@@ -1316,39 +1316,420 @@ footer {
   background: var(--bg-secondary);
 }
 
-/* Responsive adjustments */
-@media (max-width: 980px) {
-  .hero-section {
-    grid-template-columns: 1fr;
-    padding: 40px 20px;
-  }
-  .map-portal-container {
-    grid-template-columns: 1fr;
-  }
-  .form-row-2, .form-row-3 {
-    grid-template-columns: 1fr;
-  }
+/* ==========================================================================
+   2026 Mobile Responsive Architecture & Fluid Grid System
+   ========================================================================== */
+
+/* Universal mobile safeguard to eliminate horizontal scrolling */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  position: relative;
 }
 
-@media (max-width: 768px) {
+.app-shell {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Mobile Navigation Hamburger Toggle Button */
+.mobile-nav-toggle {
+  display: none;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-glass);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  z-index: 1001;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background: var(--text-main);
+  border-radius: 2px;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Mobile Nav Open State (Transforms hamburger into close X) */
+.mobile-nav-active .mobile-nav-toggle {
+  background: #FEF2F2;
+  border-color: var(--crimson-accent);
+}
+
+.mobile-nav-active .mobile-nav-toggle span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+  background: var(--crimson-primary);
+}
+
+.mobile-nav-active .mobile-nav-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-nav-active .mobile-nav-toggle span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+  background: var(--crimson-primary);
+}
+
+/* Mobile Drawer Overlay Backdrop */
+.mobile-nav-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 998;
+}
+
+.mobile-nav-active .mobile-nav-backdrop {
+  display: block;
+}
+
+/* Floating Replay Signature Intro Button */
+.floating-intro-replay-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 997;
+  background: linear-gradient(135deg, #be123c, #9f1239);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  padding: 10px 18px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(190, 18, 60, 0.4);
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+}
+
+.floating-intro-replay-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 28px rgba(190, 18, 60, 0.55);
+}
+
+/* Tablet & Mobile Breakpoints (<= 992px) */
+@media (max-width: 992px) {
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
   .navbar {
-    padding: 12px 16px;
-    flex-wrap: wrap;
-  }
-  .nav-links {
-    order: 3;
+    padding: 12px 18px;
+    position: sticky;
+    top: 0;
     width: 100%;
-    justify-content: space-around;
-    padding-top: 10px;
-    font-size: 13px;
+    z-index: 1000;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .logo-tag {
+    display: none;
+  }
+
+  /* Keep only compact emergency button on header, move others into mobile drawer */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-actions .btn:not(.btn-call) {
+    display: none;
+  }
+
+  .nav-actions .btn-call {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  /* Slide-Down Mobile Navigation Drawer */
+  .nav-links {
+    display: none !important;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
+    background: #FFFFFF;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 20px 16px 60px;
+    gap: 8px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 999;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .mobile-nav-active .nav-links {
+    display: flex !important;
+  }
+
+  .nav-links a {
+    display: flex;
+    align-items: center;
     gap: 12px;
+    padding: 14px 18px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0F172A;
+    text-decoration: none;
+    transition: all 0.2s ease;
   }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: #FEF2F2;
+    border-color: #E11D48;
+    color: #C1121F;
+    box-shadow: 0 2px 8px rgba(225, 29, 72, 0.1);
+  }
+
+  .nav-links a.active::after {
+    display: none;
+  }
+
+  /* Mobile Drawer Action Buttons Group */
+  .mobile-drawer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #E2E8F0;
+  }
+
+  .mobile-drawer-actions .btn {
+    width: 100%;
+    padding: 12px 18px;
+    font-size: 15px;
+    justify-content: center;
+  }
+
+  /* Hero Section Adaptations */
+  .hero-section {
+    grid-template-columns: 1fr !important;
+    padding: 24px 16px !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .hero-left {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-pill {
+    font-size: 11px;
+    padding: 6px 12px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+  }
+
   .hero-title {
-    font-size: 42px;
+    font-size: 32px !important;
+    line-height: 1.18 !important;
+    margin-bottom: 14px !important;
   }
+
+  .hero-desc {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 20px !important;
+    max-width: 100% !important;
+  }
+
+  .hero-cta {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .hero-cta .btn {
+    width: 100% !important;
+    padding: 13px 18px !important;
+    font-size: 15px !important;
+    justify-content: center !important;
+  }
+
   .hero-stats-strip {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .stat-chip {
+    padding: 12px 8px !important;
+  }
+
+  .stat-val {
+    font-size: 22px !important;
+  }
+
+  .stat-lbl {
+    font-size: 11px !important;
+  }
+
+  /* Hero Centerpiece & Floating Cloud */
+  .hero-card {
+    width: 100% !important;
+    padding: 16px !important;
+    overflow: hidden !important;
+  }
+
+  .hero-centerpiece-container {
+    min-height: 280px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .floating-groups-cloud {
+    display: none !important;
+  }
+
+  /* Grid Layouts to 1 Column on Mobile */
+  .section-container {
+    padding: 20px 14px !important;
+    width: 100% !important;
+  }
+
+  .section-header h2 {
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+  }
+
+  .section-header p {
+    font-size: 13px !important;
+  }
+
+  .cards-grid,
+  .grid-3,
+  .grid-4,
+  .donors-grid,
+  .hospitals-grid,
+  .map-portal-container,
+  .form-row-2,
+  .form-row-3,
+  .flow-steps {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Blood Bank Stock Chips */
+  .stock-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .stock-chip {
+    padding: 8px 4px !important;
+  }
+
+  .stock-chip .grp {
+    font-size: 13px !important;
+  }
+
+  .stock-chip .cnt {
+    font-size: 16px !important;
+  }
+
+  /* Map Container Responsiveness */
+  #trackingMap,
+  #bangaloreMap,
+  #hospitalsMap,
+  #donorsMap {
+    height: 330px !important;
+    min-height: 300px !important;
+    width: 100% !important;
+    border-radius: 14px !important;
+  }
+
+  .map-layer-selector {
+    top: 10px !important;
+    right: 10px !important;
+    gap: 4px !important;
+  }
+
+  .map-layer-btn {
+    padding: 5px 8px !important;
+    font-size: 11px !important;
+  }
+
+  /* Telematics HUD on Live Dispatch */
+  .hud-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Safe Touch Inputs (Prevents iOS/Android Zoom) */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important;
+    padding: 13px 14px !important;
+  }
+
+  /* Modals on Mobile */
+  .modal-dialog,
+  .modal-content,
+  .broadcast-modal-box {
+    max-width: 94vw !important;
+    width: 94vw !important;
+    padding: 20px 16px !important;
+    margin: 16px auto !important;
+  }
+
+  /* Floating Intro Button on Mobile */
+  .floating-intro-replay-btn {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px 14px;
+    font-size: 12px;
   }
 }
 

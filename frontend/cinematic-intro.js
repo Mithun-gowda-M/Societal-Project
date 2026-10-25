@@ -10,12 +10,6 @@
 (function () {
   'use strict';
 
-  // Check if reduced motion is preferred
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    return;
-  }
-
   const STORAGE_KEY = 'bloodconnect_cinematic_intro_v2';
   let isRunning = false;
   let animFrameId = null;
@@ -23,8 +17,15 @@
 
   function shouldPlayIntro() {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('intro') === 'replay') return true;
-    // Don't auto-play on internal sub-pages if already viewed
+    if (urlParams.get('intro') === 'replay' || urlParams.get('intro') === '1' || urlParams.get('intro') === 'true') {
+      return true;
+    }
+    // Only auto-play on root / homepage
+    const p = window.location.pathname;
+    const isHome = p === '/' || p === '' || p.endsWith('index.html');
+    if (!isHome) return false;
+
+    // Check session storage
     return !sessionStorage.getItem(STORAGE_KEY);
   }
 

@@ -12,10 +12,10 @@
 
 Open these links on your smartphone (iPhone / Android) to experience the live mobile UI:
 
-- 🌐 **Worldwide HTTPS Mobile Link (Cellular 4G/5G/Wi-Fi):**
-  👉 [https://3db2e8d3bb0145.lhr.life](https://3db2e8d3bb0145.lhr.life)
+- 🌐 **Authenticated Cloudflare Mobile Link (Cellular 4G/5G/Wi-Fi):**
+  👉 [https://listprice-marshall-nearby-else.trycloudflare.com](https://listprice-marshall-nearby-else.trycloudflare.com)
 - 📄 **13-Page Architecture & AI/ML Dossier PDF on Mobile:**
-  👉 [https://3db2e8d3bb0145.lhr.life/dossier.pdf](https://3db2e8d3bb0145.lhr.life/dossier.pdf)
+  👉 [https://listprice-marshall-nearby-else.trycloudflare.com/dossier.pdf](https://listprice-marshall-nearby-else.trycloudflare.com/dossier.pdf)
 - 📶 **Local Wi-Fi Network Access (Same Network):**
   👉 `http://10.187.113.231:5500`
 

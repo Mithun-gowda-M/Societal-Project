@@ -28,6 +28,24 @@
       box-shadow: 0 12px 35px rgba(0,0,0,0.6);
       position: relative;
     }
+    @media (max-width: 768px) {
+      #trackingMapContainer {
+        height: 330px !important;
+      }
+      .map-controls-overlay {
+        top: 8px !important;
+        right: 8px !important;
+        padding: 4px !important;
+        gap: 4px !important;
+      }
+      .map-layer-btn {
+        padding: 4px 8px !important;
+        font-size: 10px !important;
+      }
+      .live-distance-counter {
+        font-size: 30px !important;
+      }
+    }
     .map-controls-overlay {
       position: absolute;
       top: 14px;
@@ -346,6 +364,7 @@
   <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="background-fx.js"></script>
+  <script src="mobile-nav.js"></script>
   <script src="bangalore-data.js"></script>
   <script src="api.js"></script>
   <script src="official-mailer.js"></script>

@@ -17,8 +17,8 @@ Experience BloodConnect live on your mobile device (iPhone, Android, iPad, or Ta
 
 | Access Method | Live URL | Description |
 |:---|:---|:---|
-| 🌐 **Worldwide HTTPS Mobile Link** | [https://3db2e8d3bb0145.lhr.life](https://3db2e8d3bb0145.lhr.life) | **Instant Worldwide Access** (works over 4G, 5G, or any Wi-Fi network; zero configuration required). |
-| 📕 **13-Page Architecture & AI/ML Dossier PDF** | [https://3db2e8d3bb0145.lhr.life/dossier.pdf](https://3db2e8d3bb0145.lhr.life/dossier.pdf) | High-definition technical dossier with all mathematical models and system schematics. |
+| 🌐 **Authenticated Cloudflare Mobile Link** | [https://listprice-marshall-nearby-else.trycloudflare.com](https://listprice-marshall-nearby-else.trycloudflare.com) | **Instant Worldwide Access** (Rock-solid Cloudflare CDN edge, zero disconnects, works over 4G/5G/Wi-Fi). |
+| 📕 **13-Page Architecture & AI/ML Dossier PDF** | [https://listprice-marshall-nearby-else.trycloudflare.com/dossier.pdf](https://listprice-marshall-nearby-else.trycloudflare.com/dossier.pdf) | High-definition technical dossier with all mathematical models and system schematics. |
 | 📶 **Local Wi-Fi Network Access** | `http://10.187.113.231:5500` | Direct LAN access for devices connected to the same local Wi-Fi router. |
 
 <p align="center">
@@ -191,7 +191,7 @@ node dev-server.js
 The server will start at:
 - **Local:** `http://localhost:5500`
 - **LAN Mobile Access:** `http://10.187.113.231:5500`
-- **Worldwide Mobile HTTPS Tunnel:** `https://3db2e8d3bb0145.lhr.life`
+- **Worldwide Mobile Cloudflare Tunnel:** `https://listprice-marshall-nearby-else.trycloudflare.com`
 
 ---
 

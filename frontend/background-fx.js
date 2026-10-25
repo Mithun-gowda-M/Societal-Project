@@ -237,8 +237,20 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', () => {
+      init();
+      loadMobileNav();
+    });
   } else {
     init();
+    loadMobileNav();
+  }
+
+  function loadMobileNav() {
+    if (!document.querySelector('script[src*="mobile-nav.js"]')) {
+      const s = document.createElement('script');
+      s.src = 'mobile-nav.js';
+      (document.body || document.head).appendChild(s);
+    }
   }
 })();
