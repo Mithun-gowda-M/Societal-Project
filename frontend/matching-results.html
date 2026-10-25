@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect | Every Drop Connects a Life</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .match-page {
+      max-width: 1080px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .match-summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-xl);
+      padding: 24px 32px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .donor-match-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(16px);
+      transition: var(--transition-smooth);
+    }
+    .donor-match-card:hover {
+      border-color: var(--border-crimson);
+      transform: translateY(-2px);
+    }
+    .donor-match-card.top-pick {
+      border: 2px solid var(--crimson-primary);
+      box-shadow: 0 0 25px var(--crimson-glow);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch">🛸 Live Dispatch</a>
+          <a href="/emergency" class="active">Emergency</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm">📞 108 Ambulance</a>
+          <a href="/live-dispatch" class="btn btn-primary btn-sm">🛸 Live Dispatch</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="match-page">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
+        <div>
+          <span class="badge badge-ai" style="margin-bottom: 6px;">⭐ Ranked by AI Donor Response Prediction</span>
+          <h1 style="font-family: var(--font-display); font-size: 32px;">Compatible Donors in Bengaluru</h1>
+          <p style="font-size: 14px; color: var(--text-muted);">
+            Donors prioritized based on probability of answering in &lt;15 mins, distance to hospital, and verified 90-day cooldown status.
+          </p>
+        </div>
+        <a href="emergency-request.html" class="btn btn-secondary btn-sm">Edit Request</a>
+      </div>
+
+      <!-- Request Summary Strip -->
+      <div class="match-summary-card">
+        <div>
+          <span style="font-size: 12px; color: var(--text-dim); text-transform: uppercase;">Patient & Hospital</span>
+          <h3 style="font-family: var(--font-display); font-size: 20px; margin-top: 2px;" id="summaryPatient">
+            Ramesh Sundaram
+          </h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 2px;" id="summaryHospital">
+            Victoria Hospital Emergency Trauma ICU, KR Market
+          </p>
+          <p style="font-size: 12px; color: var(--text-dim);" id="summaryAddress">
+            📍 Fort Road, near City Market, Kalasipalya, Bengaluru
+          </p>
+          <a id="summaryGoogleMapsLink" href="https://www.google.com/maps?q=12.9625,77.5750" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-size: 11px; font-weight: 700; margin-top: 4px; display: inline-flex; align-items: center; gap: 4px;">
+            🗺️ Hospital Location on Google Maps ➔
+          </a>
+        </div>
+
+        <div style="display: flex; gap: 24px; align-items: center;">
+          <div style="text-align: center;">
+            <span style="font-size: 12px; color: var(--text-dim); display: block;">Blood Group</span>
+            <span class="badge badge-critical" style="font-size: 16px; padding: 6px 14px; margin-top: 4px;" id="summaryGroup">O+</span>
+          </div>
+          <div style="text-align: center;">
+            <span style="font-size: 12px; color: var(--text-dim); display: block;">Units</span>
+            <strong style="font-family: var(--font-display); font-size: 20px; color: var(--text-main);" id="summaryUnits">2</strong>
+          </div>
+          <div style="text-align: center;">
+            <span style="font-size: 12px; color: var(--text-dim); display: block;">Urgency</span>
+            <span class="badge badge-critical" id="summaryUrgency">Critical</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="matchingStatusNotice" style="margin-bottom: 20px; font-size: 14px; color: var(--emerald-primary);">
+        Scanning Bangalore donor network...
+      </div>
+
+      <!-- Donors Match List -->
+      <div id="matchListContainer">
+        <!-- Rendered by matching-results.js -->
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 BloodConnect — AI Donor Response Prediction & Instant WhatsApp Phlebotomy Linking</p>
+        <p style="font-size: 13px; color: var(--text-dim);">All matched donors hold verified government ID credentials.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="background-fx.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script src="official-mailer.js"></script>
+  <script src="matching-results.js"></script>
+</body>
+</html>

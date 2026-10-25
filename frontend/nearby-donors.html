@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect | Every Drop Connects a Life</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <style>
+    .nearby-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    #donorMapContainer {
+      width: 100%;
+      height: 100%;
+      min-height: 580px;
+      border-radius: var(--radius-xl);
+    }
+    @media (max-width: 960px) {
+      .nearby-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors" class="active">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch">🛸 Live Dispatch</a>
+          <a href="/emergency">🚨 Emergency</a>
+          <a href="/patient-portal">🧑‍🤝‍🧑 Patient Portal</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm">📞 108 Ambulance</a>
+          <a href="/login" class="btn btn-secondary btn-sm">Login</a>
+          <a href="/register" class="btn btn-primary btn-sm">Register</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section-container">
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+        <div>
+          <span class="badge badge-ai sub-badge">📍 Rapid Spatial Geofencing (Nearest First)</span>
+          <h2>Explore Verified Blood Donors</h2>
+          <p>Instant Haversine distance-sorted registry of verified blood donors across Bangalore and Indian metropolitan networks.</p>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btnDetectDonorGps" style="border-color: var(--crimson-accent); color: var(--crimson-accent);">
+          📍 Detect My Live Location
+        </button>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="card" style="margin-bottom: 24px; padding: 20px 28px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; align-items: flex-end;">
+          <div class="form-group" style="margin: 0;">
+            <label for="filterBloodGroup">Target Blood Group</label>
+            <select id="filterBloodGroup" class="form-select">
+              <option value="ALL">All Compatible Groups</option>
+              <option value="O+">O+</option>
+              <option value="O-">O- (Universal)</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin: 0;">
+            <label for="filterCity">City Network</label>
+            <select id="filterCity" class="form-select">
+              <option value="ALL">All Cities (Nearest First)</option>
+              <option value="Bengaluru" selected>Bengaluru (Karnataka)</option>
+              <option value="New Delhi">New Delhi / NCR</option>
+              <option value="Mumbai">Mumbai (Maharashtra)</option>
+              <option value="Chennai">Chennai (Tamil Nadu)</option>
+              <option value="Hyderabad">Hyderabad (Telangana)</option>
+              <option value="Ahmedabad">Ahmedabad (Gujarat)</option>
+              <option value="Kolkata">Kolkata (West Bengal)</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin: 0;">
+            <label for="filterAvailability">Availability / Cooldown</label>
+            <select id="filterAvailability" class="form-select">
+              <option value="ALL">All Donors</option>
+              <option value="AVAILABLE" selected>Available (Cooldown Clear)</option>
+              <option value="COOLDOWN">In 90-day Cooldown</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin: 0;">
+            <label for="searchArea">Area or Name Search</label>
+            <input type="text" id="searchArea" class="form-control" placeholder="e.g. Indiranagar, Arjun">
+          </div>
+
+          <div>
+            <button class="btn btn-primary" id="searchBtn" style="width: 100%; height: 48px;">
+              🔍 Search Donors
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Google Maps Telemetry Banner -->
+        <div id="liveDonorGpsPill" style="display: none; margin-top: 14px; padding: 10px 16px; border-radius: 8px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 13px; color: #10b981; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <span id="donorGpsText">📍 Live Location: Indiranagar, Bengaluru [12.9719, 77.6412] (Closest Donors First)</span>
+          <a id="donorGoogleMapsLink" href="https://www.google.com/maps?q=12.9719,77.6412" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-weight: 700;">🗺️ View on Google Maps ➔</a>
+        </div>
+
+        <!-- Quick Neighborhood Chips -->
+        <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span style="font-size: 11px; color: var(--text-dim);">Quick Neighborhoods:</span>
+          <button type="button" class="quick-chip" onclick="window.setDonorAreaSearch('Indiranagar', 12.9719, 77.6412)">Indiranagar</button>
+          <button type="button" class="quick-chip" onclick="window.setDonorAreaSearch('Koramangala', 12.9345, 77.6265)">Koramangala</button>
+          <button type="button" class="quick-chip" onclick="window.setDonorAreaSearch('Whitefield', 12.9856, 77.7289)">Whitefield</button>
+          <button type="button" class="quick-chip" onclick="window.setDonorAreaSearch('Jayanagar', 12.9298, 77.5843)">Jayanagar</button>
+          <button type="button" class="quick-chip" onclick="window.setDonorAreaSearch('Malleshwaram', 13.0031, 77.5702)">Malleshwaram</button>
+          <button type="button" class="quick-chip" onclick="window.setDonorAreaSearch('KR Market', 12.9625, 77.5750)">KR Market</button>
+        </div>
+      </div>
+
+      <!-- Map & Donor List -->
+      <div class="nearby-layout">
+        <!-- Interactive Map -->
+        <div class="map-wrapper">
+          <div id="donorMapContainer"></div>
+        </div>
+
+        <!-- Donors Grid List -->
+        <div style="max-height: 600px; overflow-y: auto; padding-right: 8px;" id="nearbyDonorList">
+          <!-- Populated by nearby-donors.js -->
+      </div>
+
+      <!-- In-App Route & Navigation HUD Drawer -->
+      <div id="inAppRouteDrawer" style="display: none; position: fixed; bottom: 24px; right: 24px; max-width: 420px; width: calc(100% - 48px); background: var(--bg-card); border: 1.5px solid #0284c7; border-radius: var(--radius-xl); padding: 22px; box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 20px rgba(2, 132, 199, 0.25); z-index: 10000; backdrop-filter: blur(16px);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div>
+            <span class="badge" style="background: rgba(2, 132, 199, 0.15); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3); font-size: 11px;">🚗 In-App Route Active</span>
+            <h4 id="routeTargetName" style="margin: 6px 0 0 0; font-size: 17px; font-family: var(--font-display); color: var(--text-main);">Target Destination</h4>
+          </div>
+          <button onclick="window.closeInAppRoute()" style="background: none; border: none; font-size: 24px; color: var(--text-muted); cursor: pointer; line-height: 1;">&times;</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-glass);">
+            <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Direct Distance</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--crimson-primary);" id="routeDistanceDisplay">0.0 km</div>
+          </div>
+          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-glass);">
+            <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Estimated Drive Time</div>
+            <div style="font-size: 20px; font-weight: 800; color: #10b981;" id="routeEtaDisplay">0 mins</div>
+          </div>
+        </div>
+
+        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;" id="routeTurnByTurn">
+          📍 <strong>Route Plotted:</strong> Blue dashed transit vector drawn on the live map. Real-time road distance and ETA computed in-app.
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary btn-sm" onclick="window.closeInAppRoute()" style="flex: 1;">Dismiss</button>
+          <a id="routeExternalGmapsLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="flex: 1; text-align: center; background: #4285F4; border: none; text-decoration: none;">External Maps ↗</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 BloodConnect — Bangalore Geofenced Donor Discovery</p>
+        <p style="font-size: 13px; color: var(--text-dim);">Coordinates mapped with privacy blur for donor safety.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="background-fx.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script src="official-mailer.js"></script>
+  <script src="nearby-donors.js"></script>
+</body>
+</html>

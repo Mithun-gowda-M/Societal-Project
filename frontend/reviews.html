@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect | Every Drop Connects a Life</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .star-rating-input {
+      display: inline-flex;
+      gap: 8px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+    .star-rating-input span {
+      color: var(--text-dim);
+      transition: color 0.15s ease;
+    }
+    .star-rating-input span.selected,
+    .star-rating-input span.hover {
+      color: #f59e0b;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch">🛸 Live Dispatch</a>
+          <a href="/emergency">Emergency</a>
+          <a href="/reviews" class="active">Reviews & Ratings</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm">📞 108 Ambulance</a>
+          <a href="/login" class="btn btn-secondary btn-sm">Login</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section-container">
+      <div class="section-header">
+        <span class="badge badge-ai sub-badge">⭐ Mutual Trust & Verified Ratings</span>
+        <h2>Community Ratings & Testimonials</h2>
+        <p>Transparency and gratitude between donors, critical patients, and Bangalore hospitals.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px;">
+        <!-- Left: Reviews Feed -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-family: var(--font-display); font-size: 20px;">Verified Feedback</h3>
+            <span class="badge badge-available">⭐ 4.97 Avg Community Rating</span>
+          </div>
+
+          <div id="reviewsListContainer">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Right: Submit Review Form -->
+        <div>
+          <div class="card card-glow-red">
+            <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 8px;">Submit a Review / Rating</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+              Share your donation or transfusion coordination experience.
+            </p>
+
+            <form id="reviewSubmissionForm">
+              <div class="form-group">
+                <label for="revRole">I am a</label>
+                <select id="revRole" class="form-select" required>
+                  <option value="Patient / Family Requester">🚨 Patient / Family Relative</option>
+                  <option value="Hospital Requester">🏥 Hospital Doctor / Staff</option>
+                  <option value="Blood Donor">🩸 Blood Donor</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="revAuthor">Your Name / Organization</label>
+                <input type="text" id="revAuthor" class="form-control" placeholder="e.g. Manipal ICU Team or Sneha N." required>
+              </div>
+
+              <div class="form-group">
+                <label for="revTarget">Reviewing (Donor or Blood Bank)</label>
+                <input type="text" id="revTarget" class="form-control" placeholder="e.g. Dr. Arjun K. Rao or Victoria Hospital" required>
+              </div>
+
+              <div class="form-group">
+                <label>Rating (Stars)</label>
+                <div class="star-rating-input" id="starPicker">
+                  <span data-star="1" class="selected">★</span>
+                  <span data-star="2" class="selected">★</span>
+                  <span data-star="3" class="selected">★</span>
+                  <span data-star="4" class="selected">★</span>
+                  <span data-star="5" class="selected">★</span>
+                </div>
+                <input type="hidden" id="starValue" value="5">
+              </div>
+
+              <div class="form-group">
+                <label for="revComment">Feedback & Comments</label>
+                <textarea id="revComment" class="form-textarea" rows="4" placeholder="Describe the response time, professionalism, and care..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                ⭐ Post Verified Review
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 BloodConnect — Mutual Rating System for Bangalore Donors & Patients</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="background-fx.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script>
+    const container = document.getElementById('reviewsListContainer');
+    const form = document.getElementById('reviewSubmissionForm');
+    const starPicker = document.getElementById('starPicker');
+    const starValue = document.getElementById('starValue');
+
+    function renderReviews() {
+      const reviews = window.BangaloreBloodData ? window.BangaloreBloodData.getReviews() : [];
+      container.innerHTML = '';
+
+      reviews.forEach(rev => {
+        const card = document.createElement('div');
+        card.className = 'review-card';
+
+        const stars = '★'.repeat(rev.rating) + '☆'.repeat(5 - rev.rating);
+
+        card.innerHTML = `
+          <div class="review-author">
+            <div>
+              <strong style="color: var(--text-main); font-size: 16px;">${rev.reviewerName}</strong>
+              <span class="badge badge-verified" style="margin-left: 8px;">${rev.reviewerRole}</span>
+            </div>
+            <div class="rating-stars">${stars}</div>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px;">
+            "${rev.comment}"
+          </p>
+          <div style="font-size: 12px; color: var(--text-dim); display: flex; justify-content: space-between;">
+            <span>Review for: <strong style="color: var(--crimson-primary);">${rev.donorName}</strong></span>
+            <span>${rev.date}</span>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Star Picker Interaction
+    const starSpans = starPicker.querySelectorAll('span');
+    starSpans.forEach(span => {
+      span.addEventListener('click', () => {
+        const rating = Number(span.dataset.star);
+        starValue.value = rating;
+        starSpans.forEach(s => {
+          s.classList.toggle('selected', Number(s.dataset.star) <= rating);
+        });
+      });
+    });
+
+    // Form Submit
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newRev = {
+        reviewerName: document.getElementById('revAuthor').value.trim(),
+        reviewerRole: document.getElementById('revRole').value,
+        donorName: document.getElementById('revTarget').value.trim(),
+        rating: Number(starValue.value),
+        comment: document.getElementById('revComment').value.trim()
+      };
+
+      if (window.BangaloreBloodData) {
+        window.BangaloreBloodData.addReview(newRev);
+      }
+
+      form.reset();
+      renderReviews();
+      alert('Review posted successfully! Thank you for supporting the donor community.');
+    });
+
+    renderReviews();
+  </script>
+  <script src="official-mailer.js"></script>
+</body>
+</html>

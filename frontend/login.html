@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect | Every Drop Connects a Life</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .login-wrapper {
+      max-width: 480px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    .quick-login-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .quick-pill {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .quick-pill:hover {
+      border-color: var(--crimson-primary);
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch">🛸 Live Dispatch</a>
+          <a href="/emergency">Emergency</a>
+          <a href="/patient-portal">🧑‍🤝‍🧑 Patient Portal</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm">📞 108 Ambulance</a>
+          <a href="/register" class="btn btn-primary btn-sm">Register</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="login-wrapper">
+      <div class="card card-glow-red">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div class="badge badge-ai" style="margin-bottom: 8px;">Secure Access</div>
+          <h1 style="font-family: var(--font-display); font-size: 28px;">Welcome Back</h1>
+          <p style="font-size: 14px; color: var(--text-muted);">Enter your credentials to access your portal.</p>
+
+          <!-- Quick Test Account Prefill Chips -->
+          <div style="margin-top: 14px; text-align: left;">
+            <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">1-Click Test Login:</span>
+            <div class="quick-login-pills">
+              <button type="button" class="quick-pill" onclick="quickFill('patient', 'rajeshwari.patient@karnataka-health.gov.in', 'Rajeshwari2026@Patient')">🧑‍🤝‍🧑 Rajeshwari (Patient)</button>
+              <button type="button" class="quick-pill" onclick="quickFill('donor', 'arjun.rao@blr-med.org', 'Arjun2026@Life')">🩸 Dr. Arjun (Donor)</button>
+              <button type="button" class="quick-pill" onclick="quickFill('hospital', 'victoria.trauma@bmcri.edu.in', 'Victoria2026@Trauma')">🏥 Victoria (Hospital)</button>
+              <button type="button" class="quick-pill" onclick="quickFill('bloodbank', 'rotary.ttk@bloodbank.org', 'Rotary2026@Blood')">🏦 Rotary (Blood Bank)</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginRole">Account Role</label>
+            <select id="loginRole" class="form-select">
+              <option value="patient" selected>🧑‍🤝‍🧑 Patient / Family Requester</option>
+              <option value="donor">🩸 Blood Donor</option>
+              <option value="hospital">🏥 Hospital / Emergency Requester</option>
+              <option value="bloodbank">🏦 Bangalore Blood Bank Staff</option>
+              <option value="admin">🛡️ System Admin</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="emailInput">Registered Email Address</label>
+            <input type="email" id="emailInput" class="form-control" placeholder="name@domain.com" required autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label for="passwordInput">Password</label>
+            <input type="password" id="passwordInput" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+
+          <!-- Security Access Notice -->
+          <div style="margin-bottom: 20px; padding: 12px 14px; background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.06);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 14px;">🔒</span>
+              <span style="font-size: 12px; color: var(--text-muted);">
+                Authorized personnel and registered donors only. Please refer to your confidential registration dossier for login credentials.
+              </span>
+            </div>
+          </div>
+
+          <p id="loginErrorMsg" style="color: var(--crimson-primary); font-size: 13px; margin-bottom: 14px;"></p>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Sign In to Dashboard
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-glass);">
+          <span style="font-size: 14px; color: var(--text-muted);">New to BloodConnect?</span>
+          <a href="register.html" style="color: var(--crimson-primary); font-weight: 700; font-size: 14px; text-decoration: none; margin-left: 6px;">
+            Create verified account ➔
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 BloodConnect — Secure Government ID & Multi-Factor Access</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="background-fx.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script>
+    window.quickFill = function(role, email, pass) {
+      document.getElementById('loginRole').value = role;
+      document.getElementById('emailInput').value = email;
+      document.getElementById('passwordInput').value = pass;
+    };
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const role = document.getElementById('loginRole').value;
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const errMsg = document.getElementById('loginErrorMsg');
+      errMsg.textContent = '';
+
+      try {
+        const session = await bloodConnectApi('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password, role })
+        });
+
+        saveBloodConnectSession(session);
+
+        if (role === 'admin') {
+          window.location.href = '/admin';
+        } else if (role === 'bloodbank') {
+          window.location.href = '/blood-banks';
+        } else if (role === 'hospital') {
+          window.location.href = '/emergency';
+        } else if (role === 'patient') {
+          window.location.href = '/patient-portal';
+        } else {
+          window.location.href = '/portal';
+        }
+      } catch (err) {
+        errMsg.textContent = err.message || 'Login failed.';
+      }
+    });
+  </script>
+  <script src="official-mailer.js"></script>
+</body>
+</html>
