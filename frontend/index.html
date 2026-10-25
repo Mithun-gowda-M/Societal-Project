@@ -143,21 +143,110 @@
         </a>
 
         <div class="nav-links">
-          <a href="/" class="active">Home</a>
-          <a href="/donors">Find Donors</a>
-          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
-          <a href="/blood-banks">Blood Banks</a>
-          <a href="/radar">📊 Shortage Radar</a>
-          <a href="/live-dispatch">🛸 Live Dispatch</a>
-          <a href="/emergency">🚨 Emergency</a>
-          <a href="/patient-portal">🧑‍🤝‍🧑 Patient Portal</a>
-          <a href="/portal">Donor Portal</a>
+          <a href="/" class="active">🏠 Home</a>
+
+          <!-- Scroll-Down Menu Button beside Home -->
+          <div class="nav-dropdown" id="servicesDropdown">
+            <button type="button" class="nav-dropdown-btn" id="servicesDropdownBtn" aria-expanded="false" aria-haspopup="true">
+              <span class="dropdown-icon-bars">☰</span>
+              <span>Services</span>
+              <span class="dropdown-chevron">▾</span>
+            </button>
+            <div class="nav-dropdown-menu" id="servicesDropdownMenu">
+              <div class="dropdown-section-label">Emergency & Transfusion</div>
+              <a href="/emergency" class="dropdown-item">
+                <span class="item-icon">🚨</span>
+                <div class="item-text">
+                  <strong>Emergency Blood Requisition</strong>
+                  <small>Autonomous AI matching & bedside dispatch</small>
+                </div>
+              </a>
+              <a href="/live-dispatch" class="dropdown-item">
+                <span class="item-icon">🛸</span>
+                <div class="item-text">
+                  <strong>Live GPS Transit HUD</strong>
+                  <small>Google Maps telematics & AeroLife Drone</small>
+                </div>
+              </a>
+              <a href="/hospitals" class="dropdown-item">
+                <span class="item-icon">🚑</span>
+                <div class="item-text">
+                  <strong>Karnataka Hospitals & ICUs</strong>
+                  <small>24/7 Trauma beds & blood bank routing</small>
+                </div>
+              </a>
+              <a href="/blood-banks" class="dropdown-item">
+                <span class="item-icon">🩸</span>
+                <div class="item-text">
+                  <strong>Blood Banks & Live Inventory</strong>
+                  <small>Real-time units audit & PIN modifier</small>
+                </div>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-section-label">Donors & Forecasting</div>
+              <a href="/donors" class="dropdown-item">
+                <span class="item-icon">🔍</span>
+                <div class="item-text">
+                  <strong>Find Compatible Donors</strong>
+                  <small>Geofenced donor discovery across Bangalore</small>
+                </div>
+              </a>
+              <a href="/radar" class="dropdown-item">
+                <span class="item-icon">📊</span>
+                <div class="item-text">
+                  <strong>AI Shortage Radar</strong>
+                  <small>7-Day Holt-Winters demand forecasting</small>
+                </div>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-section-label">Account Portals</div>
+              <a href="/patient-portal" class="dropdown-item">
+                <span class="item-icon">🧑‍🤝‍🧑</span>
+                <div class="item-text">
+                  <strong>Patient Care Portal</strong>
+                  <small>Active requisitions & transit status</small>
+                </div>
+              </a>
+              <a href="/portal" class="dropdown-item">
+                <span class="item-icon">👤</span>
+                <div class="item-text">
+                  <strong>Verified Donor Portal</strong>
+                  <small>Donation history & cooldown counter</small>
+                </div>
+              </a>
+              <a href="/admin" class="dropdown-item">
+                <span class="item-icon">🛠️</span>
+                <div class="item-text">
+                  <strong>Command Center / Admin</strong>
+                  <small>Audit logs & messaging gateway</small>
+                </div>
+              </a>
+
+              <div class="dropdown-divider"></div>
+              <a href="/about" class="dropdown-item">
+                <span class="item-icon">ℹ️</span>
+                <div class="item-text">
+                  <strong>Mission & Clinical Charter</strong>
+                </div>
+              </a>
+              <a href="/reviews" class="dropdown-item">
+                <span class="item-icon">⭐</span>
+                <div class="item-text">
+                  <strong>Donor & Patient Reviews</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <a href="/emergency" class="nav-item-urgent">🚨 Emergency Request</a>
         </div>
 
         <div class="nav-actions">
           <a href="tel:108" class="btn btn-call btn-sm" style="animation: pulseGlow 2s infinite;">📞 108 Ambulance</a>
-          <a href="/login" class="btn btn-secondary btn-sm">Login</a>
-          <a href="/register" class="btn btn-primary btn-sm">Become a Donor</a>
+          <a href="/login" class="btn btn-secondary btn-sm">🔑 Login</a>
+          <a href="/register" class="btn btn-primary btn-sm">🩸 Register</a>
         </div>
       </nav>
     </header>
