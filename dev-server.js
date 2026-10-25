@@ -914,8 +914,11 @@ const server = http.createServer(async (req, res) => {
   fs.createReadStream(fullPath).pipe(res);
 });
 
-server.listen(PORT, () => {
-  console.log(`BloodConnect 2026 Production Server active at http://localhost:${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`BloodConnect 2026 Production Server active at:`);
+  console.log(`  Local:      http://localhost:${PORT}`);
+  console.log(`  Mobile LAN: http://10.187.113.231:${PORT}`);
+  console.log(`  Tunnel:     https://3db2e8d3bb0145.lhr.life`);
   console.log(`Real Email (SMTP) & SMS API Endpoints enabled on /api/auth/register, /api/auth/verify-otp`);
   console.log(`Clean Routes enabled: / | /login | /register | /find-donors | /emergency | /dashboard | /about | /bangalore-blood-banks`);
 });
