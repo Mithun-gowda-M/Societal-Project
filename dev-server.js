@@ -848,6 +848,20 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  // Clean Route for Comprehensive Architecture & Technical Documentation Dossier PDF
+  if (urlPath === '/dossier.pdf' || urlPath === '/architecture.pdf' || urlPath === '/technical-documentation.pdf') {
+    const pdfPath = path.join(__dirname, 'BloodConnect-Comprehensive-Architecture-Dossier.pdf');
+    if (fs.existsSync(pdfPath)) {
+      res.writeHead(200, {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'inline; filename="BloodConnect-Comprehensive-Architecture-Dossier.pdf"',
+        'Cache-Control': 'no-cache'
+      });
+      fs.createReadStream(pdfPath).pipe(res);
+      return;
+    }
+  }
+
   // Block public web exposure of credential pages / markdown files
   if (urlPath.toLowerCase().includes('credential') && !urlPath.endsWith('.pdf')) {
     res.writeHead(302, { 'Location': '/login' });
