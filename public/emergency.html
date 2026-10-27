@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect | Every Drop Connects a Life</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .request-container {
+      max-width: 820px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .ai-triage-panel {
+      background: linear-gradient(135deg, rgba(255, 45, 85, 0.1), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-crimson);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch">🛸 Live Dispatch</a>
+          <a href="/emergency" class="active">Emergency</a>
+          <a href="/patient-portal">🧑‍🤝‍🧑 Patient Portal</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm">📞 108 Ambulance</a>
+          <a href="/login" class="btn btn-secondary btn-sm">Login</a>
+          <a href="/register" class="btn btn-primary btn-sm">Register</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="request-container">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <span class="badge badge-critical" style="margin-bottom: 8px;">🚨 Immediate Life-Saving Dispatch</span>
+        <h1 style="font-family: var(--font-display); font-size: 36px; letter-spacing: -1px;">
+          Broadcast Emergency Blood Request
+        </h1>
+        <p style="font-size: 15px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+          Instantly triggers AI Donor Response Prediction, SMS, Email, and Push alerts to compatible, available donors and Bangalore blood banks.
+        </p>
+      </div>
+
+      <!-- Live AI Emergency Priority & Triage Preview -->
+      <div class="ai-triage-panel">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge badge-ai">AI Triage Model</span>
+            <span class="badge badge-critical" id="liveTriageBadge">Critical (Tier-1)</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;" id="liveTriageDesc">
+            AI estimates ~12 compatible Bangalore donors in dispatch radius. Fast response ETA ~4.5 min.
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-family: var(--font-display); font-size: 24px; font-weight: 800; color: var(--crimson-primary);" id="liveTriageScore">
+            92 / 100
+          </div>
+          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Triage Priority Index</span>
+        </div>
+      </div>
+
+      <div class="card card-glow-red">
+        <form id="emergencyRequestForm">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="patientName">Patient Full Name</label>
+              <input type="text" id="patientName" class="form-control" placeholder="e.g. Ramesh Sundaram" required>
+            </div>
+            <div class="form-group">
+              <label for="bloodGroup">Required Blood Group</label>
+              <select id="bloodGroup" class="form-select" required>
+                <option value="">Select Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+" selected>O+</option>
+                <option value="O-">O- (Universal)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label for="units">Units Needed <small>(1 - 10)</small></label>
+              <input type="number" id="units" class="form-control" min="1" max="15" value="2" required>
+            </div>
+            <div class="form-group">
+              <label for="urgency">Clinical Urgency Level</label>
+              <select id="urgency" class="form-select" required>
+                <option value="Critical" selected>🚨 Critical (Immediate Surgery/ICU)</option>
+                <option value="Urgent">⚠️ Urgent (Within 4-6 Hours)</option>
+                <option value="Normal">🟢 Routine / Scheduled Procedure</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="contact">Requester Contact (WhatsApp/Call)</label>
+              <input type="tel" id="contact" class="form-control" placeholder="+91 98450 11150" value="+919845011150" required>
+            </div>
+          </div>
+
+          <!-- Hospital Location, Address & Live GPS Section -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-crimson); border-radius: var(--radius-lg); padding: 22px; margin-bottom: 22px; box-shadow: var(--shadow-card);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <label style="font-weight: 700; font-size: 15px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                  <span>🏥</span> Hospital Location & Real-Time Google Maps Telematics
+                </label>
+                <p style="font-size: 12px; color: var(--text-muted); margin: 3px 0 0 0;">
+                  Donors and ambulance units receive real-time Google Maps turn-by-turn navigation directly to this destination.
+                </p>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnFetchEmergencyLocation" style="border-color: #ff3347; color: #ff3347; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(193, 18, 31, 0.12); cursor: pointer;">
+                <span id="emGpsBtnIcon">📍</span>
+                <span id="emGpsBtnText">Fetch Live Location & Auto-Fill Address</span>
+              </button>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label for="hospital">Hospital / Medical Center Name</label>
+                <input type="text" id="hospital" class="form-control" placeholder="e.g. Victoria Hospital Emergency Trauma ICU" value="Victoria Hospital Emergency Trauma ICU" required>
+              </div>
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label for="location">Hospital Locality / Area</label>
+                <input type="text" id="location" class="form-control" placeholder="e.g. KR Market, Bengaluru" value="KR Market, Bengaluru" required>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px; position: relative;">
+              <label for="hospitalAddress" style="font-size: 12px; color: var(--text-muted);">Hospital Full Street Address / Medical Campus</label>
+              <div style="position: relative;">
+                <input type="text" id="hospitalAddress" class="form-control" placeholder="Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002" value="Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002" required style="padding-right: 130px;">
+                <span id="emAddressAutoBadge" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 4px; display: inline;">✓ AUTO-FETCHED</span>
+              </div>
+            </div>
+
+            <!-- Live Google Maps Telemetry Lock Pill -->
+            <div id="emLocationStatusPill" style="display: flex; margin-top: 10px; padding: 10px 16px; border-radius: 8px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); font-size: 12px; color: #38bdf8; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+              <span id="emGpsCoordsDisplay">🛰️ Google Maps Telemetry: <strong>12.9625, 77.5750</strong> (Victoria Hospital Fort)</span>
+              <a id="emGoogleMapsLink" href="https://www.google.com/maps?q=12.9625,77.5750" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                🗺️ Open in Google Maps ➔
+              </a>
+            </div>
+
+            <!-- Quick-Pick Major Trauma Centers (1-Click) -->
+            <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 11px; color: var(--text-dim);">Quick Trauma Hospitals:</span>
+              <button type="button" class="quick-chip" onclick="setHospitalPreset('Victoria Hospital Emergency Trauma ICU', 'KR Market, Bengaluru', 'Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002', 12.9625, 77.5750)">Victoria (KR Market)</button>
+              <button type="button" class="quick-chip" onclick="setHospitalPreset('NIMHANS Emergency Neuro-Trauma Centre', 'Dairy Circle, Bengaluru', 'Hosur Road, Lakkasandra, Dairy Circle, Bengaluru, Karnataka 560029', 12.9385, 77.5955)">NIMHANS (Dairy Circle)</button>
+              <button type="button" class="quick-chip" onclick="setHospitalPreset('Bowring & Lady Curzon Emergency Hospital', 'Shivajinagar, Bengaluru', 'Lady Curzon Rd, Tasker Town, Shivajinagar, Bengaluru, Karnataka 560001', 12.9833, 77.6015)">Bowring (Shivajinagar)</button>
+              <button type="button" class="quick-chip" onclick="setHospitalPreset('Manipal Hospital Comprehensive Trauma Center', 'Old Airport Rd, Bengaluru', '98 HAL Old Airport Rd, Kodihalli, Bengaluru, Karnataka 560017', 12.9592, 77.6534)">Manipal (Old Airport Rd)</button>
+              <button type="button" class="quick-chip" onclick="setHospitalPreset('St. John\'s Medical College Emergency Trauma Center', 'Koramangala, Bengaluru', '100 Feet Rd, 4th Block, Koramangala, Bengaluru, Karnataka 560034', 12.9345, 77.6265)">St. John's (Koramangala)</button>
+              <button type="button" class="quick-chip" onclick="setHospitalPreset('Aster CMI Emergency & Multi-Trauma Hospital', 'Hebbal, Bengaluru', 'No. 43/2, New Airport Rd, NH 44, Sahakar Nagar, Bengaluru, Karnataka 560092', 13.0583, 77.5922)">Aster CMI (Hebbal)</button>
+            </div>
+
+            <input type="hidden" id="latitude" value="12.9625">
+            <input type="hidden" id="longitude" value="77.5750">
+          </div>
+
+          <div class="form-group">
+            <label for="message">Medical Diagnosis & Special Instructions <small>(Optional)</small></label>
+            <textarea id="message" class="form-textarea" rows="3" placeholder="e.g. Acute internal hemorrhage post motor collision. Immediate cross-match required at 2nd floor ICU blood desk."></textarea>
+          </div>
+
+          <!-- Fake / Spam Request Detector Status -->
+          <div id="spamCheckNotice" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); padding: 12px; border-radius: var(--radius-md); margin-bottom: 16px; color: #ff859b; font-size: 13px;">
+            ⚠️ <strong>Spam Protection Alert:</strong> Unusual request pattern detected. Flagged for administrative verification.
+          </div>
+
+          <p id="formErrorMessage" style="color: var(--crimson-primary); font-size: 14px; margin-bottom: 16px;"></p>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="submitRequestBtn">
+            🚨 Broadcast Emergency & Match Donors Now
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 BloodConnect — Bangalore Emergency Dispatch & AI Priority Triage</p>
+        <p style="font-size: 13px; color: var(--text-dim);">Automated multi-channel push, SMS, and email broadcasting.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="background-fx.js"></script>
+  <script src="mobile-nav.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script src="official-mailer.js"></script>
+  <script>
+    const form = document.getElementById('emergencyRequestForm');
+    const urgencySelect = document.getElementById('urgency');
+    const unitsInput = document.getElementById('units');
+    const messageInput = document.getElementById('message');
+    const liveTriageScore = document.getElementById('liveTriageScore');
+    const liveTriageBadge = document.getElementById('liveTriageBadge');
+    const liveTriageDesc = document.getElementById('liveTriageDesc');
+    const spamCheckNotice = document.getElementById('spamCheckNotice');
+    const useLocationBtn = document.getElementById('useCurrentLocationBtn');
+
+    function updateLiveTriage() {
+      const pred = window.BloodAI.predictEmergencyPriority({
+        urgency: urgencySelect.value,
+        units: unitsInput.value,
+        message: messageInput.value
+      });
+
+      liveTriageScore.textContent = `${pred.score} / 100`;
+      liveTriageBadge.textContent = pred.level;
+      liveTriageBadge.className = `badge ${pred.badgeClass}`;
+      liveTriageDesc.textContent = `Broadcast radius: ~${pred.suggestedBroadcastRadiusKm} km across Bangalore. Targeting ${pred.recommendedTargetDonors} prime donors.`;
+
+      // Check Spam
+      const spam = window.BloodAI.detectSpamRequest({
+        units: unitsInput.value,
+        contact: document.getElementById('contact').value,
+        hospital: document.getElementById('hospital').value
+      });
+
+      spamCheckNotice.style.display = spam.isSpam ? 'block' : 'none';
+    }
+
+    [urgencySelect, unitsInput, messageInput, document.getElementById('hospital')].forEach(el => {
+      el.addEventListener('input', updateLiveTriage);
+    });
+
+    const btnFetchEmergencyLocation = document.getElementById('btnFetchEmergencyLocation');
+    const hospitalInput = document.getElementById('hospital');
+    const locationInput = document.getElementById('location');
+    const hospitalAddressInput = document.getElementById('hospitalAddress');
+    const latInput = document.getElementById('latitude');
+    const lngInput = document.getElementById('longitude');
+    const emGoogleMapsLink = document.getElementById('emGoogleMapsLink');
+    const emGpsCoordsDisplay = document.getElementById('emGpsCoordsDisplay');
+    const emGpsBtnIcon = document.getElementById('emGpsBtnIcon');
+    const emGpsBtnText = document.getElementById('emGpsBtnText');
+    const emAddressAutoBadge = document.getElementById('emAddressAutoBadge');
+
+    window.setHospitalPreset = function (name, loc, addr, lat, lng) {
+      if (hospitalInput) hospitalInput.value = name;
+      if (locationInput) locationInput.value = loc;
+      if (hospitalAddressInput) hospitalAddressInput.value = addr;
+      if (latInput) latInput.value = lat;
+      if (lngInput) lngInput.value = lng;
+      if (emAddressAutoBadge) emAddressAutoBadge.style.display = 'inline';
+      if (emGpsCoordsDisplay) {
+        emGpsCoordsDisplay.innerHTML = `🛰️ Google Maps Telemetry: <strong>${lat.toFixed(4)}, ${lng.toFixed(4)}</strong> (${name})`;
+      }
+      if (emGoogleMapsLink) {
+        emGoogleMapsLink.href = `https://www.google.com/maps?q=${lat},${lng}`;
+      }
+      updateLiveTriage();
+    };
+
+    if (btnFetchEmergencyLocation) {
+      btnFetchEmergencyLocation.addEventListener('click', async () => {
+        if (emGpsBtnIcon) emGpsBtnIcon.textContent = '⏳';
+        if (emGpsBtnText) emGpsBtnText.textContent = 'Acquiring GPS Satellite Lock...';
+        btnFetchEmergencyLocation.disabled = true;
+
+        try {
+          const coords = await window.BloodConnectGeo.fetchLiveCoordinates();
+          const lat = coords.lat;
+          const lng = coords.lng;
+
+          if (latInput) latInput.value = lat.toFixed(6);
+          if (lngInput) lngInput.value = lng.toFixed(6);
+
+          if (emGpsBtnIcon) emGpsBtnIcon.textContent = '🛰️';
+          if (emGpsBtnText) emGpsBtnText.textContent = 'Reverse Geocoding Address...';
+
+          const geo = await window.BloodConnectGeo.reverseGeocode(lat, lng);
+
+          if (hospitalAddressInput) hospitalAddressInput.value = geo.fullAddress;
+          if (locationInput) locationInput.value = `${geo.locality}, ${geo.city}`;
+          if (hospitalInput && (!hospitalInput.value || hospitalInput.value.includes('Victoria'))) {
+            hospitalInput.value = `${geo.locality} Emergency Medical Care Facility`;
+          }
+
+          if (emAddressAutoBadge) emAddressAutoBadge.style.display = 'inline';
+          if (emGpsCoordsDisplay) {
+            emGpsCoordsDisplay.innerHTML = `🛰️ Google Maps GPS Locked: <strong>${lat.toFixed(4)}, ${lng.toFixed(4)}</strong> (${geo.locality})`;
+          }
+          if (emGoogleMapsLink) {
+            emGoogleMapsLink.href = geo.googleMapsUrl;
+          }
+
+          if (emGpsBtnIcon) emGpsBtnIcon.textContent = '✓';
+          if (emGpsBtnText) emGpsBtnText.textContent = 'Live Hospital Address Fetched';
+          btnFetchEmergencyLocation.style.borderColor = '#10b981';
+          btnFetchEmergencyLocation.style.color = '#10b981';
+        } catch (err) {
+          console.warn('Emergency location fallback activated:', err.message);
+          window.setHospitalPreset(
+            'Victoria Hospital Emergency Trauma ICU',
+            'KR Market, Bengaluru',
+            'Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002',
+            12.9625,
+            77.5750
+          );
+          if (emGpsBtnIcon) emGpsBtnIcon.textContent = '📍';
+          if (emGpsBtnText) emGpsBtnText.textContent = 'Preset to Victoria Trauma ICU';
+        } finally {
+          btnFetchEmergencyLocation.disabled = false;
+          updateLiveTriage();
+        }
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const err = document.getElementById('formErrorMessage');
+      err.textContent = '';
+
+      const payload = {
+        patientName: document.getElementById('patientName').value.trim(),
+        bloodGroup: document.getElementById('bloodGroup').value,
+        units: Number(document.getElementById('units').value),
+        urgency: document.getElementById('urgency').value,
+        contact: document.getElementById('contact').value.trim(),
+        hospital: document.getElementById('hospital').value.trim(),
+        location: document.getElementById('location').value.trim(),
+        address: (hospitalAddressInput ? hospitalAddressInput.value.trim() : '') || 'Fort Road, near City Market, Kalasipalya, Bengaluru',
+        latitude: Number(document.getElementById('latitude').value) || 12.9625,
+        longitude: Number(document.getElementById('longitude').value) || 77.5750,
+        message: document.getElementById('message').value.trim()
+      };
+
+      // Save locally & broadcast
+      if (window.BangaloreBloodData) {
+        window.BangaloreBloodData.saveEmergency(payload);
+      }
+
+      // Automated Real Email Alert to Donors from Outlook Gateway
+      fetch('/api/emergencies/broadcast', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(e => console.warn('Broadcast API dispatched:', e.message));
+
+      // Broadcast event across all browser tabs for in-app pop-up notification
+      localStorage.setItem('bloodconnect_latest_emergency_broadcast', JSON.stringify({
+        ...payload,
+        timestamp: Date.now()
+      }));
+
+      // Trigger In-App Emergency Pop-up on current page
+      if (window.OfficialMailer && window.OfficialMailer.showEmergencyAlertModal) {
+        window.OfficialMailer.showEmergencyAlertModal(payload);
+      }
+
+      localStorage.setItem('currentRequestId', `req-${Date.now()}`);
+      localStorage.setItem('requestBloodGroup', payload.bloodGroup);
+      localStorage.setItem('requestUnits', String(payload.units));
+      localStorage.setItem('requestHospital', payload.hospital);
+      localStorage.setItem('requestLocation', payload.location);
+      localStorage.setItem('requestUrgency', payload.urgency);
+      localStorage.setItem('requestPatient', payload.patientName);
+      localStorage.setItem('requestContact', payload.contact);
+      localStorage.setItem('requestHospitalAddress', payload.address);
+      localStorage.setItem('requestLatitude', String(payload.latitude));
+      localStorage.setItem('requestLongitude', String(payload.longitude));
+
+      setTimeout(() => {
+        window.location.href = 'matching-results.html';
+      }, 1200);
+    });
+
+    updateLiveTriage();
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="ogBg" cx="30%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#1A0307" />
+      <stop offset="60%" stop-color="#09090D" />
+      <stop offset="100%" stop-color="#050508" />
+    </radialGradient>
+    <radialGradient id="dropRuby" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#FF4D5E" />
+      <stop offset="45%" stop-color="#C1121F" />
+      <stop offset="90%" stop-color="#780000" />
+      <stop offset="100%" stop-color="#3A0005" />
+    </radialGradient>
+    <linearGradient id="specular" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="40%" stop-color="#FF859B" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#FF3347" stop-opacity="0" />
+    </linearGradient>
+    <filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="35" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="630" fill="url(#ogBg)" />
+
+  <!-- Subtle EKG Heartbeat Trace across background -->
+  <path d="M 0 315 L 300 315 L 340 315 L 360 250 L 380 390 L 400 290 L 420 330 L 440 315 L 1200 315" 
+        fill="none" stroke="rgba(193, 18, 31, 0.25)" stroke-width="3" />
+
+  <!-- Blood Drop Centerpiece -->
+  <g transform="translate(180, 165)">
+    <circle cx="100" cy="150" r="130" fill="#FF3347" opacity="0.12" filter="url(#glowEffect)" />
+    <!-- Main Drop -->
+    <path d="M 100 20 C 100 20, 30 110, 30 165 C 30 210, 61 245, 100 245 C 139 245, 170 210, 170 165 C 170 110, 100 20, 100 20 Z" 
+          fill="url(#dropRuby)" />
+    <!-- 3D Specular Highlight -->
+    <path d="M 100 35 C 90 55, 55 110, 55 155 C 55 180, 68 205, 85 215 C 75 205, 68 185, 68 155 C 68 115, 96 55, 100 35 Z" 
+          fill="url(#specular)" />
+    <!-- Glint -->
+    <circle cx="82" cy="110" r="10" fill="#FFFFFF" opacity="0.9" />
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(450, 240)">
+    <!-- Wordmark -->
+    <text font-family="'Plus Jakarta Sans', 'Outfit', sans-serif" font-size="80" font-weight="800" letter-spacing="-1">
+      <tspan fill="#C1121F">Blood</tspan><tspan fill="#FFFFFF">Connect</tspan>
+    </text>
+    
+    <!-- Red Pulse Line beneath wordmark -->
+    <rect x="0" y="25" width="460" height="4" rx="2" fill="#FF3347" />
+    
+    <!-- Tagline -->
+    <text x="0" y="75" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="500" fill="#94A3B8" letter-spacing="0.5">
+      Every Drop Connects a Life.
+    </text>
+
+    <!-- Sub-bullets -->
+    <text x="0" y="140" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="400" fill="#64748B">
+      AI-Powered Blood Matching • Emergency Response • Real-Time Bangalore Transfusion Network
+    </text>
+  </g>
+</svg>

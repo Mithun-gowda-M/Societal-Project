@@ -1,6 +1,6 @@
 # 🩸 BloodConnect 2026 — AI Autonomous Blood Logistics & Transit Network
 
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Edge%20Serverless%20Live-000000?logo=vercel)](https://vercel.com)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-societal--project--nine.vercel.app-000000?logo=vercel)](https://societal-project-nine.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/Build-Passing-10b981.svg)]()
 [![Mobile Responsive](https://img.shields.io/badge/Mobile-100%25%20Responsive-brightgreen.svg)]()
@@ -20,7 +20,7 @@ Experience BloodConnect live across global devices (iPhone, Android, iPad, Table
 
 | Deployment Channel | Live URL / Access | Description |
 |:---|:---|:---|
-| ⚡ **Vercel Production Edge** | [https://societal-project.vercel.app](https://societal-project.vercel.app) *(or your linked Vercel domain)* | **Global High-Speed CDN** with Serverless Email OTP & Emergency Broadcast Engine. |
+| ⚡ **Vercel Production Edge** | [https://societal-project-nine.vercel.app](https://societal-project-nine.vercel.app) | **Official Global Live URL** (Rock-solid high-speed CDN, real-time routing, zero configuration). |
 | 🌐 **Authenticated Cloudflare Tunnel** | [https://listprice-marshall-nearby-else.trycloudflare.com](https://listprice-marshall-nearby-else.trycloudflare.com) | Direct tunnel for local full-stack integration. |
 | 📕 **13-Page Architecture & AI/ML Dossier PDF** | [`/dossier.pdf`](/BloodConnect-Comprehensive-Architecture-Dossier.pdf) | High-definition technical dossier with all mathematical models and system schematics. |
 | 📶 **Local Wi-Fi Network Access** | `http://10.187.113.231:5500` | Direct LAN access for devices connected to the local Wi-Fi router. |

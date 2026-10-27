@@ -20,3 +20,5 @@ cloudflared.exe
 # OS metadata
 .DS_Store
 Thumbs.db
+
+.vercel

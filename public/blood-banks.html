@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect | Every Drop Connects a Life</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cinematic-intro.css">
+  <!-- Leaflet CSS for Interactive Bangalore Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <style>
+    .bank-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(16px);
+      transition: var(--transition-smooth);
+    }
+    .bank-card:hover {
+      border-color: var(--border-crimson);
+      transform: translateY(-2px);
+    }
+    .stock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+    }
+    .stock-chip {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 8px 6px;
+      text-align: center;
+      transition: var(--transition-smooth);
+    }
+    .stock-chip.active-highlight {
+      border-color: var(--crimson-primary);
+      background: var(--crimson-subtle);
+      box-shadow: 0 0 10px var(--crimson-glow);
+    }
+    .stock-chip .grp {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .stock-chip .cnt {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--crimson-primary);
+      margin-top: 2px;
+    }
+    .stock-chip .cnt.zero {
+      color: var(--text-dim);
+    }
+    .stock-chip .cnt.low {
+      color: var(--amber-primary);
+    }
+    .stock-chip .cnt.good {
+      color: var(--emerald-primary);
+    }
+    .bank-contacts {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    #bangaloreMap {
+      width: 100%;
+      height: 100%;
+      min-height: 580px;
+      border-radius: var(--radius-xl);
+      z-index: 10;
+    }
+    .staff-portal-panel {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-crimson);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-card);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks" class="active">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch">🛸 Live Dispatch</a>
+          <a href="/emergency">🚨 Emergency</a>
+          <a href="/patient-portal">🧑‍🤝‍🧑 Patient Portal</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm">📞 108 Ambulance</a>
+          <a href="/login" class="btn btn-secondary btn-sm">Login</a>
+          <button class="btn btn-primary btn-sm" id="openStaffLoginBtn">🏥 Staff Login</button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section-container">
+      <div class="section-header">
+        <div class="badge badge-ai sub-badge">📍 India National Blood Banks Network & Live Stock</div>
+        <h2>India Blood Banks & Real-Time Inventory</h2>
+        <p>Comprehensive verified registry of premier blood transfusion centres across Bangalore and all major Indian states. Search by city, blood group, or distance with instant phone, WhatsApp, email, and stock inspection.</p>
+      </div>
+
+      <!-- Blood Bank Staff Inventory Manager (Toggleable / Login aware) -->
+      <section class="staff-portal-panel" id="staffPortal" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--crimson-primary); display: flex; align-items: center; gap: 8px;">
+              <span>🏥</span> <span id="activeBankTitle">Staff Stock Editor — Rotary Bangalore TTK Blood Centre</span>
+            </h3>
+            <p style="font-size: 13px; color: var(--text-muted);">You are authorized to add (+) or subtract (-) available units. Changes sync live across the platform (Staff PIN: 2026).</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="closeStaffPortalBtn">Exit Staff Mode</button>
+        </div>
+
+        <div id="stockEditorGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+          <!-- Stock editor controls dynamically populated -->
+        </div>
+      </section>
+
+      <!-- Search & Blood Group Filter Bar -->
+      <div class="card" style="margin-bottom: 24px; padding: 18px 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <label style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">City / State:</label>
+            <select id="bankCitySelect" class="form-select" style="max-width: 240px; padding: 6px 12px;">
+              <option value="ALL">All India & Karnataka (Nearest First)</option>
+              <optgroup label="Karnataka Districts & Cities">
+                <option value="Bengaluru" selected>Bengaluru (Urban & Rural)</option>
+                <option value="Mysuru">Mysuru District</option>
+                <option value="Mangaluru">Mangaluru / Coastal</option>
+                <option value="Udupi">Udupi / Manipal</option>
+                <option value="Hubballi">Hubballi-Dharwad</option>
+                <option value="Belagavi">Belagavi District</option>
+                <option value="Davanagere">Davanagere District</option>
+                <option value="Kalaburagi">Kalaburagi / Gulbarga</option>
+                <option value="Ballari">Ballari / Bellary</option>
+                <option value="Shivamogga">Shivamogga / Shimoga</option>
+                <option value="Tumakuru">Tumakuru District</option>
+                <option value="Hassan">Hassan District</option>
+              </optgroup>
+              <optgroup label="Other Major Indian Metros">
+                <option value="New Delhi">New Delhi / NCR</option>
+                <option value="Mumbai">Mumbai (Maharashtra)</option>
+                <option value="Pune">Pune (Maharashtra)</option>
+                <option value="Chennai">Chennai (Tamil Nadu)</option>
+                <option value="Hyderabad">Hyderabad (Telangana)</option>
+                <option value="Kolkata">Kolkata (West Bengal)</option>
+                <option value="Ahmedabad">Ahmedabad (Gujarat)</option>
+                <option value="Kochi">Kochi (Kerala)</option>
+                <option value="Jaipur">Jaipur (Rajasthan)</option>
+                <option value="Lucknow">Lucknow (Uttar Pradesh)</option>
+                <option value="Chandigarh">Chandigarh (Punjab/Haryana)</option>
+                <option value="Bhopal">Bhopal (Madhya Pradesh)</option>
+                <option value="Patna">Patna (Bihar)</option>
+                <option value="Bhubaneswar">Bhubaneswar (Odisha)</option>
+                <option value="Guwahati">Guwahati (Assam)</option>
+              </optgroup>
+            </select>
+
+            <div id="groupFilterButtons" style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm group-filter-btn" data-group="ALL">All Groups</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="O+">O+</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="O-">O- (Rare)</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="A+">A+</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="A-">A-</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="B+">B+</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="B-">B-</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="AB+">AB+</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="AB-">AB- (Rare)</button>
+              <button class="btn btn-secondary btn-sm group-filter-btn" data-group="Platelets">Platelets</button>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; flex: 1; min-width: 280px; align-items: center; justify-content: flex-end;">
+            <input type="text" id="bankSearchInput" class="form-control" placeholder="Search blood bank, area, or locality..." style="padding: 9px 14px; font-size: 14px; max-width: 280px;">
+            <button class="btn btn-secondary btn-sm" id="btnDetectBankGps" style="border-color: #ff3347; color: #ff3347; white-space: nowrap; font-weight: 700; height: 42px;">
+              📍 Detect Live Location
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Google Maps Telemetry Banner -->
+        <div id="liveBankGpsPill" style="display: none; margin-top: 14px; padding: 10px 16px; border-radius: 8px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 13px; color: #10b981; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <span id="bankGpsText">📍 Live Location: Indiranagar, Bengaluru [12.9719, 77.6412] (Closest Blood Banks First)</span>
+          <a id="bankGoogleMapsLink" href="https://www.google.com/maps?q=12.9719,77.6412" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-weight: 700;">🗺️ View on Google Maps ➔</a>
+        </div>
+
+        <!-- Quick Blood Bank Area Chips -->
+        <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span style="font-size: 11px; color: var(--text-dim);">Quick Blood Centers:</span>
+          <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('Rotary TTK', 12.9719, 77.6412)">Rotary TTK (Indiranagar)</button>
+          <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('Victoria', 12.9625, 77.5750)">BMCRI Victoria (KR Market)</button>
+          <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('NIMHANS', 12.9385, 77.5955)">NIMHANS Centre (Dairy Circle)</button>
+          <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('Bowring', 12.9833, 77.6015)">Bowring Blood Bank (Shivajinagar)</button>
+          <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('Red Cross', 12.9740, 77.6100)">Indian Red Cross (MG Road)</button>
+          <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('Rashtrotthana', 12.9298, 77.5843)">Rashtrotthana (Jayanagar)</button>
+        </div>
+      </div>
+
+      <!-- Map & Bank List Two-Column Layout -->
+      <div class="map-portal-container">
+        <!-- Left: Interactive Leaflet Map -->
+        <div class="map-wrapper">
+          <div id="bangaloreMap"></div>
+        </div>
+
+        <!-- Right: Registered Bangalore Blood Banks Directory -->
+        </div>
+      </div>
+
+      <!-- In-App Route & Navigation HUD Drawer -->
+      <div id="inAppRouteDrawer" style="display: none; position: fixed; bottom: 24px; right: 24px; max-width: 420px; width: calc(100% - 48px); background: var(--bg-card); border: 1.5px solid #0284c7; border-radius: var(--radius-xl); padding: 22px; box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 20px rgba(2, 132, 199, 0.25); z-index: 10000; backdrop-filter: blur(16px);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div>
+            <span class="badge" style="background: rgba(2, 132, 199, 0.15); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3); font-size: 11px;">🚗 In-App Route Active</span>
+            <h4 id="routeTargetName" style="margin: 6px 0 0 0; font-size: 17px; font-family: var(--font-display); color: var(--text-main);">Target Blood Bank</h4>
+          </div>
+          <button onclick="window.closeInAppRoute()" style="background: none; border: none; font-size: 24px; color: var(--text-muted); cursor: pointer; line-height: 1;">&times;</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-glass);">
+            <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Direct Distance</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--crimson-primary);" id="routeDistanceDisplay">0.0 km</div>
+          </div>
+          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-glass);">
+            <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Estimated Drive Time</div>
+            <div style="font-size: 20px; font-weight: 800; color: #10b981;" id="routeEtaDisplay">0 mins</div>
+          </div>
+        </div>
+
+        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;" id="routeTurnByTurn">
+          📍 <strong>Route Plotted:</strong> Blue dashed transit vector drawn on the live map. Real-time road distance and ETA computed in-app.
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary btn-sm" onclick="window.closeInAppRoute()" style="flex: 1;">Dismiss</button>
+          <a id="routeExternalGmapsLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="flex: 1; text-align: center; background: #4285F4; border: none; text-decoration: none;">External Maps ↗</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Blood Bank Login Modal -->
+    <div class="modal-overlay" id="staffLoginModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 style="font-family: var(--font-display); font-size: 20px;">🏥 Blood Bank Staff Authorization</h3>
+          <button class="modal-close" id="closeStaffModalBtn">&times;</button>
+        </div>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+          Log in to manage real-time inventory and units for your registered Bangalore Blood Centre.
+        </p>
+        <form id="staffLoginForm">
+          <div class="form-group">
+            <label for="bankSelect">Select Blood Bank</label>
+            <select id="bankSelect" class="form-select" required>
+              <!-- Options loaded dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="staffPin">Staff Security Passcode <small>(Use demo: 2026)</small></label>
+            <input type="password" id="staffPin" name="staffPasscode" class="form-control" value="2026" required>
+          </div>
+          <p id="staffLoginMsg" style="font-size: 13px; color: var(--crimson-primary); margin-bottom: 14px;"></p>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Authorize & Open Inventory Editor</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 BloodConnect — Bangalore Blood Bank Coordination & Transfusion Network</p>
+        <p style="color: var(--text-dim); font-size: 13px;">Data synchronized with Karnataka Blood Transfusion Council & NACO standards.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Leaflet JS for Map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="background-fx.js"></script>
+  <script src="mobile-nav.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script src="official-mailer.js"></script>
+  <script src="bangalore-blood-banks.js"></script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Patient-to-Donor Transit & Emergency Dispatch Tracker | BloodConnect</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <style>
+    .dispatch-layout {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    @media (max-width: 992px) {
+      .dispatch-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    #trackingMapContainer {
+      width: 100%;
+      height: 520px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    @media (max-width: 768px) {
+      #trackingMapContainer {
+        height: 330px !important;
+      }
+      .map-controls-overlay {
+        top: 8px !important;
+        right: 8px !important;
+        padding: 4px !important;
+        gap: 4px !important;
+      }
+      .map-layer-btn {
+        padding: 4px 8px !important;
+        font-size: 10px !important;
+      }
+      .live-distance-counter {
+        font-size: 30px !important;
+      }
+    }
+    .map-controls-overlay {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 6px;
+      display: flex;
+      gap: 6px;
+    }
+    .map-layer-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      transition: all 0.2s;
+    }
+    .map-layer-btn.active {
+      background: #c1121f;
+      color: #ffffff;
+      border-color: #ff3347;
+    }
+    .distance-hud-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 10, 15, 0.9));
+      border: 1px solid rgba(255, 51, 71, 0.35);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .live-distance-counter {
+      font-family: var(--font-display, sans-serif);
+      font-size: 42px;
+      font-weight: 800;
+      color: #ff3347;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .distance-progress-track {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 16px 0 8px 0;
+    }
+    .distance-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff3347, #10b981);
+      border-radius: 6px;
+      transition: width 0.8s ease-in-out;
+    }
+    .maneuver-box {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mode-tab-btn {
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .mode-tab-btn.active {
+      background: rgba(255, 51, 71, 0.2);
+      border-color: var(--crimson-accent);
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(255, 51, 71, 0.3);
+    }
+    .radar-pulse-ring {
+      width: 12px;
+      height: 12px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: radarPulse 1.8s infinite;
+      margin-right: 6px;
+    }
+    @keyframes radarPulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8); }
+      70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch" class="active">🛸 Live Dispatch</a>
+          <a href="/emergency">🚨 Emergency</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm" style="animation: pulseGlow 2s infinite;">📞 108 Ambulance</a>
+          <a href="/login" class="btn btn-secondary btn-sm">Portal Login</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container" style="max-width: 1320px; padding: 36px 20px;">
+      <!-- Title & Live Dispatch Header -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+        <div>
+          <div class="badge badge-critical" style="margin-bottom: 8px;">
+            <span class="radar-pulse-ring"></span> LIVE DONOR-TO-PATIENT TRANSIT • GPS CORRIDOR ACTIVE
+          </div>
+          <h1 style="font-family: var(--font-display); font-size: 32px; color: var(--text-main);">
+            Live Patient-to-Donor Emergency Transit Tracker
+          </h1>
+          <p style="color: var(--text-muted); font-size: 14px; max-width: 800px;">
+            Real-time GPS road navigation tracking the accepted hero donor along street waypoints directly to the hospital bedside until safe arrival.
+          </p>
+        </div>
+
+        <!-- Mode Toggle Tabs (Ground Vehicle vs AeroLife Drone) -->
+        <div style="display: flex; gap: 8px; background: rgba(0, 0, 0, 0.4); padding: 4px; border-radius: var(--radius-lg); border: 1px solid var(--border-glass);">
+          <button class="mode-tab-btn active" id="btnModeGround" onclick="switchDispatchMode('GROUND')">
+            🚗 Ground Hero Donor (Road Transit)
+          </button>
+          <button class="mode-tab-btn" id="btnModeDrone" onclick="switchDispatchMode('DRONE')">
+            🛸 AeroLife Drone Airway
+          </button>
+        </div>
+      </div>
+
+      <!-- Emergency Requisition Status Strip -->
+      <div class="card card-glow-red" style="margin-bottom: 24px; border-left: 4px solid var(--crimson-accent);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="badge badge-ai" id="trackReqId">REQ-2026-BLR-101</span>
+              <span class="badge badge-critical" id="trackUrgencyBadge">CRITICAL TRAUMA TIER-1</span>
+              <span class="badge badge-verified" id="transitStatusBadge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">DONOR ACCEPTED & EN ROUTE</span>
+            </div>
+            <h2 style="font-family: var(--font-display); font-size: 24px; margin-top: 8px; color: #ffffff;" id="trackPatient">
+              Ramesh Sundaram (Trauma ICU, Bay 4)
+            </h2>
+            <p style="font-size: 14px; color: var(--text-muted); margin-top: 2px;" id="trackHospital">
+              Victoria Hospital Emergency Trauma ICU, KR Market, Bengaluru
+            </p>
+          </div>
+
+          <div style="text-align: right;">
+            <div style="font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em;">Prescribed Transfusion</div>
+            <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--crimson-accent);" id="trackGroup">
+              O- (2 Units PRBC)
+            </div>
+            <div style="font-size: 12px; color: var(--emerald-primary); margin-top: 4px;">
+              🛡️ Universal Red Cell Donor Protocol Activated
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Tracking Grid -->
+      <div class="dispatch-layout">
+        <!-- Map Column with Google Maps Switcher -->
+        <div>
+          <div style="position: relative;">
+            <div id="trackingMapContainer"></div>
+
+            <!-- Google Maps Basemap Layer Switcher Overlays -->
+            <div class="map-controls-overlay">
+              <button class="map-layer-btn active" id="btnLayerGoogleRoad" onclick="setMapBaseLayer('GOOGLE_ROAD')">
+                🗺️ Google Roadmap
+              </button>
+              <button class="map-layer-btn" id="btnLayerGoogleSat" onclick="setMapBaseLayer('GOOGLE_SAT')">
+                🛰️ Google Satellite
+              </button>
+              <button class="map-layer-btn" id="btnLayerGoogleTerrain" onclick="setMapBaseLayer('GOOGLE_TERRAIN')">
+                ⛰️ Google Terrain
+              </button>
+            </div>
+
+            <!-- Floating Speed & Navigation Badge -->
+            <div style="position: absolute; bottom: 16px; left: 16px; z-index: 1000; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); font-size: 12px;">
+              <span style="color: #10b981; font-weight: 700;">● GPS RTK Locked</span> • Velocity: <strong id="hudVelocityText" style="color: #ffffff;">38 km/h</strong>
+            </div>
+
+            <!-- External Google Maps Deep Link Navigation -->
+            <div style="position: absolute; bottom: 16px; right: 16px; z-index: 1000;">
+              <a id="btnGoogleMapsNav" href="https://www.google.com/maps/dir/12.9719,77.6412/12.9625,77.5750" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 51, 71, 0.4); font-size: 11px;">
+                📍 Open in Google Maps GPS ➔
+              </a>
+            </div>
+          </div>
+
+          <!-- Direct Communication Strip -->
+          <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+            <a id="btnCallDonor" href="tel:+919845112233" class="btn btn-call btn-sm" style="flex: 1; min-width: 170px; justify-content: center;">
+              📞 Call Donor (+91 98451 12233)
+            </a>
+            <a id="btnWhatsAppDonor" href="https://wa.me/919845112233?text=Hello%20Dr.%20Arjun%2C%20thank%20you%20for%20accepting%20the%20emergency%20requisition%20for%20Ramesh%20Sundaram." target="_blank" class="btn btn-whatsapp btn-sm" style="flex: 1; min-width: 170px; justify-content: center;">
+              💬 WhatsApp Donor
+            </a>
+            <a href="tel:+918026701150" class="btn btn-secondary btn-sm" style="flex: 1; min-width: 170px; justify-content: center;">
+              🏥 Call Victoria ICU Desk
+            </a>
+          </div>
+        </div>
+
+        <!-- Telemetry & Distance HUD Column -->
+        <div class="distance-hud-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
+            <div>
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.05em;">Live Distance to Patient</div>
+              <div class="live-distance-counter" id="hudDistanceVal">7.2 km</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.05em;">Estimated Arrival</div>
+              <div style="font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #10b981;" id="hudEtaVal">~12 mins</div>
+            </div>
+          </div>
+
+          <!-- Dynamic Distance Progress Bar -->
+          <div class="distance-progress-track">
+            <div class="distance-progress-fill" id="hudProgressFill" style="width: 12%;"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+            <span>Indiranagar (Donor Departure)</span>
+            <span id="hudPctText" style="color: #ffffff; font-weight: 700;">12% Traversed</span>
+            <span>Victoria Hospital (Patient ICU)</span>
+          </div>
+
+          <!-- Hero Donor Profile Details Card -->
+          <div style="background: rgba(0, 0, 0, 0.35); border-radius: var(--radius-md); padding: 14px; border: 1px solid rgba(255, 255, 255, 0.08); margin-top: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span class="badge badge-available">Verified Lifesaver En Route</span>
+              <span style="font-size: 11px; color: #10b981;">● 5.0★ Hero Rating</span>
+            </div>
+            <h3 style="font-family: var(--font-display); font-size: 18px; color: #ffffff; margin: 0;" id="donorCardName">
+              Dr. Arjun K. Rao (O+ Compatible Match)
+            </h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">
+              Indiranagar, Bengaluru • 14 Donations • 90-Day Clinical Recovery Cleared
+            </p>
+          </div>
+
+          <!-- Live Turn-By-Turn Waypoint Maneuver -->
+          <div class="maneuver-box">
+            <div style="font-size: 26px;" id="maneuverIcon">🚗</div>
+            <div>
+              <div style="font-size: 11px; text-transform: uppercase; color: #38bdf8; font-weight: 700; letter-spacing: 0.05em;" id="maneuverHeader">
+                Current Transit Corridor
+              </div>
+              <div style="font-size: 13px; font-weight: 600; color: #ffffff; margin-top: 2px;" id="maneuverText">
+                Traversing Richmond Road Flyover towards KR Market
+              </div>
+            </div>
+          </div>
+
+          <!-- Cold-Chain & Safety Integrity Strip (for Drone & Ground) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px;">
+            <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-md); padding: 10px 12px; border: 1px solid rgba(255,255,255,0.06); text-align: center;">
+              <div style="font-size: 10px; text-transform: uppercase; color: var(--text-dim);">Payload Integrity</div>
+              <div style="font-size: 16px; font-weight: 700; color: #10b981; margin-top: 2px;" id="hudPayloadStatus">
+                3.8°C Cold Safe
+              </div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-md); padding: 10px 12px; border: 1px solid rgba(255,255,255,0.06); text-align: center;">
+              <div style="font-size: 10px; text-transform: uppercase; color: var(--text-dim);">Triage Priority</div>
+              <div style="font-size: 16px; font-weight: 700; color: #ff3347; margin-top: 2px;">
+                Level 1 Trauma
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Controls -->
+          <div style="display: flex; gap: 10px; margin-top: 18px;">
+            <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="toggleTransitSimulation()">
+              ⏯️ Pause / Resume Tracking
+            </button>
+            <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="window.OfficialMailer?.openCommunicationsDrawer()">
+              📬 View Official Communications
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner" style="text-align: center; padding: 24px; color: var(--text-dim); font-size: 13px;">
+        © 2026 BloodConnect — Live Patient-to-Donor Geolocation & Emergency Transfusion Navigation
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="background-fx.js"></script>
+  <script src="mobile-nav.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script src="official-mailer.js"></script>
+  <script src="request-tracking.js"></script>
+</body>
+</html>

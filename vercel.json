@@ -13,37 +13,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
-    { "source": "/", "destination": "/frontend/index.html" },
-    { "source": "/donors", "destination": "/frontend/nearby-donors.html" },
-    { "source": "/find-donors", "destination": "/frontend/nearby-donors.html" },
-    { "source": "/hospitals", "destination": "/frontend/hospitals.html" },
-    { "source": "/blood-banks", "destination": "/frontend/bangalore-blood-banks.html" },
-    { "source": "/bangalore-blood-banks", "destination": "/frontend/bangalore-blood-banks.html" },
-    { "source": "/radar", "destination": "/frontend/ai-forecast.html" },
-    { "source": "/forecast", "destination": "/frontend/ai-forecast.html" },
-    { "source": "/ai-forecast", "destination": "/frontend/ai-forecast.html" },
-    { "source": "/live-dispatch", "destination": "/frontend/request-tracking.html" },
-    { "source": "/tracking", "destination": "/frontend/request-tracking.html" },
-    { "source": "/emergency", "destination": "/frontend/emergency-request.html" },
-    { "source": "/sos", "destination": "/frontend/emergency-request.html" },
-    { "source": "/portal", "destination": "/frontend/donor-dashboard.html" },
-    { "source": "/dashboard", "destination": "/frontend/donor-dashboard.html" },
-    { "source": "/patient-portal", "destination": "/frontend/patient-dashboard.html" },
-    { "source": "/patient", "destination": "/frontend/patient-dashboard.html" },
-    { "source": "/login", "destination": "/frontend/login.html" },
-    { "source": "/register", "destination": "/frontend/register.html" },
-    { "source": "/onboard", "destination": "/frontend/register.html" },
-    { "source": "/admin", "destination": "/frontend/admin-dashboard.html" },
-    { "source": "/ops", "destination": "/frontend/admin-dashboard.html" },
-    { "source": "/about", "destination": "/frontend/about.html" },
-    { "source": "/reviews", "destination": "/frontend/reviews.html" },
-    { "source": "/matching-results", "destination": "/frontend/matching-results.html" },
-    { "source": "/credentials.pdf", "destination": "/frontend/BloodConnect-Test-Credentials.pdf" },
-    { "source": "/download/credentials-pdf", "destination": "/frontend/BloodConnect-Test-Credentials.pdf" },
-    { "source": "/dossier.pdf", "destination": "/frontend/BloodConnect-Comprehensive-Architecture-Dossier.pdf" },
-    { "source": "/architecture.pdf", "destination": "/frontend/BloodConnect-Comprehensive-Architecture-Dossier.pdf" },
-    { "source": "/technical-documentation.pdf", "destination": "/frontend/BloodConnect-Comprehensive-Architecture-Dossier.pdf" },
-    { "source": "/(.*\\.(css|js|png|svg|jpg|jpeg|webp|ico|json|pdf|mp3|wav|ogg|html))", "destination": "/frontend/$1" }
+    { "source": "/api/:match*", "destination": "/api/index.js" }
   ]
 }

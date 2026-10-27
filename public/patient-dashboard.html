@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodConnect | Patient & Family Requester Portal</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .patient-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+    }
+    @media (max-width: 960px) {
+      .patient-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .profile-switcher-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .profile-chip {
+      white-space: nowrap;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .profile-chip:hover {
+      border-color: var(--crimson-primary);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+    .profile-chip.active {
+      background: var(--crimson-primary);
+      border-color: var(--crimson-primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    }
+
+    .matched-donor-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+      position: relative;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .matched-donor-card:hover {
+      border-color: rgba(225, 29, 72, 0.4);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .star-rating-box {
+      display: inline-flex;
+      gap: 8px;
+      font-size: 32px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .star-rating-box span {
+      color: #cbd5e1;
+      transition: color 0.15s ease, transform 0.15s ease;
+    }
+    .star-rating-box span.active,
+    .star-rating-box span.hovered {
+      color: #f59e0b;
+      transform: scale(1.1);
+    }
+
+    .feedback-tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .tag-chip {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .tag-chip:hover {
+      border-color: #f59e0b;
+      color: var(--text-main);
+    }
+    .tag-chip.selected {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: #f59e0b;
+      color: #d97706;
+      font-weight: 700;
+    }
+
+    .rating-label-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f59e0b;
+      margin-top: 6px;
+      min-height: 20px;
+    }
+
+    .review-item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-xs);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <nav class="navbar">
+        <a href="/" class="logo">
+          <span class="logo-badge">🩸</span>
+          <span class="logo-text">BloodConnect</span>
+          <span class="logo-tag">2026 AI</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/donors">Find Donors</a>
+          <a href="/hospitals">🚑 Hospitals & Ambulance</a>
+          <a href="/blood-banks">Blood Banks</a>
+          <a href="/radar">📊 Shortage Radar</a>
+          <a href="/live-dispatch">🛸 Live Dispatch</a>
+          <a href="/emergency">Emergency</a>
+          <a href="/patient-portal" class="active">🧑‍🤝‍🧑 Patient Portal</a>
+          <a href="/portal">Donor Portal</a>
+        </div>
+        <div class="nav-actions">
+          <a href="tel:108" class="btn btn-call btn-sm">📞 108 Ambulance</a>
+          <button class="btn btn-secondary btn-sm" id="patientLogoutBtn">Log out</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section-container" style="max-width: 1280px; margin: 30px auto; padding: 0 20px;">
+      
+      <!-- Top Demo Switcher Ribbon -->
+      <div style="margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <span class="badge badge-ai" style="margin-right: 8px;">🧑‍🤝‍🧑 Verified Patient Triage Dossiers</span>
+            <span style="font-size: 13px; color: var(--text-muted);">Quick-switch patient account to verify donor matches & ratings:</span>
+          </div>
+          <div style="font-size: 12px; color: var(--emerald-primary); font-weight: 700;">
+            ✓ Real-Time Transfusion & Feedback Sync Active
+          </div>
+        </div>
+
+        <div class="profile-switcher-bar" id="profileSwitcherBar">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Patient Header Dossier Card -->
+      <div class="card card-glow-red" style="margin-bottom: 28px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span class="badge badge-verified" id="patientVerifiedBadge">🛡️ ABHA / Aadhaar Verified Recipient</span>
+              <span class="badge badge-emergency" id="urgencyBadge">Emergency Crossmatch Fulfilled</span>
+            </div>
+            <h1 style="font-family: var(--font-display); font-size: 28px; margin: 4px 0;" id="requesterNameDisplay">
+              Rajeshwari Sundaram
+            </h1>
+            <p style="font-size: 14px; color: var(--text-muted);" id="patientRelationshipDisplay">
+              Primary Requester for <strong>Ramesh Sundaram (Father)</strong>
+            </p>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="text-align: right;">
+              <span style="font-size: 12px; color: var(--text-dim); display: block;">Blood Group Needed</span>
+              <strong style="font-family: var(--font-mono); font-size: 24px; color: var(--crimson-primary);" id="bloodGroupDisplay">O-</strong>
+            </div>
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--crimson-subtle); border: 2px solid var(--crimson-primary); display: flex; align-items: center; justify-content: center; font-size: 26px;">
+              🩸
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border-glass); font-size: 13px;">
+          <div>
+            <span style="color: var(--text-dim); display: block;">🏥 Hospital & Facility</span>
+            <strong style="color: var(--text-main);" id="hospitalDisplay">Victoria Hospital Emergency Trauma ICU</strong>
+          </div>
+          <div>
+            <span style="color: var(--text-dim); display: block;">🛏️ Bed & Admission Ref</span>
+            <strong style="color: #38bdf8;" id="admissionRefDisplay">ICU-04 • Ref #VIC-TR-2026-8941</strong>
+          </div>
+          <div>
+            <span style="color: var(--text-dim); display: block;">📞 Verified Contact</span>
+            <strong style="color: var(--text-main);" id="phoneDisplay">+91 98450 77112</strong>
+          </div>
+          <div>
+            <span style="color: var(--text-dim); display: block;">⚡ Status</span>
+            <strong style="color: var(--emerald-primary);" id="statusDisplay">✓ 2 Units Successfully Transfused</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Columns -->
+      <div class="patient-grid">
+        
+        <!-- Left: Matched Donors Section -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h2 style="font-family: var(--font-display); font-size: 22px; margin: 0;">
+                🩸 Lifesaver Donors Matched to You
+              </h2>
+              <p style="font-size: 13px; color: var(--text-muted); margin: 2px 0 0 0;">
+                These verified donors responded to your emergency broadcast and donated blood.
+              </p>
+            </div>
+            <span class="badge badge-available" id="matchedCountBadge">2 Donors</span>
+          </div>
+
+          <div id="matchedDonorsContainer">
+            <!-- Dynamic Matched Donors Cards -->
+          </div>
+
+          <!-- Transfusion Timeline & Protocol Guide -->
+          <div class="card" style="margin-top: 24px; padding: 20px;">
+            <h3 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span>📋</span> Transfusion & Post-Donation Protocol
+            </h3>
+            <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.8; padding-left: 20px; margin: 0;">
+              <li><strong>Crossmatch Clearance:</strong> Both donor units passed pre-transfusion NAT (Nucleic Acid Testing) and anti-HIV/HCV viral load clearances.</li>
+              <li><strong>Bedside Verification:</strong> Crossmatched with recipient EDTA tube at hospital blood bank before transfusion.</li>
+              <li><strong>Mutual Appreciation:</strong> Your rating motivates donors to stay on standby for future emergency alerts in Bengaluru.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Rating & Feedback Studio -->
+        <div>
+          <div class="card card-glow-red" style="padding: 24px; position: sticky; top: 90px;">
+            
+            <!-- Tab switcher: Patient Review vs Hospital Clinical Review -->
+            <div style="display: flex; gap: 8px; margin-bottom: 18px; background: var(--bg-secondary); padding: 4px; border-radius: var(--radius-md);">
+              <button type="button" id="tabPatientReview" class="btn btn-sm btn-primary" style="flex: 1; font-size: 12px; padding: 6px 10px;">
+                🧑‍🤝‍🧑 Patient / Family Feedback
+              </button>
+              <button type="button" id="tabHospitalReview" class="btn btn-sm btn-secondary" style="flex: 1; font-size: 12px; padding: 6px 10px;">
+                🏥 Hospital Staff Endorsement
+              </button>
+            </div>
+
+            <!-- Form Header -->
+            <div style="margin-bottom: 16px;">
+              <h3 style="font-family: var(--font-display); font-size: 20px; margin: 0 0 4px 0;" id="reviewFormTitle">
+                Rate & Review Your Lifesaver Donor
+              </h3>
+              <p style="font-size: 13px; color: var(--text-muted); margin: 0;" id="reviewFormSubtitle">
+                Share your gratitude and rate how promptly the donor arrived to save your family member.
+              </p>
+            </div>
+
+            <form id="donorFeedbackForm">
+              
+              <!-- Target Donor Selector -->
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label for="targetDonorSelect" style="font-size: 13px; font-weight: 700;">Select Donor to Rate</label>
+                <select id="targetDonorSelect" class="form-select" required>
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+
+              <!-- Reviewer Name (Read-only or editable for Hospital staff) -->
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label for="reviewerNameInput" style="font-size: 13px; font-weight: 700;">Your Name / Designation</label>
+                <input type="text" id="reviewerNameInput" class="form-control" value="Rajeshwari Sundaram (Daughter)" required>
+              </div>
+
+              <!-- Interactive Star Rating -->
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px;">
+                  Your Rating
+                </label>
+                <div class="star-rating-box" id="starRatingBox">
+                  <span data-rating="1">★</span>
+                  <span data-rating="2">★</span>
+                  <span data-rating="3">★</span>
+                  <span data-rating="4">★</span>
+                  <span data-rating="5">★</span>
+                </div>
+                <div class="rating-label-text" id="ratingLabelText">⭐⭐⭐⭐⭐ Outstanding Lifesaver (5/5)</div>
+                <input type="hidden" id="selectedStarScore" value="5">
+              </div>
+
+              <!-- Quick Feedback Tag Chips -->
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">
+                  Quick Feedback Tags (Select all that apply)
+                </label>
+                <div class="feedback-tag-group" id="feedbackTagsGroup">
+                  <span class="tag-chip selected" data-tag="Came on Time ⏱️">Came on Time ⏱️</span>
+                  <span class="tag-chip selected" data-tag="Very Helpful & Courteous 🤝">Very Helpful & Courteous 🤝</span>
+                  <span class="tag-chip selected" data-tag="True Lifesaver 🌟">True Lifesaver 🌟</span>
+                  <span class="tag-chip" data-tag="Immediate Midnight Response 🌙">Immediate Midnight Response 🌙</span>
+                  <span class="tag-chip" data-tag="Smooth ICU Coordination 🏥">Smooth ICU Coordination 🏥</span>
+                  <span class="tag-chip" data-tag="Calm & Gentle 💖">Calm & Gentle 💖</span>
+                  <span class="tag-chip" data-tag="Exemplary Citizen 🇮🇳">Exemplary Citizen 🇮🇳</span>
+                </div>
+              </div>
+
+              <!-- Detailed Feedback Comment -->
+              <div class="form-group" style="margin-bottom: 20px;">
+                <label for="reviewCommentText" style="font-size: 13px; font-weight: 700;">
+                  Personal Words of Gratitude / Clinical Notes
+                </label>
+                <textarea id="reviewCommentText" class="form-textarea" rows="4" placeholder="Express your sincere thanks or describe how the donor helped..." required></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary" id="btnSubmitReview" style="width: 100%; font-size: 15px; padding: 12px;">
+                ⭐ Post Verified Review & Rating
+              </button>
+            </form>
+
+            <div id="reviewSuccessNotice" style="display: none; margin-top: 14px; padding: 12px 14px; background: rgba(16, 185, 129, 0.12); border: 1px solid #10b981; border-radius: var(--radius-md); color: #047857; font-size: 13px; text-align: center;">
+              🎉 <strong>Thank You!</strong> Your verified review has been published to the donor's profile and the Bangalore community board!
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Verified Community Reviews Feed for Bangalore Donors -->
+      <section style="margin-top: 48px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 22px; margin: 0;">
+              🌟 Recent Verified Patient & Hospital Endorsements
+            </h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
+              Live feedback received by Bangalore blood donors from patients, families, and emergency triage doctors.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <span class="badge badge-verified">🛡️ 100% Aadhaar & Hospital Verified</span>
+          </div>
+        </div>
+
+        <div id="communityReviewsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 BloodConnect — Patient & Family Requester Coordination Platform • Karnataka Health Department</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="background-fx.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="bangalore-data.js"></script>
+  <script src="api.js"></script>
+  <script>
+    // =========================================================================
+    // 6 VERIFIED PATIENT / FAMILY REQUESTER DOSSIERS
+    // =========================================================================
+    const PATIENT_PROFILES = [
+      {
+        id: 'patient-1',
+        email: 'rajeshwari.patient@karnataka-health.gov.in',
+        name: 'Rajeshwari Sundaram',
+        roleDisplay: 'Daughter / Primary Requester',
+        patientName: 'Ramesh Sundaram (Father, Age 62)',
+        hospital: 'Victoria Hospital Emergency Trauma ICU',
+        admissionRef: 'ICU-04 • Ref #VIC-TR-2026-8941',
+        phone: '+91 98450 77112',
+        bloodNeeded: 'O-',
+        unitsFulfilled: '2 Units Transfused',
+        urgency: 'Emergency Trauma Surgery',
+        donors: [
+          {
+            name: 'Dr. Arjun K. Rao',
+            email: 'arjun.rao@blr-med.org',
+            phone: '+91 98451 12233',
+            bloodGroup: 'O+',
+            roleTitle: 'Senior Consultant Surgeon',
+            avatar: '👨‍⚕️',
+            unitsDonated: '1 Unit (Emergency Triage)',
+            donatedOn: '2026-10-24 18:30',
+            location: 'Indiranagar (4.8 km)',
+            responseTime: '14 mins',
+            currentRating: 4.95,
+            reviewsCount: 18
+          },
+          {
+            name: 'Karthik Venkatesh',
+            email: 'karthik.v@techblr.io',
+            phone: '+91 97413 34455',
+            bloodGroup: 'O-',
+            roleTitle: 'Lead Software Architect & Universal Donor',
+            avatar: '👨‍💻',
+            unitsDonated: '1 Unit (Emergency O- Crossmatch)',
+            donatedOn: '2026-10-24 19:15',
+            location: 'Jayanagar 4th Block (3.2 km)',
+            responseTime: '11 mins',
+            currentRating: 5.0,
+            reviewsCount: 14
+          }
+        ]
+      },
+      {
+        id: 'patient-2',
+        email: 'kavitha.gowda@blr-patient.org',
+        name: 'Kavitha Gowda',
+        roleDisplay: 'Mother / Primary Requester',
+        patientName: 'Master Chetan Gowda (Child, Age 8)',
+        hospital: 'Indira Gandhi Institute of Child Health',
+        admissionRef: 'Pediatric ICU-02 • Ref #IGICH-2026-4412',
+        phone: '+91 97412 88223',
+        bloodNeeded: 'B+',
+        unitsFulfilled: '1 Pediatric Unit Transfused',
+        urgency: 'Acute Thalassemia Triage',
+        donors: [
+          {
+            name: 'Sneha Nandakumar',
+            email: 'sneha.n@outlook.com',
+            phone: '+91 96324 45566',
+            bloodGroup: 'B+',
+            roleTitle: 'Senior UX Designer & Regular Pediatric Donor',
+            avatar: '👩‍💼',
+            unitsDonated: '1 Unit (Pediatric Safe Filtered)',
+            donatedOn: '2026-10-23 11:20',
+            location: 'Whitefield (14 km)',
+            responseTime: '26 mins',
+            currentRating: 4.92,
+            reviewsCount: 11
+          }
+        ]
+      },
+      {
+        id: 'patient-3',
+        email: 'farhan.qureshi@stjohns-patient.in',
+        name: 'Farhan Qureshi',
+        roleDisplay: 'Self (Patient Requester)',
+        patientName: 'Farhan Qureshi (Self, Age 29)',
+        hospital: "St. John's Medical College Hospital",
+        admissionRef: 'Hemato-Oncology • Ref #SJMCH-2026-3021',
+        phone: '+91 98490 33441',
+        bloodNeeded: 'Platelets (Single Donor Apheresis)',
+        unitsFulfilled: '1 SDP Unit Transfused',
+        urgency: 'Dengue Hemorrhagic Thrombocytopenia',
+        donors: [
+          {
+            name: 'Rohan Deshmukh',
+            email: 'rohan.d@fintech.in',
+            phone: '+91 95135 56677',
+            bloodGroup: 'AB+',
+            roleTitle: 'Fintech Specialist & Apheresis Champion',
+            avatar: '👨‍💼',
+            unitsDonated: '1 Single-Donor Platelet (SDP) Unit',
+            donatedOn: '2026-10-22 16:45',
+            location: 'Malleshwaram (7.4 km)',
+            responseTime: '21 mins',
+            currentRating: 4.88,
+            reviewsCount: 9
+          }
+        ]
+      },
+      {
+        id: 'patient-4',
+        email: 'sunita.shinde@bowring-patient.org',
+        name: 'Sunita Shinde',
+        roleDisplay: 'Wife / Primary Requester',
+        patientName: 'Ashok Shinde (Husband, Age 48)',
+        hospital: 'Bowring & Lady Curzon Emergency Hospital',
+        admissionRef: 'Trauma Resuscitation • Ref #BLCH-2026-7819',
+        phone: '+91 98801 55662',
+        bloodNeeded: 'A+',
+        unitsFulfilled: '2 Units Transfused',
+        urgency: 'Severe Industrial Polytrauma',
+        donors: [
+          {
+            name: 'Priyanka Sharma',
+            email: 'priyanka.s@gmail.com',
+            phone: '+91 98802 23344',
+            bloodGroup: 'A+',
+            roleTitle: 'Biotech Research Fellow & Golden Donor',
+            avatar: '👩‍🔬',
+            unitsDonated: '1 Unit Whole Blood A+',
+            donatedOn: '2026-10-21 14:15',
+            location: 'Koramangala (5.1 km)',
+            responseTime: '17 mins',
+            currentRating: 4.96,
+            reviewsCount: 16
+          }
+        ]
+      },
+      {
+        id: 'patient-5',
+        email: 'anand.murthy@heartcare-blr.org',
+        name: 'Anand Murthy',
+        roleDisplay: 'Son / Primary Requester',
+        patientName: 'Smt. Shakuntala Murthy (Mother, Age 71)',
+        hospital: 'Sri Jayadeva Institute of Cardiovascular Sciences',
+        admissionRef: 'Cardiac OT-3 • Ref #SJICS-2026-6632',
+        phone: '+91 96321 66773',
+        bloodNeeded: 'O+',
+        unitsFulfilled: '3 Units Transfused (CABG Surgery)',
+        urgency: 'Emergency Open-Heart Bypass',
+        donors: [
+          {
+            name: 'Dr. Arjun K. Rao',
+            email: 'arjun.rao@blr-med.org',
+            phone: '+91 98451 12233',
+            bloodGroup: 'O+',
+            roleTitle: 'Senior Consultant Surgeon',
+            avatar: '👨‍⚕️',
+            unitsDonated: '1 Unit Whole Blood O+',
+            donatedOn: '2026-10-20 09:30',
+            location: 'Indiranagar (6.8 km)',
+            responseTime: '18 mins',
+            currentRating: 4.95,
+            reviewsCount: 18
+          },
+          {
+            name: 'Kavya Reddy',
+            email: 'kavya.reddy@hsr-tech.in',
+            phone: '+91 98860 11224',
+            bloodGroup: 'AB+',
+            roleTitle: 'Aerospace Systems Engineer',
+            avatar: '👩‍💻',
+            unitsDonated: '1 Unit Fresh Frozen Plasma (FFP)',
+            donatedOn: '2026-10-20 10:10',
+            location: 'HSR Layout (4.2 km)',
+            responseTime: '15 mins',
+            currentRating: 4.90,
+            reviewsCount: 12
+          }
+        ]
+      },
+      {
+        id: 'patient-6',
+        email: 'meenakshi.nair@kidwai-patient.org',
+        name: 'Meenakshi Nair',
+        roleDisplay: 'Sister / Primary Requester',
+        patientName: 'Kumari Ananya Nair (Sister, Age 24)',
+        hospital: 'Kidwai Memorial Institute of Oncology',
+        admissionRef: 'Bone Marrow Unit • Ref #KMIO-2026-1945',
+        phone: '+91 94481 99884',
+        bloodNeeded: 'A-',
+        unitsFulfilled: '2 Units Transfused (Chemo Support)',
+        urgency: 'Rare Negative Subgroup Crossmatch',
+        donors: [
+          {
+            name: 'Ananya Hegde',
+            email: 'ananya.h@ecity.org',
+            phone: '+91 94486 67788',
+            bloodGroup: 'A-',
+            roleTitle: 'Bio-Informatics Data Scientist',
+            avatar: '👩‍🔬',
+            unitsDonated: '1 Unit Rare A- Whole Blood',
+            donatedOn: '2026-10-19 12:40',
+            location: 'Electronic City Phase 1 (11.5 km)',
+            responseTime: '24 mins',
+            currentRating: 4.94,
+            reviewsCount: 13
+          }
+        ]
+      }
+    ];
+
+    // Current State
+    let activeProfileIndex = 0;
+    let isHospitalReviewMode = false;
+    let selectedRating = 5;
+
+    // Check if user is logged in as a specific patient from session
+    const currentUser = getCurrentUser();
+    if (currentUser && currentUser.email) {
+      const idx = PATIENT_PROFILES.findIndex(p => p.email.toLowerCase() === currentUser.email.toLowerCase());
+      if (idx !== -1) {
+        activeProfileIndex = idx;
+      }
+    }
+
+    // Rating Label Helper
+    const RATING_LABELS = {
+      1: '⭐ Needs Immediate Improvement (1/5)',
+      2: '⭐⭐ Fair Effort (2/5)',
+      3: '⭐⭐⭐ Good & Responsive (3/5)',
+      4: '⭐⭐⭐⭐ Very Good Lifesaver (4/5)',
+      5: '⭐⭐⭐⭐⭐ Outstanding Lifesaver (5/5)'
+    };
+
+    // Render Switcher Bar
+    function renderProfileSwitcher() {
+      const switcher = document.getElementById('profileSwitcherBar');
+      switcher.innerHTML = '';
+
+      PATIENT_PROFILES.forEach((p, index) => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = `profile-chip ${index === activeProfileIndex ? 'active' : ''}`;
+        chip.innerHTML = `<span>👤</span> ${p.name} <small style="opacity:0.8;">(${p.bloodNeeded})</small>`;
+        chip.onclick = () => {
+          activeProfileIndex = index;
+          renderProfileSwitcher();
+          loadActiveProfile();
+        };
+        switcher.appendChild(chip);
+      });
+    }
+
+    // Load Profile into UI
+    function loadActiveProfile() {
+      const profile = PATIENT_PROFILES[activeProfileIndex];
+      
+      document.getElementById('requesterNameDisplay').textContent = profile.name;
+      document.getElementById('patientRelationshipDisplay').innerHTML = `Primary Requester for <strong>${profile.patientName}</strong>`;
+      document.getElementById('bloodGroupDisplay').textContent = profile.bloodNeeded;
+      document.getElementById('hospitalDisplay').textContent = profile.hospital;
+      document.getElementById('admissionRefDisplay').textContent = profile.admissionRef;
+      document.getElementById('phoneDisplay').textContent = profile.phone;
+      document.getElementById('statusDisplay').textContent = `✓ ${profile.unitsFulfilled}`;
+      document.getElementById('matchedCountBadge').textContent = `${profile.donors.length} Verified Donors`;
+
+      if (!isHospitalReviewMode) {
+        document.getElementById('reviewerNameInput').value = `${profile.name} (${profile.roleDisplay})`;
+      }
+
+      // Populate Matched Donors
+      const donorsContainer = document.getElementById('matchedDonorsContainer');
+      const selectDonorDropdown = document.getElementById('targetDonorSelect');
+      donorsContainer.innerHTML = '';
+      selectDonorDropdown.innerHTML = '';
+
+      profile.donors.forEach((donor, i) => {
+        // Dropdown option
+        const opt = document.createElement('option');
+        opt.value = donor.name;
+        opt.textContent = `${donor.name} (${donor.bloodGroup} • ${donor.unitsDonated})`;
+        selectDonorDropdown.appendChild(opt);
+
+        // Donor Card
+        const card = document.createElement('div');
+        card.className = 'matched-donor-card';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <div style="font-size: 36px; width: 54px; height: 54px; background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-glass);">
+                ${donor.avatar}
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="font-size: 17px; color: var(--text-main);">${donor.name}</strong>
+                  <span class="badge badge-verified" style="font-size: 11px;">🛡️ Aadhaar Verified</span>
+                </div>
+                <div style="font-size: 13px; color: var(--text-muted);">${donor.roleTitle}</div>
+                <div style="font-size: 12px; color: var(--text-dim); margin-top: 2px;">
+                  📍 ${donor.location} • Arrived in <strong>${donor.responseTime}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align: right;">
+              <span class="blood-pill pill-${donor.bloodGroup.replace('+', 'pos').replace('-', 'neg')}" style="font-size: 13px; padding: 4px 10px;">
+                ${donor.bloodGroup}
+              </span>
+              <div style="font-size: 12px; color: #f59e0b; margin-top: 4px; font-weight: 700;">
+                ★ ${donor.currentRating.toFixed(2)} (${donor.reviewsCount} reviews)
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-glass); flex-wrap: wrap; gap: 10px;">
+            <div style="font-size: 13px; color: var(--text-main);">
+              💉 Donated: <strong>${donor.unitsDonated}</strong> on <em>${donor.donatedOn}</em>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="prefillDonorReview('${donor.name.replace(/'/g, "\\'")}')" style="border-color: #f59e0b; color: #d97706; font-weight: 700;">
+                ⭐ Rate & Review ${donor.name.split(' ')[0]}
+              </button>
+            </div>
+          </div>
+        `;
+        donorsContainer.appendChild(card);
+      });
+
+      // Default review text
+      setDefaultReviewText();
+    }
+
+    function setDefaultReviewText() {
+      const profile = PATIENT_PROFILES[activeProfileIndex];
+      const targetDonor = document.getElementById('targetDonorSelect').value || (profile.donors[0] ? profile.donors[0].name : 'the donor');
+      
+      if (!isHospitalReviewMode) {
+        document.getElementById('reviewCommentText').value = 
+          `We are eternally grateful to ${targetDonor} who arrived at ${profile.hospital} without any hesitation to donate ${profile.bloodNeeded} for ${profile.patientName}. The response was prompt, courteous, and saved our family during a critical moment. True hero!`;
+      } else {
+        document.getElementById('reviewCommentText').value = 
+          `Official Clinical Endorsement: ${targetDonor} reported to ${profile.hospital} Blood Bank within triage protocol window. Completed pre-donation screening and donated full unit for ${profile.patientName}. Exemplary cooperation with ICU medical team.`;
+      }
+    }
+
+    window.prefillDonorReview = function(donorName) {
+      document.getElementById('targetDonorSelect').value = donorName;
+      setDefaultReviewText();
+      document.getElementById('donorFeedbackForm').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // Tab Mode Toggle
+    document.getElementById('tabPatientReview').addEventListener('click', () => {
+      isHospitalReviewMode = false;
+      document.getElementById('tabPatientReview').className = 'btn btn-sm btn-primary';
+      document.getElementById('tabHospitalReview').className = 'btn btn-sm btn-secondary';
+      document.getElementById('reviewFormTitle').textContent = 'Rate & Review Your Lifesaver Donor';
+      document.getElementById('reviewFormSubtitle').textContent = 'Share your gratitude and rate how promptly the donor arrived to save your family member.';
+      
+      const profile = PATIENT_PROFILES[activeProfileIndex];
+      document.getElementById('reviewerNameInput').value = `${profile.name} (${profile.roleDisplay})`;
+      setDefaultReviewText();
+    });
+
+    document.getElementById('tabHospitalReview').addEventListener('click', () => {
+      isHospitalReviewMode = true;
+      document.getElementById('tabHospitalReview').className = 'btn btn-sm btn-primary';
+      document.getElementById('tabPatientReview').className = 'btn btn-sm btn-secondary';
+      document.getElementById('reviewFormTitle').textContent = '🏥 Hospital Clinical Staff Endorsement';
+      document.getElementById('reviewFormSubtitle').textContent = 'Attending doctors, blood bank officers, and trauma nurses can endorse donors for speed, health screening, and conduct.';
+      
+      const profile = PATIENT_PROFILES[activeProfileIndex];
+      document.getElementById('reviewerNameInput').value = `Dr. Sudhir Shenoy (Chief Trauma Surgeon, ${profile.hospital})`;
+      setDefaultReviewText();
+    });
+
+    // Star Rating Click & Hover
+    const starContainer = document.getElementById('starRatingBox');
+    const stars = starContainer.querySelectorAll('span');
+
+    function updateStarDisplay(score) {
+      selectedRating = score;
+      document.getElementById('selectedStarScore').value = score;
+      document.getElementById('ratingLabelText').textContent = RATING_LABELS[score] || `Rating: ${score}/5`;
+
+      stars.forEach(s => {
+        const val = Number(s.dataset.rating);
+        s.classList.toggle('active', val <= score);
+      });
+    }
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        updateStarDisplay(Number(star.dataset.rating));
+      });
+      star.addEventListener('mouseenter', () => {
+        const hoverVal = Number(star.dataset.rating);
+        stars.forEach(s => {
+          s.classList.toggle('hovered', Number(s.dataset.rating) <= hoverVal);
+        });
+      });
+    });
+
+    starContainer.addEventListener('mouseleave', () => {
+      stars.forEach(s => s.classList.remove('hovered'));
+    });
+
+    // Feedback Tag Pill Toggles
+    const tagChips = document.querySelectorAll('.tag-chip');
+    tagChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('selected');
+      });
+    });
+
+    // Submit Review Form
+    document.getElementById('donorFeedbackForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const donorName = document.getElementById('targetDonorSelect').value;
+      const reviewerName = document.getElementById('reviewerNameInput').value.trim();
+      const rating = Number(document.getElementById('selectedStarScore').value);
+      const comment = document.getElementById('reviewCommentText').value.trim();
+
+      // Collect selected tags
+      const selectedTags = Array.from(document.querySelectorAll('.tag-chip.selected'))
+        .map(chip => chip.dataset.tag);
+
+      const profile = PATIENT_PROFILES[activeProfileIndex];
+
+      const reviewPayload = {
+        id: `rev-${Date.now()}`,
+        reviewerName,
+        reviewerRole: isHospitalReviewMode ? '🏥 Hospital Attending Staff' : '🧑‍🤝‍🧑 Patient / Family Requester',
+        donorName,
+        rating,
+        tags: selectedTags,
+        hospital: profile.hospital,
+        patientName: profile.patientName,
+        comment: comment + (selectedTags.length ? ` [Tags: ${selectedTags.join(', ')}]` : ''),
+        date: new Date().toISOString().split('T')[0],
+        verified: true
+      };
+
+      // Save into BangaloreBloodData reviews
+      if (window.BangaloreBloodData && window.BangaloreBloodData.addReview) {
+        window.BangaloreBloodData.addReview(reviewPayload);
+      }
+
+      // Also persist to localStorage backup
+      const reviewsKey = 'bloodconnect_donor_reviews_v1';
+      let existingReviews = [];
+      try {
+        existingReviews = JSON.parse(localStorage.getItem(reviewsKey) || '[]');
+      } catch (err) {
+        existingReviews = [];
+      }
+      existingReviews.unshift(reviewPayload);
+      localStorage.setItem(reviewsKey, JSON.stringify(existingReviews));
+
+      // Show Success Notice
+      const notice = document.getElementById('reviewSuccessNotice');
+      notice.style.display = 'block';
+      setTimeout(() => {
+        notice.style.display = 'none';
+      }, 5000);
+
+      // Refresh Community Feed
+      renderCommunityFeed();
+    });
+
+    // Render Community Feed
+    function renderCommunityFeed() {
+      const feedContainer = document.getElementById('communityReviewsGrid');
+      feedContainer.innerHTML = '';
+
+      // Get reviews from BangaloreBloodData and localStorage
+      let reviews = [];
+      if (window.BangaloreBloodData && window.BangaloreBloodData.getReviews) {
+        reviews = window.BangaloreBloodData.getReviews();
+      }
+
+      const reviewsKey = 'bloodconnect_donor_reviews_v1';
+      try {
+        const local = JSON.parse(localStorage.getItem(reviewsKey) || '[]');
+        local.forEach(r => {
+          if (!reviews.some(ex => ex.id === r.id)) {
+            reviews.unshift(r);
+          }
+        });
+      } catch (e) {}
+
+      // Fallback Seed Reviews if empty
+      if (!reviews || reviews.length === 0) {
+        reviews = [
+          {
+            reviewerName: 'Rajeshwari Sundaram (Daughter)',
+            reviewerRole: '🧑‍🤝‍🧑 Patient / Family Requester',
+            donorName: 'Dr. Arjun K. Rao',
+            rating: 5,
+            comment: 'Dr. Arjun rushed to Victoria Hospital ICU in 14 minutes when my father needed emergency whole blood. Remarkable dedication and humanity. Our family owes him a lifetime of gratitude!',
+            date: '2026-10-24',
+            verified: true
+          },
+          {
+            reviewerName: 'Dr. Sudhir Shenoy (Chief Trauma Surgeon, Victoria Hospital)',
+            reviewerRole: '🏥 Hospital Attending Staff',
+            donorName: 'Karthik Venkatesh',
+            rating: 5,
+            comment: 'Karthik reported to Victoria Blood Bank within 15 minutes of SOS broadcast. Emergency O- units crossmatched cleanly. Exceptional donor discipline.',
+            date: '2026-10-24',
+            verified: true
+          },
+          {
+            reviewerName: 'Kavitha Gowda (Mother)',
+            reviewerRole: '🧑‍🤝‍🧑 Patient / Family Requester',
+            donorName: 'Sneha Nandakumar',
+            rating: 5,
+            comment: 'Sneha donated pediatric-filtered blood for my son Chetan at Indira Gandhi Child Hospital. She is so gentle and loving with children. Bless you Sneha!',
+            date: '2026-10-23',
+            verified: true
+          }
+        ];
+      }
+
+      reviews.slice(0, 6).forEach(rev => {
+        const card = document.createElement('div');
+        card.className = 'review-item-card';
+
+        const starStr = '★'.repeat(rev.rating) + '☆'.repeat(5 - rev.rating);
+        const isHospital = (rev.reviewerRole || '').includes('Hospital');
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+            <div>
+              <strong style="color: var(--text-main); font-size: 15px;">${rev.reviewerName}</strong>
+              <div style="margin-top: 3px;">
+                <span class="badge ${isHospital ? 'badge-ai' : 'badge-verified'}" style="font-size: 11px;">
+                  ${rev.reviewerRole}
+                </span>
+              </div>
+            </div>
+            <div style="color: #f59e0b; font-size: 16px; letter-spacing: 2px;">
+              ${starStr}
+            </div>
+          </div>
+
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 10px 0;">
+            "${rev.comment}"
+          </p>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-dim); border-top: 1px solid var(--border-glass); padding-top: 8px;">
+            <span>Review for: <strong style="color: var(--crimson-primary);">${rev.donorName}</strong></span>
+            <span>${rev.date || 'Recent'}</span>
+          </div>
+        `;
+        feedContainer.appendChild(card);
+      });
+    }
+
+    // Logout
+    document.getElementById('patientLogoutBtn').addEventListener('click', () => {
+      clearBloodConnectSession();
+      window.location.href = '/login';
+    });
+
+    // Initialize
+    renderProfileSwitcher();
+    loadActiveProfile();
+    updateStarDisplay(5);
+    renderCommunityFeed();
+  </script>
+  <script src="official-mailer.js"></script>
+</body>
+</html>
