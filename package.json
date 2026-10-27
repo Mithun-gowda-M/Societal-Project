@@ -1,4 +1,12 @@
 {
+  "name": "bloodconnect-transfusion-platform",
+  "version": "2.0.0",
+  "description": "BloodConnect 2026 — AI Autonomous Blood Logistics & Transit Network",
+  "scripts": {
+    "start": "node dev-server.js",
+    "dev": "node dev-server.js",
+    "build": "echo 'Build successful for Vercel deployment'"
+  },
   "dependencies": {
     "dotenv": "^18.0.9",
     "nodemailer": "^10.2.1",

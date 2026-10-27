@@ -151,7 +151,7 @@
       sender: OFFICIAL_SMS_SENDER,
       recipient: patientPhone || '+91 98450 XXXXX',
       title: 'Donor Accepted Emergency Blood Call',
-      content: `[BloodConnect Emergency] Hero Donor ${donorName} (${bloodGroup}) has accepted your blood request for ${patientName} at ${hospitalName}. Live tracking link: http://localhost:5500/live-dispatch`,
+      content: `[BloodConnect Emergency] Hero Donor ${donorName} (${bloodGroup}) has accepted your blood request for ${patientName} at ${hospitalName}. Live tracking link: ${(typeof window !== 'undefined' ? window.location.origin : '')}/live-dispatch`,
       role: 'PATIENT'
     });
 
@@ -196,7 +196,7 @@
       sender: OFFICIAL_SMS_SENDER,
       recipient: bankPhone || '+91 80 2670 XXXXX',
       title: 'Priority Inventory Reservation Alert',
-      content: `[BloodConnect BloodBank Ops] Urgent reserve order #${alertId}: ${unitsRequired} units of ${bloodGroup} required for ${urgentHospital}. Cold-chain courier dispatched. Authorize: http://localhost:5500/blood-banks`,
+      content: `[BloodConnect BloodBank Ops] Urgent reserve order #${alertId}: ${unitsRequired} units of ${bloodGroup} required for ${urgentHospital}. Cold-chain courier dispatched. Authorize: ${(typeof window !== 'undefined' ? window.location.origin : '')}/blood-banks`,
       role: 'BLOOD_BANK'
     });
 

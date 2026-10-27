@@ -1,5 +1,6 @@
 # 🩸 BloodConnect 2026 — AI Autonomous Blood Logistics & Transit Network
 
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Edge%20Serverless%20Live-000000?logo=vercel)](https://vercel.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/Build-Passing-10b981.svg)]()
 [![Mobile Responsive](https://img.shields.io/badge/Mobile-100%25%20Responsive-brightgreen.svg)]()
@@ -11,15 +12,18 @@
 
 ---
 
-## 📱 Mobile Live Access Links (Open Directly on Smartphone)
+## 🚀 Live Cloud Deployment (Vercel & Global Edge)
 
-Experience BloodConnect live on your mobile device (iPhone, Android, iPad, or Tablet):
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMithun-gowda-M%2FSocietal-Project)
 
-| Access Method | Live URL | Description |
+Experience BloodConnect live across global devices (iPhone, Android, iPad, Tablet, Desktop):
+
+| Deployment Channel | Live URL / Access | Description |
 |:---|:---|:---|
-| 🌐 **Authenticated Cloudflare Mobile Link** | [https://listprice-marshall-nearby-else.trycloudflare.com](https://listprice-marshall-nearby-else.trycloudflare.com) | **Instant Worldwide Access** (Rock-solid Cloudflare CDN edge, zero disconnects, works over 4G/5G/Wi-Fi). |
-| 📕 **13-Page Architecture & AI/ML Dossier PDF** | [https://listprice-marshall-nearby-else.trycloudflare.com/dossier.pdf](https://listprice-marshall-nearby-else.trycloudflare.com/dossier.pdf) | High-definition technical dossier with all mathematical models and system schematics. |
-| 📶 **Local Wi-Fi Network Access** | `http://10.187.113.231:5500` | Direct LAN access for devices connected to the same local Wi-Fi router. |
+| ⚡ **Vercel Production Edge** | [https://societal-project.vercel.app](https://societal-project.vercel.app) *(or your linked Vercel domain)* | **Global High-Speed CDN** with Serverless Email OTP & Emergency Broadcast Engine. |
+| 🌐 **Authenticated Cloudflare Tunnel** | [https://listprice-marshall-nearby-else.trycloudflare.com](https://listprice-marshall-nearby-else.trycloudflare.com) | Direct tunnel for local full-stack integration. |
+| 📕 **13-Page Architecture & AI/ML Dossier PDF** | [`/dossier.pdf`](/BloodConnect-Comprehensive-Architecture-Dossier.pdf) | High-definition technical dossier with all mathematical models and system schematics. |
+| 📶 **Local Wi-Fi Network Access** | `http://10.187.113.231:5500` | Direct LAN access for devices connected to the local Wi-Fi router. |
 
 <p align="center">
   <img src="./mobile-qr.png" alt="Scan QR Code to open on Mobile" width="230" />

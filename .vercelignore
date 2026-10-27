@@ -1,0 +1,29 @@
+# Vercel Deployment Ignore Rules
+# Exclude Java Spring Boot Backend and build outputs
+backend/
+target/
+*.class
+*.jar
+
+# Exclude large local binaries and executables
+cloudflared.exe
+*.exe
+
+# Exclude developer scratch files, logs, and screenshots
+scratch/
+screenshots/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Exclude IDE and Git metadata
+.git
+.github
+.vscode
+.DS_Store
+Thumbs.db
+
+# Exclude local environment secrets
+.env
+.env.local
+.env.*.local

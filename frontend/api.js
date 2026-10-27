@@ -6,7 +6,7 @@
 
 const BLOODCONNECT_API_URL = window.BLOODCONNECT_API_URL !== undefined 
   ? window.BLOODCONNECT_API_URL 
-  : (typeof window !== 'undefined' && window.location.origin.includes(':5500') ? "" : "http://localhost:8081");
+  : "";
 
 function bloodConnectToken() {
   return localStorage.getItem("accessToken");
