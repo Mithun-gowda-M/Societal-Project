@@ -1,4 +1,19 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.exclude": {
+        "**/target/**": true,
+        "**/.vercel/**": true
+    },
+    "files.watcherExclude": {
+        "**/target/**": true,
+        "**/public/**": true,
+        "**/.vercel/**": true,
+        "**/node_modules/**": true
+    },
+    "search.exclude": {
+        "**/target/**": true,
+        "**/public/**": true,
+        "**/.vercel/**": true
+    }
 }
