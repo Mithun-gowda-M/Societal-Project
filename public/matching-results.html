@@ -18,6 +18,7 @@
       border-radius: var(--radius-xl);
       padding: 24px 32px;
       margin-bottom: 30px;
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       display: flex;
       justify-content: space-between;
@@ -31,6 +32,7 @@
       border-radius: var(--radius-lg);
       padding: 24px;
       margin-bottom: 20px;
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       transition: var(--transition-smooth);
     }
@@ -71,11 +73,11 @@
     </header>
 
     <main class="match-page">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
+      <div class="match-header">
         <div>
-          <span class="badge badge-ai" style="margin-bottom: 6px;">⭐ Ranked by AI Donor Response Prediction</span>
-          <h1 style="font-family: var(--font-display); font-size: 32px;">Compatible Donors in Bengaluru</h1>
-          <p style="font-size: 14px; color: var(--text-muted);">
+          <span class="badge badge-ai match-badge">⭐ Ranked by AI Donor Response Prediction</span>
+          <h1 class="match-title">Compatible Donors in Bengaluru</h1>
+          <p class="match-subtitle">
             Donors prioritized based on probability of answering in &lt;15 mins, distance to hospital, and verified 90-day cooldown status.
           </p>
         </div>
@@ -85,38 +87,38 @@
       <!-- Request Summary Strip -->
       <div class="match-summary-card">
         <div>
-          <span style="font-size: 12px; color: var(--text-dim); text-transform: uppercase;">Patient & Hospital</span>
-          <h3 style="font-family: var(--font-display); font-size: 20px; margin-top: 2px;" id="summaryPatient">
+          <span class="summary-label-uppercase">Patient & Hospital</span>
+          <h3 class="summary-patient-name" id="summaryPatient">
             Ramesh Sundaram
           </h3>
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 2px;" id="summaryHospital">
+          <p class="summary-hospital-name" id="summaryHospital">
             Victoria Hospital Emergency Trauma ICU, KR Market
           </p>
-          <p style="font-size: 12px; color: var(--text-dim);" id="summaryAddress">
+          <p class="summary-address-text" id="summaryAddress">
             📍 Fort Road, near City Market, Kalasipalya, Bengaluru
           </p>
-          <a id="summaryGoogleMapsLink" href="https://www.google.com/maps?q=12.9625,77.5750" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-size: 11px; font-weight: 700; margin-top: 4px; display: inline-flex; align-items: center; gap: 4px;">
+          <a id="summaryGoogleMapsLink" href="https://www.google.com/maps?q=12.9625,77.5750" target="_blank" rel="noopener noreferrer" class="summary-maps-link">
             🗺️ Hospital Location on Google Maps ➔
           </a>
         </div>
 
-        <div style="display: flex; gap: 24px; align-items: center;">
-          <div style="text-align: center;">
-            <span style="font-size: 12px; color: var(--text-dim); display: block;">Blood Group</span>
-            <span class="badge badge-critical" style="font-size: 16px; padding: 6px 14px; margin-top: 4px;" id="summaryGroup">O+</span>
+        <div class="summary-stats-cluster">
+          <div class="stat-cell-center">
+            <span class="stat-cell-label">Blood Group</span>
+            <span class="badge badge-critical summary-blood-badge" id="summaryGroup">O+</span>
           </div>
-          <div style="text-align: center;">
-            <span style="font-size: 12px; color: var(--text-dim); display: block;">Units</span>
-            <strong style="font-family: var(--font-display); font-size: 20px; color: var(--text-main);" id="summaryUnits">2</strong>
+          <div class="stat-cell-center">
+            <span class="stat-cell-label">Units</span>
+            <strong class="summary-stat-val" id="summaryUnits">2</strong>
           </div>
-          <div style="text-align: center;">
-            <span style="font-size: 12px; color: var(--text-dim); display: block;">Urgency</span>
+          <div class="stat-cell-center">
+            <span class="stat-cell-label">Urgency</span>
             <span class="badge badge-critical" id="summaryUrgency">Critical</span>
           </div>
         </div>
       </div>
 
-      <div id="matchingStatusNotice" style="margin-bottom: 20px; font-size: 14px; color: var(--emerald-primary);">
+      <div id="matchingStatusNotice" class="matching-status-notice">
         Scanning Bangalore donor network...
       </div>
 
@@ -130,7 +132,7 @@
     <footer>
       <div class="footer-inner">
         <p>© 2026 BloodConnect — AI Donor Response Prediction & Instant WhatsApp Phlebotomy Linking</p>
-        <p style="font-size: 13px; color: var(--text-dim);">All matched donors hold verified government ID credentials.</p>
+        <p class="footer-note">All matched donors hold verified government ID credentials.</p>
       </div>
     </footer>
   </div>

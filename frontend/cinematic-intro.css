@@ -62,6 +62,7 @@
   padding: 8px 18px;
   border-radius: 9999px;
   cursor: pointer;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   transition: all 0.25s ease;
   display: flex;

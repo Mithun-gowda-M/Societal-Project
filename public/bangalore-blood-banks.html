@@ -16,6 +16,7 @@
       border-radius: var(--radius-lg);
       padding: 24px;
       margin-bottom: 20px;
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       transition: var(--transition-smooth);
     }
@@ -125,28 +126,28 @@
       </div>
 
       <!-- Blood Bank Staff Inventory Manager (Toggleable / Login aware) -->
-      <section class="staff-portal-panel" id="staffPortal" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+      <section class="staff-portal-panel" id="staffPortal">
+        <div class="staff-header-row">
           <div>
-            <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--crimson-primary); display: flex; align-items: center; gap: 8px;">
+            <h3 class="staff-title">
               <span>🏥</span> <span id="activeBankTitle">Staff Stock Editor — Rotary Bangalore TTK Blood Centre</span>
             </h3>
-            <p style="font-size: 13px; color: var(--text-muted);">You are authorized to add (+) or subtract (-) available units. Changes sync live across the platform (Staff PIN: 2026).</p>
+            <p class="staff-desc">You are authorized to add (+) or subtract (-) available units. Changes sync live across the platform (Staff PIN: 2026).</p>
           </div>
           <button class="btn btn-secondary btn-sm" id="closeStaffPortalBtn">Exit Staff Mode</button>
         </div>
 
-        <div id="stockEditorGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+        <div id="stockEditorGrid" class="stock-editor-grid">
           <!-- Stock editor controls dynamically populated -->
         </div>
       </section>
 
       <!-- Search & Blood Group Filter Bar -->
-      <div class="card" style="margin-bottom: 24px; padding: 18px 24px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <label style="font-family: var(--font-display); font-weight: 700; font-size: 14px;">City / State:</label>
-            <select id="bankCitySelect" class="form-select" style="max-width: 240px; padding: 6px 12px;">
+      <div class="card filter-card-pad">
+        <div class="filter-row-between">
+          <div class="filter-left-group">
+            <label class="filter-label-bold">City / State:</label>
+            <select id="bankCitySelect" class="form-select bank-city-select" title="Filter by City or State" aria-label="Filter by City or State">
               <option value="ALL">All India & Karnataka (Nearest First)</option>
               <optgroup label="Karnataka Districts & Cities">
                 <option value="Bengaluru" selected>Bengaluru (Urban & Rural)</option>
@@ -181,7 +182,7 @@
               </optgroup>
             </select>
 
-            <div id="groupFilterButtons" style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <div id="groupFilterButtons" class="group-filters-wrap">
               <button class="btn btn-primary btn-sm group-filter-btn" data-group="ALL">All Groups</button>
               <button class="btn btn-secondary btn-sm group-filter-btn" data-group="O+">O+</button>
               <button class="btn btn-secondary btn-sm group-filter-btn" data-group="O-">O- (Rare)</button>
@@ -194,23 +195,23 @@
               <button class="btn btn-secondary btn-sm group-filter-btn" data-group="Platelets">Platelets</button>
             </div>
           </div>
-          <div style="display: flex; gap: 8px; flex: 1; min-width: 280px; align-items: center; justify-content: flex-end;">
-            <input type="text" id="bankSearchInput" class="form-control" placeholder="Search blood bank, area, or locality..." style="padding: 9px 14px; font-size: 14px; max-width: 280px;">
-            <button class="btn btn-secondary btn-sm" id="btnDetectBankGps" style="border-color: #ff3347; color: #ff3347; white-space: nowrap; font-weight: 700; height: 42px;">
+          <div class="search-action-group">
+            <input type="text" id="bankSearchInput" class="form-control search-input-field" placeholder="Search blood bank, area, or locality...">
+            <button class="btn btn-secondary btn-sm btn-detect-gps-red" id="btnDetectBankGps">
               📍 Detect Live Location
             </button>
           </div>
         </div>
 
         <!-- Live Google Maps Telemetry Banner -->
-        <div id="liveBankGpsPill" style="display: none; margin-top: 14px; padding: 10px 16px; border-radius: 8px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 13px; color: #10b981; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <div id="liveBankGpsPill" class="live-gps-pill">
           <span id="bankGpsText">📍 Live Location: Indiranagar, Bengaluru [12.9719, 77.6412] (Closest Blood Banks First)</span>
-          <a id="bankGoogleMapsLink" href="https://www.google.com/maps?q=12.9719,77.6412" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-weight: 700;">🗺️ View on Google Maps ➔</a>
+          <a id="bankGoogleMapsLink" href="https://www.google.com/maps?q=12.9719,77.6412" target="_blank" rel="noopener noreferrer" class="live-gps-maps-link">🗺️ View on Google Maps ➔</a>
         </div>
 
         <!-- Quick Blood Bank Area Chips -->
-        <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-          <span style="font-size: 11px; color: var(--text-dim);">Quick Blood Centers:</span>
+        <div class="quick-chips-row">
+          <span class="quick-chips-label">Quick Blood Centers:</span>
           <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('Rotary TTK', 12.9719, 77.6412)">Rotary TTK (Indiranagar)</button>
           <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('Victoria', 12.9625, 77.5750)">BMCRI Victoria (KR Market)</button>
           <button type="button" class="quick-chip" onclick="window.setBankAreaSearch('NIMHANS', 12.9385, 77.5955)">NIMHANS Centre (Dairy Circle)</button>
@@ -228,37 +229,37 @@
         </div>
 
         <!-- Right: Registered Bangalore Blood Banks Directory -->
-        </div>
+        <div id="bankCardsContainer"></div>
       </div>
 
       <!-- In-App Route & Navigation HUD Drawer -->
-      <div id="inAppRouteDrawer" style="display: none; position: fixed; bottom: 24px; right: 24px; max-width: 420px; width: calc(100% - 48px); background: var(--bg-card); border: 1.5px solid #0284c7; border-radius: var(--radius-xl); padding: 22px; box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 20px rgba(2, 132, 199, 0.25); z-index: 10000; backdrop-filter: blur(16px);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+      <div id="inAppRouteDrawer" class="route-drawer">
+        <div class="route-drawer-header">
           <div>
-            <span class="badge" style="background: rgba(2, 132, 199, 0.15); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3); font-size: 11px;">🚗 In-App Route Active</span>
-            <h4 id="routeTargetName" style="margin: 6px 0 0 0; font-size: 17px; font-family: var(--font-display); color: var(--text-main);">Target Blood Bank</h4>
+            <span class="badge route-badge">🚗 In-App Route Active</span>
+            <h4 id="routeTargetName" class="route-target-title">Target Blood Bank</h4>
           </div>
-          <button onclick="window.closeInAppRoute()" style="background: none; border: none; font-size: 24px; color: var(--text-muted); cursor: pointer; line-height: 1;">&times;</button>
+          <button onclick="window.closeInAppRoute()" class="route-close-btn">&times;</button>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-glass);">
-            <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Direct Distance</div>
-            <div style="font-size: 20px; font-weight: 800; color: var(--crimson-primary);" id="routeDistanceDisplay">0.0 km</div>
+        <div class="route-stats-grid">
+          <div class="route-stat-box">
+            <div class="route-stat-label">Direct Distance</div>
+            <div class="route-dist-display" id="routeDistanceDisplay">0.0 km</div>
           </div>
-          <div style="background: var(--bg-secondary); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-glass);">
-            <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Estimated Drive Time</div>
-            <div style="font-size: 20px; font-weight: 800; color: #10b981;" id="routeEtaDisplay">0 mins</div>
+          <div class="route-stat-box">
+            <div class="route-stat-label">Estimated Drive Time</div>
+            <div class="route-eta-display" id="routeEtaDisplay">0 mins</div>
           </div>
         </div>
 
-        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;" id="routeTurnByTurn">
+        <div class="route-turn-note" id="routeTurnByTurn">
           📍 <strong>Route Plotted:</strong> Blue dashed transit vector drawn on the live map. Real-time road distance and ETA computed in-app.
         </div>
 
-        <div style="display: flex; gap: 10px;">
-          <button class="btn btn-secondary btn-sm" onclick="window.closeInAppRoute()" style="flex: 1;">Dismiss</button>
-          <a id="routeExternalGmapsLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="flex: 1; text-align: center; background: #4285F4; border: none; text-decoration: none;">External Maps ↗</a>
+        <div class="route-btn-row">
+          <button class="btn btn-secondary btn-sm route-btn-flex" onclick="window.closeInAppRoute()">Dismiss</button>
+          <a id="routeExternalGmapsLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm route-external-link">External Maps ↗</a>
         </div>
       </div>
     </main>
@@ -267,10 +268,10 @@
     <div class="modal-overlay" id="staffLoginModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 style="font-family: var(--font-display); font-size: 20px;">🏥 Blood Bank Staff Authorization</h3>
+          <h3 class="modal-heading">🏥 Blood Bank Staff Authorization</h3>
           <button class="modal-close" id="closeStaffModalBtn">&times;</button>
         </div>
-        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+        <p class="modal-subtext">
           Log in to manage real-time inventory and units for your registered Bangalore Blood Centre.
         </p>
         <form id="staffLoginForm">
@@ -284,8 +285,8 @@
             <label for="staffPin">Staff Security Passcode <small>(Use demo: 2026)</small></label>
             <input type="password" id="staffPin" name="staffPasscode" class="form-control" value="2026" required>
           </div>
-          <p id="staffLoginMsg" style="font-size: 13px; color: var(--crimson-primary); margin-bottom: 14px;"></p>
-          <button type="submit" class="btn btn-primary" style="width: 100%;">Authorize & Open Inventory Editor</button>
+          <p id="staffLoginMsg" class="staff-login-error"></p>
+          <button type="submit" class="btn btn-primary w-full">Authorize & Open Inventory Editor</button>
         </form>
       </div>
     </div>
@@ -294,7 +295,7 @@
     <footer>
       <div class="footer-inner">
         <p>© 2026 BloodConnect — Bangalore Blood Bank Coordination & Transfusion Network</p>
-        <p style="color: var(--text-dim); font-size: 13px;">Data synchronized with Karnataka Blood Transfusion Council & NACO standards.</p>
+        <p class="footer-note">Data synchronized with Karnataka Blood Transfusion Council & NACO standards.</p>
       </div>
     </footer>
   </div>

@@ -228,12 +228,18 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.style.display = 'none');
+        contents.forEach(c => {
+          c.classList.add('tab-hidden');
+          c.style.display = 'none';
+        });
 
         tab.classList.add('active');
         const targetId = tab.dataset.tab;
         const targetContent = document.getElementById(targetId);
-        if (targetContent) targetContent.style.display = 'block';
+        if (targetContent) {
+          targetContent.classList.remove('tab-hidden');
+          targetContent.style.display = 'block';
+        }
       });
     });
   }

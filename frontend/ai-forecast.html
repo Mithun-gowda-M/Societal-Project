@@ -18,6 +18,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-lg);
       padding: 20px;
+      -webkit-backdrop-filter: blur(12px);
       backdrop-filter: blur(12px);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
@@ -155,36 +156,36 @@
       </nav>
     </header>
 
-    <main class="container" style="max-width: 1240px; padding: 40px 20px;">
+    <main class="container forecast-container">
       <!-- Title & Live Epidemiology Banner -->
-      <div style="margin-bottom: 28px;">
-        <span class="badge badge-ai" style="margin-bottom: 8px;">
+      <div class="forecast-header-wrap">
+        <span class="badge badge-ai forecast-top-badge">
           🔮 PREDICTIVE EPIDEMIOLOGY • DEEP CLINICAL CROSS-MATCHING
         </span>
-        <h1 style="font-family: var(--font-display); font-size: 32px; color: var(--text-main); margin-top: 4px;">
+        <h1 class="forecast-main-title">
           AI 7-Day Blood Shortage Radar & Clinical Transfusion Matrix
         </h1>
-        <p style="color: var(--text-muted); font-size: 14px; max-width: 820px;">
+        <p class="forecast-main-desc">
           Empowered by seasonal dengue incidence modeling, trauma emergency surge projection, and clinical ABO/Rh compatibility rules across India's metropolitan transfusion centers.
         </p>
       </div>
 
       <!-- Live Regional Shortage Alert Strip -->
-      <div class="card card-glow-red" style="margin-bottom: 32px; border-left: 4px solid var(--crimson-accent);">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <div class="card card-glow-red regional-alert-strip">
+        <div class="regional-alert-inner">
           <div>
-            <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="regional-alert-meta">
               <span class="badge badge-critical">HIGH DEFICIT RADAR WARNING</span>
-              <span style="font-size: 12px; color: var(--text-dim);">Horizon: Next 7 Days (Updated: 25 Oct 2026)</span>
+              <span class="regional-alert-horizon">Horizon: Next 7 Days (Updated: 25 Oct 2026)</span>
             </div>
-            <h3 style="font-family: var(--font-display); font-size: 20px; color: #ffffff; margin-top: 6px;">
+            <h3 class="regional-alert-title">
               Critical Shortage Predicted for Universal O- & Apheresis Platelets
             </h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            <p class="regional-alert-desc">
               Trauma admissions at Victoria Hospital, NIMHANS, and AIIMS have increased projected O- red cell demand by <strong>+42%</strong>. Platelet consumption is surging due to post-monsoon dengue admissions.
             </p>
           </div>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <div class="regional-alert-buttons">
             <button class="btn btn-primary btn-sm" onclick="triggerRecruitmentDrive('O-')">
               📢 Broadcast O- Donor Drive
             </button>
@@ -196,20 +197,20 @@
       </div>
 
       <!-- Section 1: AI 7-Day Shortage Radar Cards -->
-      <div style="margin-bottom: 40px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div class="forecast-section-wrap">
+        <div class="forecast-section-header">
           <div>
-            <h2 style="font-family: var(--font-display); font-size: 22px; color: #ffffff;">
+            <h2 class="forecast-sec-title">
               7-Day Regional Municipal Inventory Projections
             </h2>
-            <p style="font-size: 13px; color: var(--text-dim);">
+            <p class="forecast-sec-desc">
               Aggregated across 30+ regional blood banks and major hospital trauma banks.
             </p>
           </div>
-          <div style="display: flex; gap: 12px; font-size: 12px;">
-            <span style="color: #ff3347;">● Critical Deficit</span>
-            <span style="color: #f59e0b;">● Moderate Buffer</span>
-            <span style="color: #10b981;">● Stable Reserve</span>
+          <div class="forecast-legend">
+            <span class="legend-critical">● Critical Deficit</span>
+            <span class="legend-moderate">● Moderate Buffer</span>
+            <span class="legend-stable">● Stable Reserve</span>
           </div>
         </div>
 
@@ -219,20 +220,20 @@
       </div>
 
       <!-- Section 2: Clinical Universal Transfusion Compatibility Engine -->
-      <div class="card" style="padding: 30px; margin-bottom: 40px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 51, 71, 0.2);">
-        <div style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 18px; margin-bottom: 20px;">
+      <div class="card compatibility-engine-card">
+        <div class="engine-header-row">
           <span class="badge badge-ai">Clinical Safety Protocols</span>
-          <h2 style="font-family: var(--font-display); font-size: 24px; color: #ffffff; margin-top: 6px;">
+          <h2 class="engine-title">
             Universal Transfusion Compatibility & Antigen Cross-Matching Engine
           </h2>
-          <p style="font-size: 13px; color: var(--text-muted);">
+          <p class="engine-desc">
             Calculate compatible donor groups based on surface antigens (A, B, Rh D-factor) and plasma antibodies to prevent acute hemolytic transfusion reactions.
           </p>
         </div>
 
         <!-- Component Selector -->
         <div>
-          <label style="font-size: 12px; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em;">
+          <label class="selector-step-label">
             1. Select Transfusion Component:
           </label>
           <div class="selector-pill-group">
@@ -243,8 +244,8 @@
         </div>
 
         <!-- Patient Blood Group Selector -->
-        <div style="margin-top: 14px;">
-          <label style="font-size: 12px; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em;">
+        <div class="selector-step-margin">
+          <label class="selector-step-label">
             2. Select Recipient (Patient) Blood Group:
           </label>
           <div class="selector-pill-group" id="patientGroupPills">
@@ -260,9 +261,9 @@
         </div>
 
         <!-- Cross-Match Results Grid -->
-        <div style="margin-top: 24px;">
-          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">
-            Compatible Donor Groups for <strong id="lblSelectedPatient" style="color: #ffffff; font-size: 15px;">O- Patient</strong> (PRBC Transfusion):
+        <div class="crossmatch-results-wrap">
+          <div class="crossmatch-lead">
+            Compatible Donor Groups for <strong id="lblSelectedPatient" class="crossmatch-strong-highlight">O- Patient</strong> (PRBC Transfusion):
           </div>
           <div class="compatibility-grid" id="compatMatrixGrid">
             <!-- Dynamically populated -->
@@ -270,32 +271,32 @@
         </div>
 
         <!-- Clinical Notes & Antigen Specs -->
-        <div id="clinicalSpecsBox" style="margin-top: 24px; background: rgba(0, 0, 0, 0.4); border-radius: var(--radius-md); padding: 18px; border: 1px solid rgba(255, 255, 255, 0.06);">
-          <h4 style="font-family: var(--font-display); color: #ffffff; font-size: 16px; margin-bottom: 8px;" id="specTitle">
+        <div id="clinicalSpecsBox" class="clinical-specs-card">
+          <h4 class="clinical-spec-heading" id="specTitle">
             O- (Universal Emergency Red Cell Donor)
           </h4>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 13px;">
+          <div class="clinical-specs-grid">
             <div>
-              <span style="color: var(--text-dim);">Surface Antigens:</span><br>
-              <strong style="color: #ffffff;" id="specAntigens">None (Zero A or B antigens on RBC surface)</strong>
+              <span class="spec-label-dim">Surface Antigens:</span><br>
+              <strong class="spec-val-white" id="specAntigens">None (Zero A or B antigens on RBC surface)</strong>
             </div>
             <div>
-              <span style="color: var(--text-dim);">Plasma Antibodies:</span><br>
-              <strong style="color: #ffffff;" id="specAntibodies">Anti-A and Anti-B in plasma</strong>
+              <span class="spec-label-dim">Plasma Antibodies:</span><br>
+              <strong class="spec-val-white" id="specAntibodies">Anti-A and Anti-B in plasma</strong>
             </div>
             <div>
-              <span style="color: var(--text-dim);">Clinical Rule:</span><br>
-              <span style="color: var(--emerald-primary);" id="specDirective">Can safely receive ONLY O- red blood cells.</span>
+              <span class="spec-label-dim">Clinical Rule:</span><br>
+              <span class="spec-val-emerald" id="specDirective">Can safely receive ONLY O- red blood cells.</span>
             </div>
           </div>
-          <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px;" id="specNote">
+          <p class="spec-note-p" id="specNote">
             Universal emergency red cell donor. Crucial for Level 1 trauma resuscitation before laboratory cross-matching is available.
           </p>
         </div>
       </div>
 
       <!-- Action Navigation Strip -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+      <div class="forecast-action-nav">
         <a href="/find-donors" class="btn btn-secondary">
           🔍 Search Nearby Active Donors
         </a>
@@ -309,7 +310,7 @@
     </main>
 
     <footer>
-      <div class="footer-inner" style="text-align: center; padding: 24px; color: var(--text-dim); font-size: 13px;">
+      <div class="footer-inner footer-inner-centered">
         © 2026 BloodConnect — AI Shortage Predictive Radar & Clinical Transfusion Cross-Match Systems
       </div>
     </footer>
