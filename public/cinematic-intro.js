@@ -17,16 +17,13 @@
 
   function shouldPlayIntro() {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('intro') === 'replay' || urlParams.get('intro') === '1' || urlParams.get('intro') === 'true') {
-      return true;
+    if (urlParams.get('intro') === '0' || urlParams.get('intro') === 'false') {
+      return false;
     }
-    // Only auto-play on root / homepage
+    // Auto-play signature intro on root / homepage
     const p = window.location.pathname;
-    const isHome = p === '/' || p === '' || p.endsWith('index.html');
-    if (!isHome) return false;
-
-    // Check session storage
-    return !sessionStorage.getItem(STORAGE_KEY);
+    const isHome = p === '/' || p === '' || p.endsWith('index.html') || p.endsWith('/');
+    return isHome;
   }
 
   function createIntroElements() {
