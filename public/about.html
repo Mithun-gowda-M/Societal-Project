@@ -6,39 +6,6 @@
   <title>BloodConnect | Every Drop Connects a Life</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
-  <style>
-    .about-header {
-      text-align: center;
-      max-width: 820px;
-      margin: 40px auto 50px;
-    }
-    .about-card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-    .value-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      backdrop-filter: blur(16px);
-      transition: var(--transition-smooth);
-    }
-    .value-card:hover {
-      border-color: var(--border-crimson);
-      transform: translateY(-3px);
-    }
-    .disclaimer-hero-card {
-      background: linear-gradient(135deg, rgba(193, 18, 31, 0.12), rgba(18, 16, 24, 0.95));
-      border: 1px solid var(--border-crimson);
-      border-radius: var(--radius-xl);
-      padding: 36px;
-      margin: 40px 0;
-      position: relative;
-    }
-  </style>
 </head>
 <body>
   <div class="app-shell">
@@ -71,10 +38,10 @@
     <main class="section-container">
       <div class="about-header">
         <div class="badge badge-ai sub-badge">Technology in Service of Humanity</div>
-        <h1 style="font-family: var(--font-display); font-size: 46px; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px;">
+        <h1 class="about-title">
           Every Drop Connects a Life.
         </h1>
-        <p style="font-size: 18px; color: var(--text-muted); line-height: 1.7;">
+        <p class="about-description">
           BloodConnect is an advanced healthcare technology platform dedicated to eliminating critical delays in emergency blood access. By uniting predictive AI donor response modeling, real-time hospital stock transparency, and ethical clinical safety protocols, we empower citizens and healthcare providers to save lives in minutes.
         </p>
       </div>
@@ -82,25 +49,25 @@
       <!-- Core Pillars -->
       <div class="about-card-grid">
         <div class="value-card card-glow-red">
-          <div style="font-size: 36px; margin-bottom: 16px;">🎯</div>
-          <h3 style="font-family: var(--font-display); font-size: 22px; margin-bottom: 10px;">Predictive Response Speed</h3>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+          <div class="value-icon">🎯</div>
+          <h3 class="value-title">Predictive Response Speed</h3>
+          <p class="value-description">
             Traditional donor coordination relies on broadcast panic messaging. Our AI models analyze geofenced proximity, historical confirmation reliability, and cooldown freshness to mobilize the exact donors most likely to arrive within 15 minutes.
           </p>
         </div>
 
         <div class="value-card card-glow-blue">
-          <div style="font-size: 36px; margin-bottom: 16px;">🏥</div>
-          <h3 style="font-family: var(--font-display); font-size: 22px; margin-bottom: 10px;">Bangalore Transfusion Network</h3>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+          <div class="value-icon">🏥</div>
+          <h3 class="value-title">Bangalore Transfusion Network</h3>
+          <p class="value-description">
             Directly synchronizes inventory across 10 prominent Bangalore blood centres (BMCRI Victoria, Bowring, NIMHANS, Rotary TTK, Rashtrotthana, Kidwai, Manipal, Narayana Hrudayalaya, Red Cross, and St. John's) so doctors and families never face dead ends.
           </p>
         </div>
 
         <div class="value-card card-glow-green">
-          <div style="font-size: 36px; margin-bottom: 16px;">🛡️</div>
-          <h3 style="font-family: var(--font-display); font-size: 22px; margin-bottom: 10px;">Clinical Safety & 90-Day Cooldown</h3>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+          <div class="value-icon">🛡️</div>
+          <h3 class="value-title">Clinical Safety & 90-Day Cooldown</h3>
+          <p class="value-description">
             Donor wellness is paramount. We strictly enforce a 3-month (90-day) recovery period between whole blood donations, Aadhaar ID verification against bots and spam, and explicit medical clearance overrides for emergency triage.
           </p>
         </div>
@@ -108,13 +75,13 @@
 
       <!-- Mandatory Medical and Clinical Disclaimer -->
       <div class="disclaimer-hero-card">
-        <div style="display: flex; gap: 16px; align-items: flex-start;">
-          <span style="font-size: 32px; color: #FF3347;">⚕️</span>
+        <div class="disclaimer-content">
+          <span class="disclaimer-icon">⚕️</span>
           <div>
-            <h3 style="font-family: var(--font-display); font-size: 20px; color: #FFFFFF; margin-bottom: 8px;">
+            <h3 class="disclaimer-title">
               Clinical Assessment & Transfusion Disclaimer
             </h3>
-            <p style="font-size: 14px; color: #CBD5E1; line-height: 1.7;">
+            <p class="disclaimer-description">
               BloodConnect provides digital donor coordination, preliminary algorithmic eligibility screening, and hospital inventory tracking. Blood group compatibility alone does not establish clinical suitability for transfusion. Final compatibility, infectious disease screening, cross-matching, and phlebotomy clearance must be verified and performed by qualified healthcare and blood-bank professionals on-site in accordance with the National Blood Transfusion Council (NBTC) and NACO standards.
             </p>
           </div>
@@ -122,10 +89,10 @@
       </div>
 
       <!-- Call to Action -->
-      <div style="text-align: center; margin-top: 40px;">
-        <h2 style="font-family: var(--font-display); font-size: 32px; margin-bottom: 12px;">Be Someone’s Reason to Live.</h2>
-        <p style="font-size: 16px; color: var(--text-muted); margin-bottom: 24px;">Join thousands of registered life-savers across Karnataka.</p>
-        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+      <div class="about-cta-section">
+        <h2 class="about-cta-title">Be Someone’s Reason to Live.</h2>
+        <p class="about-cta-subtitle">Join thousands of registered life-savers across Karnataka.</p>
+        <div class="about-cta-actions">
           <a href="/register" class="btn btn-primary btn-lg">Become a Verified Donor</a>
           <a href="/find-donors" class="btn btn-secondary btn-lg">Find Blood Donors</a>
         </div>
@@ -136,15 +103,15 @@
     <footer>
       <div class="footer-inner">
         <div>
-          <strong style="color: var(--text-main); font-size: 16px; display: block; margin-bottom: 4px;">🩸 BloodConnect</strong>
-          <p style="font-size: 13px;">Every Drop Connects a Life. Advanced Healthcare Technology Platform.</p>
+          <strong class="footer-brand-title">🩸 BloodConnect</strong>
+          <p class="footer-brand-subtitle">Every Drop Connects a Life. Advanced Healthcare Technology Platform.</p>
         </div>
-        <div style="display: flex; gap: 20px; font-size: 13px;">
-          <a href="/" style="color: var(--text-muted); text-decoration: none;">Home</a>
-          <a href="/about" style="color: var(--text-muted); text-decoration: none;">About</a>
-          <a href="/bangalore-blood-banks" style="color: var(--text-muted); text-decoration: none;">Blood Banks</a>
-          <a href="/find-donors" style="color: var(--text-muted); text-decoration: none;">Find Donors</a>
-          <a href="/emergency" style="color: var(--text-muted); text-decoration: none;">Emergency</a>
+        <div class="footer-links-group">
+          <a href="/" class="footer-nav-link">Home</a>
+          <a href="/about" class="footer-nav-link">About</a>
+          <a href="/bangalore-blood-banks" class="footer-nav-link">Blood Banks</a>
+          <a href="/find-donors" class="footer-nav-link">Find Donors</a>
+          <a href="/emergency" class="footer-nav-link">Emergency</a>
         </div>
       </div>
     </footer>
