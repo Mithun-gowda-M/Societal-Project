@@ -78,6 +78,7 @@
       gap: 8px;
       font-size: 32px;
       cursor: pointer;
+      -webkit-user-select: none;
       user-select: none;
     }
     .star-rating-box span {
@@ -106,6 +107,7 @@
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.2s ease;
+      -webkit-user-select: none;
       user-select: none;
     }
     .tag-chip:hover {
@@ -164,16 +166,16 @@
       </nav>
     </header>
 
-    <main class="section-container" style="max-width: 1280px; margin: 30px auto; padding: 0 20px;">
+    <main class="section-container patient-main-container">
       
       <!-- Top Demo Switcher Ribbon -->
-      <div style="margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+      <div class="profile-switcher-wrap">
+        <div class="profile-switcher-header">
           <div>
-            <span class="badge badge-ai" style="margin-right: 8px;">🧑‍🤝‍🧑 Verified Patient Triage Dossiers</span>
-            <span style="font-size: 13px; color: var(--text-muted);">Quick-switch patient account to verify donor matches & ratings:</span>
+            <span class="badge badge-ai mr-8">🧑‍🤝‍🧑 Verified Patient Triage Dossiers</span>
+            <span class="switcher-desc-text">Quick-switch patient account to verify donor matches & ratings:</span>
           </div>
-          <div style="font-size: 12px; color: var(--emerald-primary); font-weight: 700;">
+          <div class="switcher-sync-status">
             ✓ Real-Time Transfusion & Feedback Sync Active
           </div>
         </div>
@@ -184,48 +186,48 @@
       </div>
 
       <!-- Patient Header Dossier Card -->
-      <div class="card card-glow-red" style="margin-bottom: 28px; padding: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+      <div class="card card-glow-red patient-dossier-card">
+        <div class="patient-dossier-header">
           <div>
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <div class="patient-badge-row">
               <span class="badge badge-verified" id="patientVerifiedBadge">🛡️ ABHA / Aadhaar Verified Recipient</span>
               <span class="badge badge-emergency" id="urgencyBadge">Emergency Crossmatch Fulfilled</span>
             </div>
-            <h1 style="font-family: var(--font-display); font-size: 28px; margin: 4px 0;" id="requesterNameDisplay">
+            <h1 class="patient-requester-title" id="requesterNameDisplay">
               Rajeshwari Sundaram
             </h1>
-            <p style="font-size: 14px; color: var(--text-muted);" id="patientRelationshipDisplay">
+            <p class="patient-relationship-desc" id="patientRelationshipDisplay">
               Primary Requester for <strong>Ramesh Sundaram (Father)</strong>
             </p>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 14px;">
-            <div style="text-align: right;">
-              <span style="font-size: 12px; color: var(--text-dim); display: block;">Blood Group Needed</span>
-              <strong style="font-family: var(--font-mono); font-size: 24px; color: var(--crimson-primary);" id="bloodGroupDisplay">O-</strong>
+          <div class="blood-group-hero-wrap">
+            <div class="text-align-right">
+              <span class="blood-group-label">Blood Group Needed</span>
+              <strong class="blood-group-val" id="bloodGroupDisplay">O-</strong>
             </div>
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--crimson-subtle); border: 2px solid var(--crimson-primary); display: flex; align-items: center; justify-content: center; font-size: 26px;">
+            <div class="blood-drop-circle">
               🩸
             </div>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border-glass); font-size: 13px;">
+        <div class="patient-meta-grid">
           <div>
-            <span style="color: var(--text-dim); display: block;">🏥 Hospital & Facility</span>
-            <strong style="color: var(--text-main);" id="hospitalDisplay">Victoria Hospital Emergency Trauma ICU</strong>
+            <span class="meta-item-label">🏥 Hospital & Facility</span>
+            <strong class="meta-val-main" id="hospitalDisplay">Victoria Hospital Emergency Trauma ICU</strong>
           </div>
           <div>
-            <span style="color: var(--text-dim); display: block;">🛏️ Bed & Admission Ref</span>
-            <strong style="color: #38bdf8;" id="admissionRefDisplay">ICU-04 • Ref #VIC-TR-2026-8941</strong>
+            <span class="meta-item-label">🛏️ Bed & Admission Ref</span>
+            <strong class="meta-val-sky" id="admissionRefDisplay">ICU-04 • Ref #VIC-TR-2026-8941</strong>
           </div>
           <div>
-            <span style="color: var(--text-dim); display: block;">📞 Verified Contact</span>
-            <strong style="color: var(--text-main);" id="phoneDisplay">+91 98450 77112</strong>
+            <span class="meta-item-label">📞 Verified Contact</span>
+            <strong class="meta-val-main" id="phoneDisplay">+91 98450 77112</strong>
           </div>
           <div>
-            <span style="color: var(--text-dim); display: block;">⚡ Status</span>
-            <strong style="color: var(--emerald-primary);" id="statusDisplay">✓ 2 Units Successfully Transfused</strong>
+            <span class="meta-item-label">⚡ Status</span>
+            <strong class="meta-val-emerald" id="statusDisplay">✓ 2 Units Successfully Transfused</strong>
           </div>
         </div>
       </div>
@@ -235,12 +237,12 @@
         
         <!-- Left: Matched Donors Section -->
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div class="matched-donors-header">
             <div>
-              <h2 style="font-family: var(--font-display); font-size: 22px; margin: 0;">
+              <h2 class="matched-donors-title">
                 🩸 Lifesaver Donors Matched to You
               </h2>
-              <p style="font-size: 13px; color: var(--text-muted); margin: 2px 0 0 0;">
+              <p class="matched-donors-subtitle">
                 These verified donors responded to your emergency broadcast and donated blood.
               </p>
             </div>
@@ -252,11 +254,11 @@
           </div>
 
           <!-- Transfusion Timeline & Protocol Guide -->
-          <div class="card" style="margin-top: 24px; padding: 20px;">
-            <h3 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <div class="card protocol-card">
+            <h3 class="protocol-title">
               <span>📋</span> Transfusion & Post-Donation Protocol
             </h3>
-            <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.8; padding-left: 20px; margin: 0;">
+            <ul class="protocol-list">
               <li><strong>Crossmatch Clearance:</strong> Both donor units passed pre-transfusion NAT (Nucleic Acid Testing) and anti-HIV/HCV viral load clearances.</li>
               <li><strong>Bedside Verification:</strong> Crossmatched with recipient EDTA tube at hospital blood bank before transfusion.</li>
               <li><strong>Mutual Appreciation:</strong> Your rating motivates donors to stay on standby for future emergency alerts in Bengaluru.</li>
@@ -266,24 +268,24 @@
 
         <!-- Right: Interactive Rating & Feedback Studio -->
         <div>
-          <div class="card card-glow-red" style="padding: 24px; position: sticky; top: 90px;">
+          <div class="card card-glow-red feedback-studio-card">
             
             <!-- Tab switcher: Patient Review vs Hospital Clinical Review -->
-            <div style="display: flex; gap: 8px; margin-bottom: 18px; background: var(--bg-secondary); padding: 4px; border-radius: var(--radius-md);">
-              <button type="button" id="tabPatientReview" class="btn btn-sm btn-primary" style="flex: 1; font-size: 12px; padding: 6px 10px;">
+            <div class="tab-switcher-strip">
+              <button type="button" id="tabPatientReview" class="btn btn-sm btn-primary btn-tab-toggle">
                 🧑‍🤝‍🧑 Patient / Family Feedback
               </button>
-              <button type="button" id="tabHospitalReview" class="btn btn-sm btn-secondary" style="flex: 1; font-size: 12px; padding: 6px 10px;">
+              <button type="button" id="tabHospitalReview" class="btn btn-sm btn-secondary btn-tab-toggle">
                 🏥 Hospital Staff Endorsement
               </button>
             </div>
 
             <!-- Form Header -->
-            <div style="margin-bottom: 16px;">
-              <h3 style="font-family: var(--font-display); font-size: 20px; margin: 0 0 4px 0;" id="reviewFormTitle">
+            <div class="review-form-header">
+              <h3 class="review-form-title" id="reviewFormTitle">
                 Rate & Review Your Lifesaver Donor
               </h3>
-              <p style="font-size: 13px; color: var(--text-muted); margin: 0;" id="reviewFormSubtitle">
+              <p class="review-form-subtitle" id="reviewFormSubtitle">
                 Share your gratitude and rate how promptly the donor arrived to save your family member.
               </p>
             </div>
@@ -291,22 +293,22 @@
             <form id="donorFeedbackForm">
               
               <!-- Target Donor Selector -->
-              <div class="form-group" style="margin-bottom: 16px;">
-                <label for="targetDonorSelect" style="font-size: 13px; font-weight: 700;">Select Donor to Rate</label>
+              <div class="form-group form-group-spaced">
+                <label for="targetDonorSelect" class="form-label-bold">Select Donor to Rate</label>
                 <select id="targetDonorSelect" class="form-select" required>
                   <!-- Populated dynamically -->
                 </select>
               </div>
 
               <!-- Reviewer Name (Read-only or editable for Hospital staff) -->
-              <div class="form-group" style="margin-bottom: 16px;">
-                <label for="reviewerNameInput" style="font-size: 13px; font-weight: 700;">Your Name / Designation</label>
+              <div class="form-group form-group-spaced">
+                <label for="reviewerNameInput" class="form-label-bold">Your Name / Designation</label>
                 <input type="text" id="reviewerNameInput" class="form-control" value="Rajeshwari Sundaram (Daughter)" required>
               </div>
 
               <!-- Interactive Star Rating -->
-              <div class="form-group" style="margin-bottom: 16px;">
-                <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px;">
+              <div class="form-group form-group-spaced">
+                <label class="form-label-block">
                   Your Rating
                 </label>
                 <div class="star-rating-box" id="starRatingBox">
@@ -321,8 +323,8 @@
               </div>
 
               <!-- Quick Feedback Tag Chips -->
-              <div class="form-group" style="margin-bottom: 16px;">
-                <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">
+              <div class="form-group form-group-spaced">
+                <label class="form-label-block-sm">
                   Quick Feedback Tags (Select all that apply)
                 </label>
                 <div class="feedback-tag-group" id="feedbackTagsGroup">
@@ -337,20 +339,20 @@
               </div>
 
               <!-- Detailed Feedback Comment -->
-              <div class="form-group" style="margin-bottom: 20px;">
-                <label for="reviewCommentText" style="font-size: 13px; font-weight: 700;">
+              <div class="form-group form-group-mb20">
+                <label for="reviewCommentText" class="form-label-bold">
                   Personal Words of Gratitude / Clinical Notes
                 </label>
                 <textarea id="reviewCommentText" class="form-textarea" rows="4" placeholder="Express your sincere thanks or describe how the donor helped..." required></textarea>
               </div>
 
               <!-- Submit Button -->
-              <button type="submit" class="btn btn-primary" id="btnSubmitReview" style="width: 100%; font-size: 15px; padding: 12px;">
+              <button type="submit" class="btn btn-primary btn-submit-review" id="btnSubmitReview">
                 ⭐ Post Verified Review & Rating
               </button>
             </form>
 
-            <div id="reviewSuccessNotice" style="display: none; margin-top: 14px; padding: 12px 14px; background: rgba(16, 185, 129, 0.12); border: 1px solid #10b981; border-radius: var(--radius-md); color: #047857; font-size: 13px; text-align: center;">
+            <div id="reviewSuccessNotice" class="review-success-banner">
               🎉 <strong>Thank You!</strong> Your verified review has been published to the donor's profile and the Bangalore community board!
             </div>
 
@@ -360,22 +362,22 @@
       </div>
 
       <!-- Verified Community Reviews Feed for Bangalore Donors -->
-      <section style="margin-top: 48px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+      <section class="community-reviews-section">
+        <div class="community-reviews-header">
           <div>
-            <h3 style="font-family: var(--font-display); font-size: 22px; margin: 0;">
+            <h3 class="community-section-title">
               🌟 Recent Verified Patient & Hospital Endorsements
             </h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
+            <p class="community-section-subtitle">
               Live feedback received by Bangalore blood donors from patients, families, and emergency triage doctors.
             </p>
           </div>
-          <div style="display: flex; gap: 10px; align-items: center;">
+          <div class="header-badge-wrap">
             <span class="badge badge-verified">🛡️ 100% Aadhaar & Hospital Verified</span>
           </div>
         </div>
 
-        <div id="communityReviewsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+        <div id="communityReviewsGrid" class="community-reviews-grid">
           <!-- Dynamically populated -->
         </div>
       </section>
@@ -635,7 +637,7 @@
         const chip = document.createElement('button');
         chip.type = 'button';
         chip.className = `profile-chip ${index === activeProfileIndex ? 'active' : ''}`;
-        chip.innerHTML = `<span>👤</span> ${p.name} <small style="opacity:0.8;">(${p.bloodNeeded})</small>`;
+        chip.innerHTML = `<span>👤</span> ${p.name} <small class="opacity-80">(${p.bloodNeeded})</small>`;
         chip.onclick = () => {
           activeProfileIndex = index;
           renderProfileSwitcher();
@@ -679,39 +681,39 @@
         const card = document.createElement('div');
         card.className = 'matched-donor-card';
         card.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
-            <div style="display: flex; gap: 14px; align-items: center;">
-              <div style="font-size: 36px; width: 54px; height: 54px; background: var(--bg-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-glass);">
+          <div class="card-row-between">
+            <div class="donor-avatar-meta-wrap">
+              <div class="donor-avatar-circle">
                 ${donor.avatar}
               </div>
               <div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <strong style="font-size: 17px; color: var(--text-main);">${donor.name}</strong>
-                  <span class="badge badge-verified" style="font-size: 11px;">🛡️ Aadhaar Verified</span>
+                <div class="donor-name-badge-row">
+                  <strong class="donor-name-strong">${donor.name}</strong>
+                  <span class="badge badge-verified badge-fs-11">🛡️ Aadhaar Verified</span>
                 </div>
-                <div style="font-size: 13px; color: var(--text-muted);">${donor.roleTitle}</div>
-                <div style="font-size: 12px; color: var(--text-dim); margin-top: 2px;">
+                <div class="donor-role-desc">${donor.roleTitle}</div>
+                <div class="donor-loc-timing">
                   📍 ${donor.location} • Arrived in <strong>${donor.responseTime}</strong>
                 </div>
               </div>
             </div>
 
-            <div style="text-align: right;">
-              <span class="blood-pill pill-${donor.bloodGroup.replace('+', 'pos').replace('-', 'neg')}" style="font-size: 13px; padding: 4px 10px;">
+            <div class="text-align-right">
+              <span class="blood-pill pill-${donor.bloodGroup.replace('+', 'pos').replace('-', 'neg')} blood-pill-sm">
                 ${donor.bloodGroup}
               </span>
-              <div style="font-size: 12px; color: #f59e0b; margin-top: 4px; font-weight: 700;">
+              <div class="donor-rating-row">
                 ★ ${donor.currentRating.toFixed(2)} (${donor.reviewsCount} reviews)
               </div>
             </div>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-glass); flex-wrap: wrap; gap: 10px;">
-            <div style="font-size: 13px; color: var(--text-main);">
+          <div class="donor-footer-row">
+            <div class="donor-donation-record">
               💉 Donated: <strong>${donor.unitsDonated}</strong> on <em>${donor.donatedOn}</em>
             </div>
-            <div style="display: flex; gap: 8px;">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="prefillDonorReview('${donor.name.replace(/'/g, "\\'")}')" style="border-color: #f59e0b; color: #d97706; font-weight: 700;">
+            <div class="donor-btn-wrap">
+              <button type="button" class="btn btn-secondary btn-sm btn-rate-donor" onclick="prefillDonorReview('${donor.name.replace(/'/g, "\\'")}')">
                 ⭐ Rate & Review ${donor.name.split(' ')[0]}
               </button>
             </div>
@@ -925,26 +927,26 @@
         const isHospital = (rev.reviewerRole || '').includes('Hospital');
 
         card.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+          <div class="review-card-top">
             <div>
-              <strong style="color: var(--text-main); font-size: 15px;">${rev.reviewerName}</strong>
-              <div style="margin-top: 3px;">
-                <span class="badge ${isHospital ? 'badge-ai' : 'badge-verified'}" style="font-size: 11px;">
+              <strong class="review-author-name">${rev.reviewerName}</strong>
+              <div class="mt-3">
+                <span class="badge ${isHospital ? 'badge-ai' : 'badge-verified'} badge-fs-11">
                   ${rev.reviewerRole}
                 </span>
               </div>
             </div>
-            <div style="color: #f59e0b; font-size: 16px; letter-spacing: 2px;">
+            <div class="review-stars-display">
               ${starStr}
             </div>
           </div>
 
-          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 10px 0;">
+          <p class="review-text-quote">
             "${rev.comment}"
           </p>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-dim); border-top: 1px solid var(--border-glass); padding-top: 8px;">
-            <span>Review for: <strong style="color: var(--crimson-primary);">${rev.donorName}</strong></span>
+          <div class="review-card-footer">
+            <span>Review for: <strong class="color-crimson">${rev.donorName}</strong></span>
             <span>${rev.date || 'Recent'}</span>
           </div>
         `;

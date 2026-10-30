@@ -55,12 +55,12 @@
     </header>
 
     <main class="request-container">
-      <div style="text-align: center; margin-bottom: 28px;">
-        <span class="badge badge-critical" style="margin-bottom: 8px;">🚨 Immediate Life-Saving Dispatch</span>
-        <h1 style="font-family: var(--font-display); font-size: 36px; letter-spacing: -1px;">
+      <div class="emergency-header-box">
+        <span class="badge badge-critical emergency-badge-top">🚨 Immediate Life-Saving Dispatch</span>
+        <h1 class="emergency-main-title">
           Broadcast Emergency Blood Request
         </h1>
-        <p style="font-size: 15px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+        <p class="emergency-lead-desc">
           Instantly triggers AI Donor Response Prediction, SMS, Email, and Push alerts to compatible, available donors and Bangalore blood banks.
         </p>
       </div>
@@ -68,19 +68,19 @@
       <!-- Live AI Emergency Priority & Triage Preview -->
       <div class="ai-triage-panel">
         <div>
-          <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="triage-level-flex">
             <span class="badge badge-ai">AI Triage Model</span>
             <span class="badge badge-critical" id="liveTriageBadge">Critical (Tier-1)</span>
           </div>
-          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;" id="liveTriageDesc">
+          <p class="triage-desc-text" id="liveTriageDesc">
             AI estimates ~12 compatible Bangalore donors in dispatch radius. Fast response ETA ~4.5 min.
           </p>
         </div>
-        <div style="text-align: right;">
-          <div style="font-family: var(--font-display); font-size: 24px; font-weight: 800; color: var(--crimson-primary);" id="liveTriageScore">
+        <div class="triage-score-box">
+          <div class="triage-score-val" id="liveTriageScore">
             92 / 100
           </div>
-          <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase;">Triage Priority Index</span>
+          <span class="triage-score-lbl">Triage Priority Index</span>
         </div>
       </div>
 
@@ -127,52 +127,52 @@
           </div>
 
           <!-- Hospital Location, Address & Live GPS Section -->
-          <div style="background: var(--bg-card); border: 1px solid var(--border-crimson); border-radius: var(--radius-lg); padding: 22px; margin-bottom: 22px; box-shadow: var(--shadow-card);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+          <div class="emergency-location-card">
+            <div class="emergency-location-header">
               <div>
-                <label style="font-weight: 700; font-size: 15px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                <label class="emergency-location-label">
                   <span>🏥</span> Hospital Location & Real-Time Google Maps Telematics
                 </label>
-                <p style="font-size: 12px; color: var(--text-muted); margin: 3px 0 0 0;">
+                <p class="emergency-location-sub">
                   Donors and ambulance units receive real-time Google Maps turn-by-turn navigation directly to this destination.
                 </p>
               </div>
-              <button type="button" class="btn btn-secondary btn-sm" id="btnFetchEmergencyLocation" style="border-color: #ff3347; color: #ff3347; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(193, 18, 31, 0.12); cursor: pointer;">
+              <button type="button" class="btn btn-secondary btn-sm btn-fetch-location" id="btnFetchEmergencyLocation">
                 <span id="emGpsBtnIcon">📍</span>
                 <span id="emGpsBtnText">Fetch Live Location & Auto-Fill Address</span>
               </button>
             </div>
 
             <div class="form-row-2">
-              <div class="form-group" style="margin-bottom: 12px;">
+              <div class="form-group form-group-compact">
                 <label for="hospital">Hospital / Medical Center Name</label>
                 <input type="text" id="hospital" class="form-control" placeholder="e.g. Victoria Hospital Emergency Trauma ICU" value="Victoria Hospital Emergency Trauma ICU" required>
               </div>
-              <div class="form-group" style="margin-bottom: 12px;">
+              <div class="form-group form-group-compact">
                 <label for="location">Hospital Locality / Area</label>
                 <input type="text" id="location" class="form-control" placeholder="e.g. KR Market, Bengaluru" value="KR Market, Bengaluru" required>
               </div>
             </div>
 
-            <div class="form-group" style="margin-bottom: 12px; position: relative;">
-              <label for="hospitalAddress" style="font-size: 12px; color: var(--text-muted);">Hospital Full Street Address / Medical Campus</label>
-              <div style="position: relative;">
-                <input type="text" id="hospitalAddress" class="form-control" placeholder="Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002" value="Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002" required style="padding-right: 130px;">
-                <span id="emAddressAutoBadge" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 4px; display: inline;">✓ AUTO-FETCHED</span>
+            <div class="form-group form-group-rel">
+              <label for="hospitalAddress" class="field-label-sm">Hospital Full Street Address / Medical Campus</label>
+              <div class="position-relative">
+                <input type="text" id="hospitalAddress" class="form-control input-with-badge" placeholder="Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002" value="Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002" required>
+                <span id="emAddressAutoBadge" class="auto-badge-pill">✓ AUTO-FETCHED</span>
               </div>
             </div>
 
             <!-- Live Google Maps Telemetry Lock Pill -->
-            <div id="emLocationStatusPill" style="display: flex; margin-top: 10px; padding: 10px 16px; border-radius: 8px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); font-size: 12px; color: #38bdf8; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <div id="emLocationStatusPill" class="location-status-strip">
               <span id="emGpsCoordsDisplay">🛰️ Google Maps Telemetry: <strong>12.9625, 77.5750</strong> (Victoria Hospital Fort)</span>
-              <a id="emGoogleMapsLink" href="https://www.google.com/maps?q=12.9625,77.5750" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+              <a id="emGoogleMapsLink" href="https://www.google.com/maps?q=12.9625,77.5750" target="_blank" rel="noopener noreferrer" class="maps-nav-link">
                 🗺️ Open in Google Maps ➔
               </a>
             </div>
 
             <!-- Quick-Pick Major Trauma Centers (1-Click) -->
-            <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-              <span style="font-size: 11px; color: var(--text-dim);">Quick Trauma Hospitals:</span>
+            <div class="quick-hospitals-strip">
+              <span class="quick-hospitals-lbl">Quick Trauma Hospitals:</span>
               <button type="button" class="quick-chip" onclick="setHospitalPreset('Victoria Hospital Emergency Trauma ICU', 'KR Market, Bengaluru', 'Fort Road, near City Market, Kalasipalya, Bengaluru, Karnataka 560002', 12.9625, 77.5750)">Victoria (KR Market)</button>
               <button type="button" class="quick-chip" onclick="setHospitalPreset('NIMHANS Emergency Neuro-Trauma Centre', 'Dairy Circle, Bengaluru', 'Hosur Road, Lakkasandra, Dairy Circle, Bengaluru, Karnataka 560029', 12.9385, 77.5955)">NIMHANS (Dairy Circle)</button>
               <button type="button" class="quick-chip" onclick="setHospitalPreset('Bowring & Lady Curzon Emergency Hospital', 'Shivajinagar, Bengaluru', 'Lady Curzon Rd, Tasker Town, Shivajinagar, Bengaluru, Karnataka 560001', 12.9833, 77.6015)">Bowring (Shivajinagar)</button>
@@ -191,13 +191,13 @@
           </div>
 
           <!-- Fake / Spam Request Detector Status -->
-          <div id="spamCheckNotice" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); padding: 12px; border-radius: var(--radius-md); margin-bottom: 16px; color: #ff859b; font-size: 13px;">
+          <div id="spamCheckNotice" class="spam-notice-box">
             ⚠️ <strong>Spam Protection Alert:</strong> Unusual request pattern detected. Flagged for administrative verification.
           </div>
 
-          <p id="formErrorMessage" style="color: var(--crimson-primary); font-size: 14px; margin-bottom: 16px;"></p>
+          <p id="formErrorMessage" class="form-error-text"></p>
 
-          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="submitRequestBtn">
+          <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitRequestBtn">
             🚨 Broadcast Emergency & Match Donors Now
           </button>
         </form>
@@ -208,7 +208,7 @@
     <footer>
       <div class="footer-inner">
         <p>© 2026 BloodConnect — Bangalore Emergency Dispatch & AI Priority Triage</p>
-        <p style="font-size: 13px; color: var(--text-dim);">Automated multi-channel push, SMS, and email broadcasting.</p>
+        <p class="footer-broadcast-note">Automated multi-channel push, SMS, and email broadcasting.</p>
       </div>
     </footer>
   </div>

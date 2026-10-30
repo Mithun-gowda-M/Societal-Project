@@ -54,11 +54,11 @@
           <div class="cooldown-info">
             <h4 id="cooldownStatusTitle">3-Month Donation Cooldown Active</h4>
             <p id="cooldownDetails">
-              Last whole blood donation was on <strong id="lastDonationDateText" style="color: var(--text-main);">2026-06-10</strong>. You are scheduled to be eligible again on <strong id="nextEligibleDateText" style="color: var(--emerald-primary);">2026-09-08</strong>.
+              Last whole blood donation was on <strong id="lastDonationDateText" class="text-main-strong">2026-06-10</strong>. You are scheduled to be eligible again on <strong id="nextEligibleDateText" class="text-emerald-strong">2026-09-08</strong>.
             </p>
           </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <div class="cooldown-right-flex">
           <div class="cooldown-timer-box">
             <span class="days" id="cooldownDaysRemaining">0</span>
             <span class="lbl">Days Remaining</span>
@@ -76,81 +76,81 @@
       <div class="donor-dashboard-grid">
         <!-- Left: Donor Profile & AI Score Card -->
         <div>
-          <div class="card card-glow-red" style="margin-bottom: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+          <div class="card card-glow-red donor-card-glow">
+            <div class="donor-card-header">
               <div>
                 <span class="badge badge-verified" id="aadhaarBadge">🛡️ Aadhaar ID Verified</span>
-                <h2 style="font-family: var(--font-display); font-size: 24px; margin-top: 8px;" id="donorProfileName">
+                <h2 class="donor-profile-title" id="donorProfileName">
                   Dr. Arjun K. Rao
                 </h2>
-                <p style="font-size: 13px; color: var(--text-muted);" id="donorEmail">arjun.rao@blr-med.org</p>
+                <p class="donor-email-text" id="donorEmail">arjun.rao@blr-med.org</p>
               </div>
-              <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--crimson-subtle); border: 2px solid var(--crimson-primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 20px; font-weight: 800; color: var(--crimson-primary);" id="donorBloodGroupBadge">
+              <div class="donor-blood-badge" id="donorBloodGroupBadge">
                 O+
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; padding: 14px 0; border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass); font-size: 13px;">
-              <div style="grid-column: 1 / -1;">
-                <span style="color: var(--text-dim); display: block;">📍 Verified Live Residential Address</span>
-                <strong style="color: #38bdf8;" id="donorAddress">100 Feet Rd, HAL 2nd Stage, Indiranagar, Bengaluru</strong>
-                <div style="display: flex; gap: 8px; margin-top: 6px; align-items: center; flex-wrap: wrap;">
-                  <button type="button" class="btn btn-secondary btn-sm" id="btnUpdateDonorLiveLocation" style="border-color: #38bdf8; color: #38bdf8; font-size: 11px; padding: 4px 10px; font-weight: 700;">
+            <div class="donor-info-grid">
+              <div class="grid-col-full">
+                <span class="dim-block-label">📍 Verified Live Residential Address</span>
+                <strong class="donor-address-text" id="donorAddress">100 Feet Rd, HAL 2nd Stage, Indiranagar, Bengaluru</strong>
+                <div class="donor-address-actions">
+                  <button type="button" class="btn btn-secondary btn-sm btn-update-location" id="btnUpdateDonorLiveLocation">
                     📍 Fetch Live GPS & Auto-Fill Address
                   </button>
-                  <a id="donorGoogleMapsLink" href="https://www.google.com/maps?q=12.9719,77.6412" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-size: 11px; font-weight: 700;">
+                  <a id="donorGoogleMapsLink" href="https://www.google.com/maps?q=12.9719,77.6412" target="_blank" rel="noopener noreferrer" class="gmaps-link-small">
                     🗺️ View on Google Maps ➔
                   </a>
                 </div>
               </div>
               <div>
-                <span style="color: var(--text-dim); display: block;">Locality & Metro</span>
-                <strong style="color: var(--text-main);" id="donorLocation">Indiranagar, BLR</strong>
+                <span class="dim-block-label">Locality & Metro</span>
+                <strong class="text-main-strong" id="donorLocation">Indiranagar, BLR</strong>
               </div>
               <div>
-                <span style="color: var(--text-dim); display: block;">Phone</span>
-                <strong style="color: var(--text-main);" id="donorPhone">+91 98451 12233</strong>
+                <span class="dim-block-label">Phone</span>
+                <strong class="text-main-strong" id="donorPhone">+91 98451 12233</strong>
               </div>
               <div>
-                <span style="color: var(--text-dim); display: block;">Age & Weight</span>
-                <strong style="color: var(--text-main);" id="donorAgeWeight">32 yrs • 72 kg</strong>
+                <span class="dim-block-label">Age & Weight</span>
+                <strong class="text-main-strong" id="donorAgeWeight">32 yrs • 72 kg</strong>
               </div>
               <div>
-                <span style="color: var(--text-dim); display: block;">Life-Saving Impact</span>
-                <strong style="color: var(--emerald-primary);" id="donorImpactCount">14 Donations</strong>
+                <span class="dim-block-label">Life-Saving Impact</span>
+                <strong class="text-emerald-strong" id="donorImpactCount">14 Donations</strong>
               </div>
             </div>
 
             <!-- AI Response Score Showcase -->
-            <div style="background: var(--bg-secondary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-glass); margin-bottom: 18px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--text-main);">
+            <div class="ai-score-card">
+              <div class="ai-score-header">
+                <span class="ai-score-label">
                   ⭐ AI Response Reliability:
                 </span>
                 <span class="badge badge-ai" id="aiReliabilityBadge">98% High Likelihood</span>
               </div>
-              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+              <p class="ai-score-desc">
                 AI algorithms prioritize you for urgent emergency calls due to your top-tier response time and proximity in East Bangalore.
               </p>
             </div>
 
             <!-- Manual Availability Toggle -->
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="donor-avail-strip">
               <div>
-                <div style="font-size: 13px; font-weight: 600;">Status: <span id="availabilityText" style="color: var(--emerald-primary);">Available</span></div>
-                <div style="font-size: 11px; color: var(--text-dim);">Ready for emergency requests</div>
+                <div class="donor-avail-title">Status: <span id="availabilityText" class="text-emerald-strong">Available</span></div>
+                <div class="donor-avail-sub">Ready for emergency requests</div>
               </div>
               <button class="btn btn-secondary btn-sm" id="toggleAvailabilityBtn">Toggle Status</button>
             </div>
           </div>
 
           <!-- Mark Blood Donation Recorded (Triggers 90-day cooldown) -->
-          <div class="card" style="padding: 20px;">
-            <h4 style="font-family: var(--font-display); font-size: 16px; margin-bottom: 6px;">🩸 Record Recent Blood Donation</h4>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+          <div class="card record-card-pad">
+            <h4 class="record-card-title">🩸 Record Recent Blood Donation</h4>
+            <p class="record-card-sub">
               Just donated blood today? Click below to record it. The system will automatically place you on a 3-month (90 days) rest period.
             </p>
-            <button class="btn btn-primary btn-sm" id="recordDonationTodayBtn" style="width: 100%;">
+            <button class="btn btn-primary btn-sm btn-block" id="recordDonationTodayBtn">
               Record Donation for Today
             </button>
           </div>
@@ -161,16 +161,16 @@
           <!-- ⭐ Donor Emergency Response Box (Action Center) -->
           <div class="response-box-card" id="donorResponseBox">
             <div class="response-header">
-              <div style="display: flex; align-items: center; gap: 10px;">
+              <div class="response-title-flex">
                 <span class="pulse-dot red"></span>
-                <h3 style="font-family: var(--font-display); font-size: 20px; color: var(--text-main);">
+                <h3 class="response-title-text">
                   🚨 Urgent Emergency Blood Request Incoming
                 </h3>
               </div>
               <span class="badge badge-critical" id="boxUrgencyBadge">Critical (Tier-1)</span>
             </div>
 
-            <p style="font-size: 14px; color: #fecdd3; line-height: 1.5;" id="boxSummaryText">
+            <p class="response-summary-p" id="boxSummaryText">
               Patient <strong>Ramesh Sundaram</strong> requires urgent <strong>O+ Positive (2 units)</strong> for trauma surgery at <strong>Victoria Hospital Emergency Trauma ICU, KR Market</strong>.
             </p>
 
@@ -182,17 +182,17 @@
               <div class="response-item">
                 <div class="label">Hospital / Center</div>
                 <div class="val" id="boxHospitalName">Victoria Hospital (KR Market)</div>
-                <a id="boxHospitalGoogleMapsLink" href="https://www.google.com/maps/dir/12.9719,77.6412/12.9625,77.5750" target="_blank" rel="noopener noreferrer" style="font-size: 11px; color: #38bdf8; text-decoration: underline; margin-top: 4px; display: inline-block; font-weight: 700;">
+                <a id="boxHospitalGoogleMapsLink" href="https://www.google.com/maps/dir/12.9719,77.6412/12.9625,77.5750" target="_blank" rel="noopener noreferrer" class="hospital-maps-link">
                   🗺️ Google Maps Navigation ➔
                 </a>
               </div>
               <div class="response-item">
                 <div class="label">Distance From You</div>
-                <div class="val" style="color: var(--cyber-blue);" id="boxDistance">2.4 km (~7 min)</div>
+                <div class="val val-cyber" id="boxDistance">2.4 km (~7 min)</div>
               </div>
               <div class="response-item">
                 <div class="label">AI Match Score</div>
-                <div class="val" style="color: var(--emerald-primary);" id="boxMatchScore">96% High Fit</div>
+                <div class="val val-emerald" id="boxMatchScore">96% High Fit</div>
               </div>
             </div>
 
@@ -207,20 +207,20 @@
             </div>
 
             <!-- Connected Contact Strip (Revealed when Accepted!) -->
-            <div id="acceptedConnectStrip" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.15);">
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--emerald-primary); font-weight: 700;">
+            <div id="acceptedConnectStrip" class="connect-strip-container">
+              <div class="connect-header-msg">
                 <span>✅</span> You have ACCEPTED this emergency. Coordinate directly with the hospital or patient:
               </div>
 
               <div class="connect-buttons-row">
-                <a href="#" target="_blank" class="btn btn-whatsapp btn-lg" id="donorWhatsAppBtn">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg" id="donorWhatsAppBtn">
                   💬 Chat on WhatsApp with Requester
                 </a>
                 <a href="#" class="btn btn-call btn-lg" id="donorCallBtn">
                   📞 Call Requester Immediately
                 </a>
               </div>
-              <a href="/live-dispatch" class="btn btn-primary btn-lg" style="margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: linear-gradient(135deg, #c1121f, #ff3347); box-shadow: 0 0 20px rgba(255,51,71,0.4);">
+              <a href="/live-dispatch" class="btn btn-primary btn-lg btn-start-dispatch">
                 <span>🛸 Start Live GPS Transit Corridor & Navigation</span>
                 <span>➔</span>
               </a>
@@ -229,27 +229,27 @@
 
           <!-- Multi-Channel Notification Dispatch Logs -->
           <div class="card">
-            <h3 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <h3 class="notifications-sim-title">
               <span>🔔</span> Multi-Channel Notifications Simulation
             </h3>
 
-            <div style="display: flex; flex-direction: column; gap: 12px;" id="notificationLogContainer">
-              <div style="background: var(--bg-secondary); border-radius: var(--radius-md); padding: 14px; border: 1px solid var(--border-glass);">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-dim); margin-bottom: 4px;">
+            <div class="notif-log-stack" id="notificationLogContainer">
+              <div class="notif-log-card">
+                <div class="notif-log-meta">
                   <span>📱 SMS Alert Dispatched</span>
                   <span>Just now</span>
                 </div>
-                <p style="font-size: 13px; color: var(--text-main);">
+                <p class="notif-log-content">
                   "EMERGENCY: Patient needs 2 units of O+ blood at Victoria Hospital. Please open BloodConnect to accept: https://bloodconnect.local/req-101"
                 </p>
               </div>
 
-              <div style="background: var(--bg-secondary); border-radius: var(--radius-md); padding: 14px; border: 1px solid var(--border-glass);">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-dim); margin-bottom: 4px;">
+              <div class="notif-log-card">
+                <div class="notif-log-meta">
                   <span>📧 Email Alert Sent</span>
                   <span>1 min ago</span>
                 </div>
-                <p style="font-size: 13px; color: var(--text-main);">
+                <p class="notif-log-content">
                   "Subject: URGENT: Blood Request Matched (Victoria Hospital ICU) — BloodConnect 2026 AI"
                 </p>
               </div>
@@ -263,7 +263,7 @@
     <footer>
       <div class="footer-inner">
         <p>© 2026 BloodConnect — Donor Coordination & Emergency Response Engine</p>
-        <p style="font-size: 13px; color: var(--text-dim);">Automated 90-day cooldown enforcement & WhatsApp phlebotomy linking.</p>
+        <p class="footer-broadcast-note">Automated 90-day cooldown enforcement & WhatsApp phlebotomy linking.</p>
       </div>
     </footer>
   </div>

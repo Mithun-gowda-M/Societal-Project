@@ -2,6 +2,24 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    { "source": "/portal", "destination": "/donor-dashboard.html" },
+    { "source": "/dashboard", "destination": "/donor-dashboard.html" },
+    { "source": "/emergency", "destination": "/emergency-request.html" },
+    { "source": "/sos", "destination": "/emergency-request.html" },
+    { "source": "/tracking", "destination": "/request-tracking.html" },
+    { "source": "/live-dispatch", "destination": "/request-tracking.html" },
+    { "source": "/donors", "destination": "/nearby-donors.html" },
+    { "source": "/find-donors", "destination": "/nearby-donors.html" },
+    { "source": "/patient", "destination": "/patient-dashboard.html" },
+    { "source": "/patient-portal", "destination": "/patient-dashboard.html" },
+    { "source": "/admin", "destination": "/admin-dashboard.html" },
+    { "source": "/ops", "destination": "/admin-dashboard.html" },
+    { "source": "/forecast", "destination": "/ai-forecast.html" },
+    { "source": "/radar", "destination": "/ai-forecast.html" },
+    { "source": "/blood-banks", "destination": "/bangalore-blood-banks.html" },
+    { "source": "/onboard", "destination": "/register.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

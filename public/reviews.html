@@ -57,11 +57,11 @@
         <p>Transparency and gratitude between donors, critical patients, and Bangalore hospitals.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px;">
+      <div class="reviews-grid-layout">
         <!-- Left: Reviews Feed -->
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="font-family: var(--font-display); font-size: 20px;">Verified Feedback</h3>
+          <div class="reviews-header-flex">
+            <h3 class="review-feed-title">Verified Feedback</h3>
             <span class="badge badge-available">⭐ 4.97 Avg Community Rating</span>
           </div>
 
@@ -73,8 +73,8 @@
         <!-- Right: Submit Review Form -->
         <div>
           <div class="card card-glow-red">
-            <h3 style="font-family: var(--font-display); font-size: 20px; margin-bottom: 8px;">Submit a Review / Rating</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+            <h3 class="review-form-title">Submit a Review / Rating</h3>
+            <p class="review-form-desc">
               Share your donation or transfusion coordination experience.
             </p>
 
@@ -115,7 +115,7 @@
                 <textarea id="revComment" class="form-textarea" rows="4" placeholder="Describe the response time, professionalism, and care..." required></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <button type="submit" class="btn btn-primary btn-block">
                 ⭐ Post Verified Review
               </button>
             </form>
@@ -155,16 +155,16 @@
         card.innerHTML = `
           <div class="review-author">
             <div>
-              <strong style="color: var(--text-main); font-size: 16px;">${rev.reviewerName}</strong>
-              <span class="badge badge-verified" style="margin-left: 8px;">${rev.reviewerRole}</span>
+              <strong class="review-author-name">${rev.reviewerName}</strong>
+              <span class="badge badge-verified review-role-badge">${rev.reviewerRole}</span>
             </div>
             <div class="rating-stars">${stars}</div>
           </div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px;">
+          <p class="review-comment-text">
             "${rev.comment}"
           </p>
-          <div style="font-size: 12px; color: var(--text-dim); display: flex; justify-content: space-between;">
-            <span>Review for: <strong style="color: var(--crimson-primary);">${rev.donorName}</strong></span>
+          <div class="review-footer-meta">
+            <span>Review for: <strong class="review-target-name">${rev.donorName}</strong></span>
             <span>${rev.date}</span>
           </div>
         `;

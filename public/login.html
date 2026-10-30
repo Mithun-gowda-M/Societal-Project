@@ -63,14 +63,14 @@
 
     <main class="login-wrapper">
       <div class="card card-glow-red">
-        <div style="text-align: center; margin-bottom: 24px;">
-          <div class="badge badge-ai" style="margin-bottom: 8px;">Secure Access</div>
-          <h1 style="font-family: var(--font-display); font-size: 28px;">Welcome Back</h1>
-          <p style="font-size: 14px; color: var(--text-muted);">Enter your credentials to access your portal.</p>
+        <div class="login-header-box">
+          <div class="badge badge-ai login-badge">Secure Access</div>
+          <h1 class="login-title">Welcome Back</h1>
+          <p class="login-subtitle">Enter your credentials to access your portal.</p>
 
           <!-- Quick Test Account Prefill Chips -->
-          <div style="margin-top: 14px; text-align: left;">
-            <span style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">1-Click Test Login:</span>
+          <div class="test-creds-container">
+            <span class="test-creds-label">1-Click Test Login:</span>
             <div class="quick-login-pills">
               <button type="button" class="quick-pill" onclick="quickFill('patient', 'rajeshwari.patient@karnataka-health.gov.in', 'Rajeshwari2026@Patient')">🧑‍🤝‍🧑 Rajeshwari (Patient)</button>
               <button type="button" class="quick-pill" onclick="quickFill('donor', 'arjun.rao@blr-med.org', 'Arjun2026@Life')">🩸 Dr. Arjun (Donor)</button>
@@ -103,25 +103,25 @@
           </div>
 
           <!-- Security Access Notice -->
-          <div style="margin-bottom: 20px; padding: 12px 14px; background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.06);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 14px;">🔒</span>
-              <span style="font-size: 12px; color: var(--text-muted);">
+          <div class="login-security-notice">
+            <div class="security-notice-flex">
+              <span class="security-lock-icon">🔒</span>
+              <span class="security-notice-text">
                 Authorized personnel and registered donors only. Please refer to your confidential registration dossier for login credentials.
               </span>
             </div>
           </div>
 
-          <p id="loginErrorMsg" style="color: var(--crimson-primary); font-size: 13px; margin-bottom: 14px;"></p>
+          <p id="loginErrorMsg" class="login-error-text"></p>
 
-          <button type="submit" class="btn btn-primary" style="width: 100%;">
+          <button type="submit" class="btn btn-primary btn-block">
             Sign In to Dashboard
           </button>
         </form>
 
-        <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-glass);">
-          <span style="font-size: 14px; color: var(--text-muted);">New to BloodConnect?</span>
-          <a href="register.html" style="color: var(--crimson-primary); font-weight: 700; font-size: 14px; text-decoration: none; margin-left: 6px;">
+        <div class="login-footer-card">
+          <span class="login-footer-prompt">New to BloodConnect?</span>
+          <a href="register.html" class="login-register-link">
             Create verified account ➔
           </a>
         </div>

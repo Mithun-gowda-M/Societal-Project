@@ -139,10 +139,10 @@
       <div class="card">
         <!-- Step 1: Account & Eligibility Details -->
         <section id="step1">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <div class="badge badge-ai" style="margin-bottom: 8px;">Step 1 of 3</div>
-            <h1 style="font-family: var(--font-display); font-size: 28px;">Create Verified Account</h1>
-            <p style="font-size: 14px; color: var(--text-muted);">Join Bangalore's verified donor network. Age and weight checks prevent ineligible registrations.</p>
+          <div class="reg-step-header">
+            <div class="badge badge-ai badge-mb-8">Step 1 of 3</div>
+            <h1 class="reg-step-title">Create Verified Account</h1>
+            <p class="reg-step-desc">Join Bangalore's verified donor network. Age and weight checks prevent ineligible registrations.</p>
           </div>
 
           <!-- Medical Disclaimer Banner -->
@@ -208,17 +208,17 @@
                 </div>
               </div>
 
-              <div class="form-group" style="margin-bottom: 16px;">
+              <div class="form-group form-group-spaced">
                 <label for="lastDonationDate">Last Blood Donation Date <small>(Optional — Used for automated 90-day cooldown tracking)</small></label>
                 <input type="date" id="lastDonationDate" class="form-control">
               </div>
 
               <!-- Quick Medical Checklist -->
-              <div style="background: var(--bg-secondary); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px; border: 1px solid var(--border-glass);">
-                <label style="font-weight: 700; font-size: 13px; color: var(--text-main); display: block; margin-bottom: 8px;">
+              <div class="reg-checklist-card">
+                <label class="reg-checklist-label">
                   Clinical Screening Self-Declaration:
                 </label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; color: var(--text-muted);">
+                <div class="reg-checklist-grid">
                   <label><input type="checkbox" id="noInfections" checked> No active fever or infections</label>
                   <label><input type="checkbox" id="noInsulin" checked> Not on insulin therapy</label>
                   <label><input type="checkbox" id="noSurgery" checked> No tattoo/surgery in 6 months</label>
@@ -228,42 +228,42 @@
             </div>
 
             <!-- Address & Live Geolocation Auto-Fetch Section -->
-            <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 51, 71, 0.3); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 22px; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            <div class="reg-address-card">
+              <div class="reg-address-header">
                 <div>
-                  <label style="font-weight: 700; font-size: 14px; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
+                  <label class="reg-address-label">
                     <span>📍</span> Residential / Medical Facility Address
                   </label>
-                  <p style="font-size: 12px; color: var(--text-muted); margin: 3px 0 0 0;">
+                  <p class="reg-address-subtext">
                     Used for rapid spatial matching and live GPS routing during emergency blood requests.
                   </p>
                 </div>
-                <button type="button" class="btn btn-secondary btn-sm" id="btnFetchLiveLocation" style="border-color: var(--crimson-accent); color: #ff3347; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(193, 18, 31, 0.12); cursor: pointer;">
+                <button type="button" class="btn btn-secondary btn-sm btn-fetch-location" id="btnFetchLiveLocation">
                   <span id="gpsBtnIcon">📍</span>
                   <span id="gpsBtnText">Fetch Live Location & Auto-Fill Address</span>
                 </button>
               </div>
 
               <!-- Street Address Input (Auto-filled or manual) -->
-              <div class="form-group" style="margin-bottom: 12px; position: relative;">
-                <label for="streetAddress" style="font-size: 12px; color: var(--text-muted);">Street Address / Building / Landmark</label>
-                <div style="position: relative;">
-                  <input type="text" id="streetAddress" class="form-control" placeholder="Click 'Fetch Live Location' or type complete street address..." required style="padding-right: 130px;">
-                  <span id="addressAutoBadge" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 4px; display: none;">✓ AUTO-FETCHED</span>
+              <div class="form-group reg-street-group">
+                <label for="streetAddress" class="reg-field-label">Street Address / Building / Landmark</label>
+                <div class="pos-relative">
+                  <input type="text" id="streetAddress" class="form-control street-input-padded" placeholder="Click 'Fetch Live Location' or type complete street address..." required>
+                  <span id="addressAutoBadge" class="address-auto-badge">✓ AUTO-FETCHED</span>
                 </div>
               </div>
 
-              <div class="form-row-3" style="margin-bottom: 10px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label for="location" style="font-size: 12px; color: var(--text-muted);">Locality / Area</label>
+              <div class="form-row-3 reg-row3-spaced">
+                <div class="form-group form-group-mb0">
+                  <label for="location" class="reg-field-label">Locality / Area</label>
                   <input type="text" id="location" class="form-control" placeholder="e.g. Indiranagar" required>
                 </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label for="city" style="font-size: 12px; color: var(--text-muted);">City / Metro</label>
+                <div class="form-group form-group-mb0">
+                  <label for="city" class="reg-field-label">City / Metro</label>
                   <input type="text" id="city" class="form-control" placeholder="e.g. Bengaluru" required>
                 </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label for="pincode" style="font-size: 12px; color: var(--text-muted);">Pincode / Postal Code</label>
+                <div class="form-group form-group-mb0">
+                  <label for="pincode" class="reg-field-label">Pincode / Postal Code</label>
                   <input type="text" id="pincode" class="form-control" placeholder="e.g. 560038" maxlength="10">
                 </div>
               </div>
@@ -273,15 +273,15 @@
               <input type="hidden" id="regLongitude" value="77.5946">
 
               <!-- Live Telematics Status Pill -->
-              <div id="liveGpsStatusPill" style="display: none; margin-top: 10px; padding: 8px 14px; border-radius: 6px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 12px; color: #10b981; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+              <div id="liveGpsStatusPill" class="live-gps-pill">
                 <span id="gpsCoordsDisplay">📍 GPS Locked: Lat 12.9719, Lng 77.6412</span>
-                <span id="gpsAccuracyDisplay" style="font-size: 11px; color: var(--text-dim);">Accuracy: ±8m</span>
-                <a id="regGoogleMapsLink" href="https://www.google.com/maps?q=12.9716,77.5946" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: underline; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">🗺️ View on Google Maps ➔</a>
+                <span id="gpsAccuracyDisplay" class="gps-accuracy-span">Accuracy: ±8m</span>
+                <a id="regGoogleMapsLink" href="https://www.google.com/maps?q=12.9716,77.5946" target="_blank" rel="noopener noreferrer" class="reg-maps-link">🗺️ View on Google Maps ➔</a>
               </div>
 
               <!-- Fast Preset Neighborhood Chips (Clickable Fallback) -->
-              <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span style="font-size: 11px; color: var(--text-dim);">Quick Area Fill:</span>
+              <div class="reg-chips-row">
+                <span class="quick-fill-label">Quick Area Fill:</span>
                 <button type="button" class="quick-chip" onclick="window.setPresetLocation('Indiranagar', '100 Feet Rd, Indiranagar, Bengaluru, Karnataka', '560038', 12.9719, 77.6412)">Indiranagar</button>
                 <button type="button" class="quick-chip" onclick="window.setPresetLocation('Koramangala', '80 Feet Rd, 4th Block, Koramangala, Bengaluru, Karnataka', '560034', 12.9345, 77.6265)">Koramangala</button>
                 <button type="button" class="quick-chip" onclick="window.setPresetLocation('Whitefield', 'ITPB Main Rd, Whitefield, Bengaluru, Karnataka', '560066', 12.9856, 77.7289)">Whitefield</button>
@@ -302,35 +302,35 @@
               </div>
             </div>
 
-            <p id="step1Error" style="color: var(--crimson-primary); font-size: 14px; margin-bottom: 16px;"></p>
+            <p id="step1Error" class="reg-error-msg"></p>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <button type="submit" class="btn btn-primary btn-w-full">
               Continue to Aadhaar & Government ID Scan ➔
             </button>
           </form>
         </section>
 
         <!-- Step 2: Aadhaar & Govt ID Scan (Prevents Fake Logins) -->
-        <section id="step2" style="display: none;">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <div class="badge badge-ai" style="margin-bottom: 8px;">Step 2 of 3</div>
-            <h2 style="font-family: var(--font-display); font-size: 26px;">Aadhaar / Government ID Verification</h2>
-            <p style="font-size: 14px; color: var(--text-muted);">
+        <section id="step2" class="d-none">
+          <div class="reg-step-header">
+            <div class="badge badge-ai badge-mb-8">Step 2 of 3</div>
+            <h2 class="reg-step2-title">Aadhaar / Government ID Verification</h2>
+            <p class="reg-step-desc">
               Scans your Government ID to verify you are 18+ and eliminate bots, spam, and fake donor logins.
             </p>
           </div>
 
           <div class="id-scan-container" id="scanZone">
             <div class="scan-laser-line" id="laserLine"></div>
-            <div style="font-size: 42px; margin-bottom: 10px;">🪪</div>
-            <h4 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 6px;">
+            <div class="scan-icon-hero">🪪</div>
+            <h4 class="scan-zone-title">
               Upload or Scan Aadhaar Card / Driving License / Voter ID
             </h4>
-            <p style="font-size: 13px; color: var(--text-muted); max-width: 440px; margin: 0 auto 16px;">
+            <p class="scan-zone-desc">
               Drag and drop an image of your Aadhaar card or click below to simulate instant optical OCR age verification.
             </p>
-            <input type="file" id="idFileInput" accept="image/*,.pdf" style="display: none;">
-            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <input type="file" id="idFileInput" accept="image/*,.pdf" class="d-none">
+            <div class="scan-btn-row">
               <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('idFileInput').click()">
                 📁 Choose File
               </button>
@@ -341,75 +341,75 @@
           </div>
 
           <!-- Scan Status Output -->
-          <div id="ocrResultBox" style="display: none; background: var(--bg-secondary); border-radius: var(--radius-md); padding: 18px; border: 1px solid var(--border-glass); margin-bottom: 20px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <div id="ocrResultBox" class="ocr-result-card">
+            <div class="ocr-result-header">
               <span class="badge badge-verified">🛡️ ID Scanned & Verified</span>
               <span class="badge badge-available">Age: 18+ Confirmed</span>
             </div>
-            <div style="font-size: 13px; color: var(--text-main); line-height: 1.6;">
+            <div class="ocr-result-body">
               <div><strong>Document Type:</strong> Government Aadhaar Card (UIDAI)</div>
-              <div><strong>Masked Aadhaar:</strong> <span style="font-family: var(--font-mono); color: var(--cyber-blue);" id="ocrMaskedId">XXXX-XXXX-8921</span></div>
+              <div><strong>Masked Aadhaar:</strong> <span class="ocr-masked-id" id="ocrMaskedId">XXXX-XXXX-8921</span></div>
               <div><strong>Verified Status:</strong> Authenticated Genuine Citizen Record (No Bot Signals)</div>
             </div>
           </div>
 
-          <p id="step2Error" style="color: var(--crimson-primary); font-size: 14px; margin-bottom: 16px;"></p>
+          <p id="step2Error" class="reg-error-msg"></p>
 
-          <div style="display: flex; gap: 12px;">
-            <button type="button" class="btn btn-secondary" id="backToStep1Btn" style="flex: 1;">⬅ Back</button>
-            <button type="button" class="btn btn-primary" id="proceedToOtpBtn" style="flex: 2;" disabled>
+          <div class="step-actions-row">
+            <button type="button" class="btn btn-secondary btn-flex-1" id="backToStep1Btn">⬅ Back</button>
+            <button type="button" class="btn btn-primary btn-flex-2" id="proceedToOtpBtn" disabled>
               Proceed to Email Verification ➔
             </button>
           </div>
         </section>
 
         <!-- Step 3: Email Verification (Direct Outlook Dispatch) -->
-        <section id="step3" style="display: none;">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <div class="badge badge-ai" style="margin-bottom: 8px;">Step 3 of 3</div>
-            <h2 style="font-family: var(--font-display); font-size: 26px;">Email Verification</h2>
-            <p style="font-size: 14px; color: var(--text-muted);">
+        <section id="step3" class="d-none">
+          <div class="reg-step-header">
+            <div class="badge badge-ai badge-mb-8">Step 3 of 3</div>
+            <h2 class="reg-step2-title">Email Verification</h2>
+            <p class="reg-step-desc">
               A 6-digit verification code has been dispatched directly to your email inbox from <strong>bloodconnectai@outlook.com</strong>.
             </p>
           </div>
 
           <!-- Gateway Delivery Status Notice -->
-          <div id="otpDeliveryStatusBox" style="background: var(--bg-secondary); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 14px 18px; margin-bottom: 22px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-              <div id="deliveryStatusText" style="font-size: 13px; line-height: 1.5; color: var(--text-main);">
+          <div id="otpDeliveryStatusBox" class="otp-delivery-box">
+            <div class="otp-delivery-header">
+              <div id="deliveryStatusText" class="otp-status-text">
                 ⏳ Dispatching verification code via Outlook Mail...
               </div>
-              <div id="otpDevAssistBtnContainer" style="display: none;">
-                <button type="button" class="btn btn-secondary btn-sm" id="btnAutoFillDevOtp" style="border-color: #f59e0b; color: #f59e0b; font-weight: 700; font-size: 12px; padding: 6px 12px; background: rgba(245, 158, 11, 0.08);">
+              <div id="otpDevAssistBtnContainer" class="d-none">
+                <button type="button" class="btn btn-secondary btn-sm btn-autofill-otp" id="btnAutoFillDevOtp">
                   ⚡ 1-Click Auto-Fill (Dev Assist)
                 </button>
               </div>
             </div>
-            <div id="previewUrlBanner" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-glass); align-items: center; gap: 10px; flex-wrap: wrap;">
-              <a id="previewUrlLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="background: #0284c7; border: none; font-size: 12px; padding: 6px 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <div id="previewUrlBanner" class="preview-url-banner">
+              <a id="previewUrlLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm btn-preview-email">
                 ✉️ Open Dispatched Email in Web Inbox ↗
               </a>
-              <span style="font-size: 12px; color: var(--text-muted);">(View real dispatched HTML email and 6-digit OTP in web mailbox)</span>
+              <span class="preview-url-hint">(View real dispatched HTML email and 6-digit OTP in web mailbox)</span>
             </div>
           </div>
 
           <!-- Single Streamlined Channel: Official Email Inbox -->
-          <div class="card" style="padding: 24px; border: 1px solid var(--border-glass); background: var(--bg-card); position: relative; margin-bottom: 24px; max-width: 480px; margin-left: auto; margin-right: auto; text-align: center;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px;">
-              <span style="font-size: 24px;">✉️</span>
-              <strong style="font-size: 16px; color: var(--text-main);">Official Email Verification</strong>
-              <span id="emailVerifyBadge" class="badge" style="background: rgba(2, 132, 199, 0.08); color: var(--cyber-blue); border: 1px solid rgba(2, 132, 199, 0.25); font-size: 11px;">Pending Code</span>
+          <div class="card otp-card-center">
+            <div class="otp-card-header">
+              <span class="fs-24">✉️</span>
+              <strong class="otp-header-strong">Official Email Verification</strong>
+              <span id="emailVerifyBadge" class="badge email-verify-badge">Pending Code</span>
             </div>
             
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-              Dispatched to: <strong id="otpEmailDisplay" style="color: var(--cyber-blue);">user@domain.com</strong>
+            <p class="otp-dest-p">
+              Dispatched to: <strong id="otpEmailDisplay" class="otp-email-highlight">user@domain.com</strong>
             </p>
 
-            <label style="font-size: 13px; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 10px;">
+            <label class="otp-input-label">
               Enter 6-Digit Email Verification Code
             </label>
             
-            <div class="otp-container" style="gap: 8px; justify-content: center; margin-bottom: 16px;">
+            <div class="otp-container otp-box-row">
               <input type="text" maxlength="1" class="otp-box email-box" id="emailOtp1" autofocus placeholder="•">
               <input type="text" maxlength="1" class="otp-box email-box" id="emailOtp2" placeholder="•">
               <input type="text" maxlength="1" class="otp-box email-box" id="emailOtp3" placeholder="•">
@@ -418,26 +418,26 @@
               <input type="text" maxlength="1" class="otp-box email-box" id="emailOtp6" placeholder="•">
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-top: 10px;">
-              <button type="button" id="resendEmailOtpBtn" style="background: transparent; border: none; color: var(--cyber-blue); cursor: pointer; text-decoration: underline; padding: 0; font-weight: 600;">
+            <div class="otp-actions-footer">
+              <button type="button" id="resendEmailOtpBtn" class="btn-resend-otp">
                 ↺ Resend Code to Email
               </button>
-              <span style="color: var(--text-dim);">
-                Expires in <span id="otpCountdown" style="color: var(--crimson-primary); font-family: var(--font-mono); font-weight: 700;">10:00</span>
+              <span class="otp-expiry-wrap">
+                Expires in <span id="otpCountdown" class="otp-countdown-val">10:00</span>
               </span>
             </div>
           </div>
 
-          <p id="step3Error" style="color: var(--crimson-primary); font-size: 14px; margin-bottom: 16px; text-align: center;"></p>
+          <p id="step3Error" class="reg-error-msg-center"></p>
 
-          <button type="button" class="btn btn-primary" id="finalizeRegistrationBtn" style="width: 100%; padding: 14px; font-size: 15px;">
+          <button type="button" class="btn btn-primary btn-finalize-reg" id="finalizeRegistrationBtn">
             🩸 Verify Email & Complete Registration ➔
           </button>
         </section>
       </div>
 
-      <p style="text-align: center; font-size: 14px; color: var(--text-muted); margin-top: 20px;">
-        Already registered? <a href="login.html" style="color: var(--crimson-primary); font-weight: 600;">Log in here</a>
+      <p class="reg-login-link-p">
+        Already registered? <a href="login.html" class="reg-login-link">Log in here</a>
       </p>
     </main>
 
@@ -445,7 +445,7 @@
     <footer>
       <div class="footer-inner">
         <p>© 2026 BloodConnect — AI Donor Registration & Clinical Screening</p>
-        <p style="font-size: 13px; color: var(--text-dim);">Strict compliance with Indian Drugs and Cosmetics Act & NACO Phlebotomy Standards.</p>
+        <p class="footer-subtext-dim">Strict compliance with Indian Drugs and Cosmetics Act & NACO Phlebotomy Standards.</p>
       </div>
     </footer>
   </div>

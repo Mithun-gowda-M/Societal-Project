@@ -1,0 +1,89 @@
+{
+  "properties": [
+    {
+      "name": "bloodconnect.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Base64 or raw string secret used for HMAC SHA JWT token signing."
+    },
+    {
+      "name": "bloodconnect.jwt.expiration",
+      "type": "java.time.Duration",
+      "description": "JWT token lifetime duration."
+    },
+    {
+      "name": "bloodconnect.otp.expiration",
+      "type": "java.time.Duration",
+      "description": "Duration for which a generated OTP remains valid."
+    },
+    {
+      "name": "bloodconnect.otp.resend-cooldown",
+      "type": "java.time.Duration",
+      "description": "Cooldown period before a user can request another OTP."
+    },
+    {
+      "name": "bloodconnect.otp.max-attempts",
+      "type": "java.lang.Integer",
+      "description": "Maximum failed verification attempts allowed per OTP."
+    },
+    {
+      "name": "bloodconnect.otp.max-resends",
+      "type": "java.lang.Integer",
+      "description": "Maximum number of times an OTP can be resent."
+    },
+    {
+      "name": "bloodconnect.sendgrid.api-key",
+      "type": "java.lang.String",
+      "description": "SendGrid API key for transactional emails."
+    },
+    {
+      "name": "bloodconnect.sendgrid.from-email",
+      "type": "java.lang.String",
+      "description": "Outbound sender email address for SendGrid."
+    },
+    {
+      "name": "bloodconnect.official.mail",
+      "type": "java.lang.String",
+      "description": "Official communication email address for BloodConnect."
+    },
+    {
+      "name": "bloodconnect.official.sms-sender",
+      "type": "java.lang.String",
+      "description": "Sender header/tag for official dispatch SMS."
+    },
+    {
+      "name": "bloodconnect.twilio.account-sid",
+      "type": "java.lang.String",
+      "description": "Twilio account SID for SMS routing."
+    },
+    {
+      "name": "bloodconnect.twilio.auth-token",
+      "type": "java.lang.String",
+      "description": "Twilio authentication token."
+    },
+    {
+      "name": "bloodconnect.twilio.from-number",
+      "type": "java.lang.String",
+      "description": "Registered Twilio outbound phone number."
+    },
+    {
+      "name": "bloodconnect.cors.allowed-origins",
+      "type": "java.lang.String",
+      "description": "Comma-separated list of allowed origins for CORS headers."
+    },
+    {
+      "name": "bloodconnect.admin.email",
+      "type": "java.lang.String",
+      "description": "Initial administrator account email address."
+    },
+    {
+      "name": "bloodconnect.admin.password",
+      "type": "java.lang.String",
+      "description": "Initial administrator account password."
+    },
+    {
+      "name": "bloodconnect.seed-test-accounts",
+      "type": "java.lang.Boolean",
+      "description": "Flag to seed initial demonstration and test accounts."
+    }
+  ]
+}

@@ -48,14 +48,14 @@
       </nav>
     </header>
 
-    <main class="section-container" style="max-width: 860px;">
+    <main class="section-container section-container-narrow">
       <div class="section-header">
         <span class="badge badge-ai sub-badge">🔔 Multi-Channel Notification Dispatch</span>
         <h2>Emergency Action Alerts</h2>
         <p>Live push notifications, SMS alerts, and email dispatches to mobilize donors during urgent hospital requests.</p>
       </div>
 
-      <div style="display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+      <div class="filter-strip-flex">
         <button class="btn btn-primary btn-sm notif-filter-btn" data-type="ALL">All Alerts</button>
         <button class="btn btn-secondary btn-sm notif-filter-btn" data-type="SMS">📱 SMS Alerts</button>
         <button class="btn btn-secondary btn-sm notif-filter-btn" data-type="PUSH">🔔 Push Notifications</button>
@@ -65,23 +65,23 @@
       <div id="notifListContainer">
         <!-- 1. Urgent Emergency Notification -->
         <div class="notif-card urgent">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="notif-header-row">
+            <div class="notif-title-flex">
               <span class="badge badge-critical">🚨 Critical Blood Emergency</span>
               <span class="badge badge-ai">SMS & Push Fired</span>
             </div>
-            <span style="font-size: 12px; color: var(--text-dim);">2 mins ago</span>
+            <span class="notif-time-text">2 mins ago</span>
           </div>
 
-          <h3 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 6px;">
+          <h3 class="notif-item-title">
             Urgent O+ Blood Needed at Victoria Hospital ICU
           </h3>
 
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+          <p class="notif-item-desc">
             Patient Ramesh Sundaram requires 2 units of O+ blood for emergency surgery. Distance is 2.1 km from Indiranagar.
           </p>
 
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <div class="notif-actions-flex">
             <a href="donor-dashboard.html" class="btn btn-emerald btn-sm">
               🩸 Open Response Box & Accept
             </a>
@@ -94,19 +94,19 @@
 
         <!-- 2. Cooldown Notification -->
         <div class="notif-card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="notif-header-row">
+            <div class="notif-title-flex">
               <span class="badge badge-available">⏱️ Cooldown Status</span>
               <span class="badge badge-verified">Email Sent</span>
             </div>
-            <span style="font-size: 12px; color: var(--text-dim);">Yesterday</span>
+            <span class="notif-time-text">Yesterday</span>
           </div>
 
-          <h3 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 6px;">
+          <h3 class="notif-item-title">
             You Are Fully Eligible to Donate Whole Blood!
           </h3>
 
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+          <p class="notif-item-desc">
             Your 3-month (90 days) rest period since your last donation has concluded. Your status is now marked Available for Bangalore emergencies.
           </p>
 
@@ -117,19 +117,19 @@
 
         <!-- 3. Blood Bank Stock Alert -->
         <div class="notif-card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="notif-header-row">
+            <div class="notif-title-flex">
               <span class="badge badge-cooldown">⚠️ Bangalore Stock Alert</span>
               <span class="badge badge-ai">Automated Ticker</span>
             </div>
-            <span style="font-size: 12px; color: var(--text-dim);">3 hours ago</span>
+            <span class="notif-time-text">3 hours ago</span>
           </div>
 
-          <h3 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 6px;">
+          <h3 class="notif-item-title">
             Low Supply Warning: O- Negative at Rotary Bangalore TTK
           </h3>
 
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+          <p class="notif-item-desc">
             O- universal donor reserves dropped to 6 units. Registered O- donors in East Bangalore are encouraged to schedule a donation.
           </p>
 

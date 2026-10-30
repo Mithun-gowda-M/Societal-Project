@@ -18,6 +18,7 @@
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
       padding: 24px;
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
     }
     .admin-tabs {
@@ -89,18 +90,18 @@
           <a href="/admin" class="active">Admin Oversight</a>
         </div>
         <div class="nav-actions">
-          <a href="/credentials.pdf" download class="btn btn-secondary btn-sm" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4);">📥 Credentials PDF</a>
+          <a href="/credentials.pdf" download class="btn btn-secondary btn-sm btn-emerald-outline">📥 Credentials PDF</a>
           <button class="btn btn-secondary btn-sm" id="adminLogoutBtn">Log out</button>
         </div>
       </nav>
     </header>
 
     <main class="section-container">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 16px;">
+      <div class="admin-header">
         <div>
-          <span class="badge badge-ai" style="margin-bottom: 6px;">🏛️ Karnataka Health Mission Oversight</span>
-          <h1 style="font-family: var(--font-display); font-size: 32px;">Executive Admin Dashboard</h1>
-          <p style="font-size: 14px; color: var(--text-muted);">
+          <span class="badge badge-ai admin-badge">🏛️ Karnataka Health Mission Oversight</span>
+          <h1 class="admin-title">Executive Admin Dashboard</h1>
+          <p class="admin-subtitle">
             Real-time monitoring of registered hospitals, blood donors, patient life-saving records, and AI spam protection.
           </p>
         </div>
@@ -112,27 +113,27 @@
       <!-- High-Level Metric Tiles -->
       <div class="admin-stats-grid">
         <div class="admin-stat-card card-glow-red">
-          <span style="font-size: 12px; color: var(--text-dim); text-transform: uppercase;">Registered Donors</span>
-          <h2 style="font-family: var(--font-display); font-size: 36px; margin: 4px 0;" id="metricDonorsCount">6</h2>
-          <span style="font-size: 12px; color: var(--emerald-primary);">100% Aadhaar Verified 🛡️</span>
+          <span class="admin-stat-label">Registered Donors</span>
+          <h2 class="admin-stat-val" id="metricDonorsCount">6</h2>
+          <span class="admin-stat-tag-emerald">100% Aadhaar Verified 🛡️</span>
         </div>
 
         <div class="admin-stat-card card-glow-blue">
-          <span style="font-size: 12px; color: var(--text-dim); text-transform: uppercase;">Bangalore Blood Banks & Hospitals</span>
-          <h2 style="font-family: var(--font-display); font-size: 36px; margin: 4px 0;" id="metricBanksCount">10</h2>
-          <span style="font-size: 12px; color: var(--cyber-blue);">24x7 Live Synced</span>
+          <span class="admin-stat-label">Bangalore Blood Banks & Hospitals</span>
+          <h2 class="admin-stat-val" id="metricBanksCount">10</h2>
+          <span class="admin-stat-tag-blue">24x7 Live Synced</span>
         </div>
 
         <div class="admin-stat-card card-glow-green">
-          <span style="font-size: 12px; color: var(--text-dim); text-transform: uppercase;">Patients Successfully Helped</span>
-          <h2 style="font-family: var(--font-display); font-size: 36px; margin: 4px 0;" id="metricHelpedCount">3</h2>
-          <span style="font-size: 12px; color: var(--emerald-primary);">Life-Saving Transfusions</span>
+          <span class="admin-stat-label">Patients Successfully Helped</span>
+          <h2 class="admin-stat-val" id="metricHelpedCount">3</h2>
+          <span class="admin-stat-tag-emerald">Life-Saving Transfusions</span>
         </div>
 
         <div class="admin-stat-card">
-          <span style="font-size: 12px; color: var(--text-dim); text-transform: uppercase;">AI Spam / Fake Requests Blocked</span>
-          <h2 style="font-family: var(--font-display); font-size: 36px; margin: 4px 0; color: var(--amber-primary);" id="metricSpamCount">0</h2>
-          <span style="font-size: 12px; color: var(--amber-primary);">Zero Bot Infiltration</span>
+          <span class="admin-stat-label">AI Spam / Fake Requests Blocked</span>
+          <h2 class="admin-stat-val-amber" id="metricSpamCount">0</h2>
+          <span class="admin-stat-tag-amber">Zero Bot Infiltration</span>
         </div>
       </div>
 
@@ -146,7 +147,7 @@
 
       <!-- Tab 1: Registered Donors -->
       <section id="tabDonors" class="admin-tab-content">
-        <div class="card" style="padding: 0; overflow-x: auto;">
+        <div class="card table-card">
           <table class="admin-table">
             <thead>
               <tr>
@@ -167,8 +168,8 @@
       </section>
 
       <!-- Tab 2: Registered Hospitals & Blood Banks -->
-      <section id="tabHospitals" class="admin-tab-content" style="display: none;">
-        <div class="card" style="padding: 0; overflow-x: auto;">
+      <section id="tabHospitals" class="admin-tab-content tab-hidden">
+        <div class="card table-card">
           <table class="admin-table">
             <thead>
               <tr>
@@ -188,8 +189,8 @@
       </section>
 
       <!-- Tab 3: Patients Who Got Help -->
-      <section id="tabHelped" class="admin-tab-content" style="display: none;">
-        <div class="card" style="padding: 0; overflow-x: auto;">
+      <section id="tabHelped" class="admin-tab-content tab-hidden">
+        <div class="card table-card">
           <table class="admin-table">
             <thead>
               <tr>
@@ -210,8 +211,8 @@
       </section>
 
       <!-- Tab 4: Fake / Spam Request Queue -->
-      <section id="tabSpam" class="admin-tab-content" style="display: none;">
-        <div class="card" style="padding: 0; overflow-x: auto;">
+      <section id="tabSpam" class="admin-tab-content tab-hidden">
+        <div class="card table-card">
           <table class="admin-table">
             <thead>
               <tr>
@@ -235,7 +236,7 @@
     <footer>
       <div class="footer-inner">
         <p>© 2026 BloodConnect — State Blood Transfusion Council Regulatory Portal</p>
-        <p style="font-size: 13px; color: var(--text-dim);">Strict clinical audit trail & ISO 15189 compliance.</p>
+        <p class="footer-note">Strict clinical audit trail & ISO 15189 compliance.</p>
       </div>
     </footer>
   </div>
