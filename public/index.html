@@ -625,86 +625,86 @@
     // Investor Modal Controls
     const pitchSlides = {
       problem: `
-        <h4 style="font-size: 18px; color: #ff3347; margin-bottom: 12px;">🚨 The Problem: Life-Threatening Fragmented Logistics</h4>
-        <p style="font-size: 14px; line-height: 1.6; color: #cbd5e1;">
+        <h4 class="pitch-heading-red">🚨 The Problem: Life-Threatening Fragmented Logistics</h4>
+        <p class="pitch-lead-text">
           Every year in India alone, over <strong>12,000 preventable deaths occur daily</strong> due to delayed blood delivery in acute trauma, postpartum haemorrhage, and emergency surgeries.
         </p>
-        <ul style="font-size: 13px; color: #94a3b8; line-height: 1.8; margin-left: 20px; margin-top: 10px;">
+        <ul class="pitch-list">
           <li>Hospitals rely on frantic phone calls to family members, wasting <strong>2 to 4 golden hours</strong>.</li>
           <li>70% of blood banks maintain isolated Excel inventory sheets with zero real-time interchange.</li>
           <li>Cold-chain breakdown causes <strong>₹180 Crore</strong> worth of platelets and whole blood wastage annually.</li>
         </ul>
       `,
       solution: `
-        <h4 style="font-size: 18px; color: #10b981; margin-bottom: 12px;">⚡ The BloodConnect AI Solution</h4>
-        <p style="font-size: 14px; line-height: 1.6; color: #cbd5e1;">
+        <h4 class="pitch-heading-emerald">⚡ The BloodConnect AI Solution</h4>
+        <p class="pitch-lead-text">
           An institutional-grade, full-stack dispatch operating system that connects hospital ICUs directly with pre-screened volunteer donors and blood banks in milliseconds.
         </p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px;">
-          <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2);">
-            <strong style="color: #10b981; font-size: 13px;">🧠 LightGBM Response Predictor</strong>
-            <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Predicts donor acceptance probability using historical time-of-day, spatial distance, and blood group scarcity.</p>
+        <div class="pitch-grid-2">
+          <div class="pitch-card-emerald">
+            <strong class="pitch-title-emerald">🧠 LightGBM Response Predictor</strong>
+            <p class="pitch-card-subtext">Predicts donor acceptance probability using historical time-of-day, spatial distance, and blood group scarcity.</p>
           </div>
-          <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.2);">
-            <strong style="color: #38bdf8; font-size: 13px;">🗺️ Turn-by-Turn GPS Live Tracking</strong>
-            <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Real-time street navigation tracking the accepted donor right to the patient's bedside with Google Maps layers.</p>
+          <div class="pitch-card-sky">
+            <strong class="pitch-title-sky">🗺️ Turn-by-Turn GPS Live Tracking</strong>
+            <p class="pitch-card-subtext">Real-time street navigation tracking the accepted donor right to the patient's bedside with Google Maps layers.</p>
           </div>
         </div>
       `,
       economics: `
-        <h4 style="font-size: 18px; color: #fbbf24; margin-bottom: 12px;">📊 Compelling SaaS & Transactional Unit Economics</h4>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0;">
-          <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 22px; font-weight: 700; color: #ffffff;">₹340</div>
-            <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Cost per Dispatched Unit</div>
+        <h4 class="pitch-heading-amber">📊 Compelling SaaS & Transactional Unit Economics</h4>
+        <div class="pitch-grid-3">
+          <div class="pitch-stat-box">
+            <div class="pitch-stat-val-white">₹340</div>
+            <div class="pitch-stat-lbl">Cost per Dispatched Unit</div>
           </div>
-          <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 22px; font-weight: 700; color: #10b981;">82%</div>
-            <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Gross Margin at Scale</div>
+          <div class="pitch-stat-box">
+            <div class="pitch-stat-val-emerald">82%</div>
+            <div class="pitch-stat-lbl">Gross Margin at Scale</div>
           </div>
-          <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; text-align: center;">
-            <div style="font-size: 22px; font-weight: 700; color: #38bdf8;">14.8x</div>
-            <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">LTV / CAC Ratio</div>
+          <div class="pitch-stat-box">
+            <div class="pitch-stat-val-sky">14.8x</div>
+            <div class="pitch-stat-lbl">LTV / CAC Ratio</div>
           </div>
         </div>
-        <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">
+        <p class="pitch-desc-text">
           Monetized via enterprise hospital API subscriptions (B2B SaaS) and per-requisition coordination logistics fee covered by health insurers under ABDM emergency care packages.
         </p>
       `,
       traction: `
-        <h4 style="font-size: 18px; color: #38bdf8; margin-bottom: 12px;">🏥 Clinical Validation & Hospital Network</h4>
-        <p style="font-size: 14px; line-height: 1.6; color: #cbd5e1;">
+        <h4 class="pitch-heading-sky">🏥 Clinical Validation & Hospital Network</h4>
+        <p class="pitch-lead-text">
           Deployed in sandbox partnership with major healthcare institutions in Bangalore:
         </p>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-          <span class="badge" style="background: rgba(255,255,255,0.06); padding: 8px 14px; font-size: 12px;">Victoria Hospital Trauma Centre</span>
-          <span class="badge" style="background: rgba(255,255,255,0.06); padding: 8px 14px; font-size: 12px;">NIMHANS Neuro-ICU</span>
-          <span class="badge" style="background: rgba(255,255,255,0.06); padding: 8px 14px; font-size: 12px;">Rotary TTK Blood Bank</span>
-          <span class="badge" style="background: rgba(255,255,255,0.06); padding: 8px 14px; font-size: 12px;">Kidwai Memorial Oncology</span>
-          <span class="badge" style="background: rgba(255,255,255,0.06); padding: 8px 14px; font-size: 12px;">Manipal Hospital Emergency</span>
+        <div class="pitch-badges-flex">
+          <span class="badge pitch-badge-item">Victoria Hospital Trauma Centre</span>
+          <span class="badge pitch-badge-item">NIMHANS Neuro-ICU</span>
+          <span class="badge pitch-badge-item">Rotary TTK Blood Bank</span>
+          <span class="badge pitch-badge-item">Kidwai Memorial Oncology</span>
+          <span class="badge pitch-badge-item">Manipal Hospital Emergency</span>
         </div>
-        <div style="margin-top: 16px; font-size: 13px; color: #10b981;">
+        <div class="pitch-verified-banner">
           ✔ Over 2,418 simulated emergency dispatches completed with an average verified donor arrival time under 18 minutes.
         </div>
       `,
       captable: `
-        <h4 style="font-size: 18px; color: #c084fc; margin-bottom: 12px;">🎯 Seed / Series A Capital Deployment ($3.5M)</h4>
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
-          <div style="background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between;">
-            <span style="font-size: 13px; color: #ffffff;">Metropolitan Corridor Expansion (Delhi-NCR, Mumbai, Hyderabad, Chennai)</span>
-            <strong style="color: #c084fc;">40% ($1.4M)</strong>
+        <h4 class="pitch-heading-purple">🎯 Seed / Series A Capital Deployment ($3.5M)</h4>
+        <div class="pitch-stack-col">
+          <div class="pitch-funding-row">
+            <span class="pitch-funding-desc">Metropolitan Corridor Expansion (Delhi-NCR, Mumbai, Hyderabad, Chennai)</span>
+            <strong class="pitch-funding-val">40% ($1.4M)</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between;">
-            <span style="font-size: 13px; color: #ffffff;">AeroLife Drone Airway Mesh & Cold-Chain IoT Hardware</span>
-            <strong style="color: #c084fc;">25% ($875K)</strong>
+          <div class="pitch-funding-row">
+            <span class="pitch-funding-desc">AeroLife Drone Airway Mesh & Cold-Chain IoT Hardware</span>
+            <strong class="pitch-funding-val">25% ($875K)</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between;">
-            <span style="font-size: 13px; color: #ffffff;">Clinical Safety AI & Spring Boot Telemetry Infrastructure</span>
-            <strong style="color: #c084fc;">20% ($700K)</strong>
+          <div class="pitch-funding-row">
+            <span class="pitch-funding-desc">Clinical Safety AI & Spring Boot Telemetry Infrastructure</span>
+            <strong class="pitch-funding-val">20% ($700K)</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between;">
-            <span style="font-size: 13px; color: #ffffff;">Regulatory, CDSCO Licensing & Clinical Governance</span>
-            <strong style="color: #c084fc;">15% ($525K)</strong>
+          <div class="pitch-funding-row">
+            <span class="pitch-funding-desc">Regulatory, CDSCO Licensing & Clinical Governance</span>
+            <strong class="pitch-funding-val">15% ($525K)</strong>
           </div>
         </div>
       `
