@@ -204,6 +204,13 @@
             });
           }
 
+          if (activeEmergency && activeEmergency.id) {
+            bloodConnectApi(`/api/requests/${activeEmergency.id}/replies`, {
+              method: 'POST',
+              body: JSON.stringify({ status: 'ACCEPTED', notes: 'Accepted from Donor Dashboard' })
+            }).catch(err => console.warn('[BloodConnect] Live reply sync fallback:', err.message));
+          }
+
           localStorage.setItem('activeDispatchAccepted', 'true');
           localStorage.setItem('dispatchDonorName', currentDonor.name);
           localStorage.setItem('dispatchDonorLat', String(currentDonor.lat || 12.9719));
@@ -269,6 +276,12 @@
     // Decline Emergency
     if (declineEmergencyBtn) {
       declineEmergencyBtn.addEventListener('click', () => {
+        if (activeEmergency && activeEmergency.id) {
+          bloodConnectApi(`/api/requests/${activeEmergency.id}/replies`, {
+            method: 'POST',
+            body: JSON.stringify({ status: 'DECLINED', notes: 'Declined from Donor Dashboard' })
+          }).catch(err => console.warn('[BloodConnect] Live reply sync fallback:', err.message));
+        }
         donorResponseBox.style.display = 'none';
       });
     }
@@ -296,6 +309,8 @@
         currentDonor.donationCount = (currentDonor.donationCount || 0) + 1;
         donorImpactCount.textContent = `${currentDonor.donationCount} Donations`;
         evaluateCooldown();
+        bloodConnectApi(`/api/donors/me/donation?donationDate=${todayStr}`, { method: 'POST' })
+          .catch(err => console.warn('[BloodConnect] Donation sync fallback:', err.message));
         alert(`Blood donation successfully recorded for today (${todayStr})! You have been placed on a 3-month (90-day) recovery period.`);
       });
     }

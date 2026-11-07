@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,15 @@ public class DonorController {
     public DonorProfileResponse availability(@AuthenticationPrincipal AppUser user,
                                              @Valid @RequestBody AvailabilityRequest request) {
         return donorService.setAvailability(user.getId(), request.available());
+    }
+
+    @PostMapping("/me/donation")
+    public DonorProfileResponse recordDonation(
+            @AuthenticationPrincipal AppUser user,
+            @RequestParam(required = false)
+            @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE)
+            java.time.LocalDate donationDate) {
+        return donorService.recordDonation(user.getId(), donationDate);
     }
 
     @GetMapping("/nearby")

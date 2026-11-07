@@ -33,7 +33,13 @@ public class TestAccountsSeeder implements ApplicationRunner {
     private final boolean enabled;
 
     record SeedAccount(String email, String password, UserRole role, String name, String phone,
-                       String bloodGroup, String location, Double lat, Double lng, boolean available) {}
+                       String bloodGroup, String location, Double lat, Double lng, boolean available,
+                       java.time.LocalDate lastDonationDate) {
+        SeedAccount(String email, String password, UserRole role, String name, String phone,
+                    String bloodGroup, String location, Double lat, Double lng, boolean available) {
+            this(email, password, role, name, phone, bloodGroup, location, lat, lng, available, null);
+        }
+    }
 
     private static final List<SeedAccount> ACCOUNTS_TO_SEED = List.of(
             // 1 System Admin
@@ -53,21 +59,21 @@ public class TestAccountsSeeder implements ApplicationRunner {
             new SeedAccount("bloodbank@indianredcross.org", "Redcross2026@HQ", UserRole.REQUESTER, "Indian Red Cross Society HQ", "+911123711551", null, null, null, null, false),
 
             // 15 Donors (covering all 8 blood groups across India)
-            new SeedAccount("arjun.rao@blr-med.org", "Arjun@2026Blood", UserRole.DONOR, "Dr. Arjun K. Rao", "+919845112233", "O+", "Indiranagar, Bengaluru", 12.9719, 77.6412, true),
-            new SeedAccount("priyanka.s@gmail.com", "Priya@2026Donate", UserRole.DONOR, "Priyanka Sharma", "+919880223344", "A+", "Koramangala, Bengaluru", 12.9345, 77.6265, true),
-            new SeedAccount("karthik.v@techblr.io", "Karthik@UniversalO", UserRole.DONOR, "Karthik Venkatesh", "+919741334455", "O-", "Jayanagar, Bengaluru", 12.9298, 77.5843, true),
-            new SeedAccount("sneha.n@outlook.com", "Sneha@BPositive", UserRole.DONOR, "Sneha Nandakumar", "+919632445566", "B+", "Whitefield, Bengaluru", 12.9856, 77.7289, false),
-            new SeedAccount("rohan.d@fintech.in", "Rohan@ABPlatelets", UserRole.DONOR, "Rohan Deshmukh", "+919513556677", "AB+", "Malleshwaram, Bengaluru", 13.0031, 77.5702, true),
-            new SeedAccount("ananya.h@ecity.org", "Ananya@RareBlood", UserRole.DONOR, "Ananya Hegde", "+919448667788", "A-", "Electronic City, Bengaluru", 12.8452, 77.6602, true),
-            new SeedAccount("vikram.rathore@delhi-adv.in", "Vikram@DelhiB", UserRole.DONOR, "Vikramaditya Rathore", "+919810122334", "B-", "Connaught Place, New Delhi", 28.6315, 77.2167, true),
-            new SeedAccount("meera.iyer@mumbai-art.org", "Meera@MumbaiO", UserRole.DONOR, "Meera Iyer", "+919820044556", "O+", "Bandra West, Mumbai", 19.0596, 72.8295, true),
-            new SeedAccount("aravind.swamy@chennai-med.edu", "Aravind@RareAB", UserRole.DONOR, "Dr. Aravind Swamy", "+919840066778", "AB-", "T. Nagar, Chennai", 13.0418, 80.2341, true),
-            new SeedAccount("rajeshwari.p@ahmedabad-tech.in", "Rajeshwari@GujO", UserRole.DONOR, "Rajeshwari Patel", "+919825088990", "O-", "SG Highway, Ahmedabad", 23.0338, 72.5126, true),
-            new SeedAccount("faizan.a@hyd-eng.in", "Faizan@HydA", UserRole.DONOR, "Faizan Ahmed", "+919849011223", "A+", "Banjara Hills, Hyderabad", 17.4156, 78.4356, true),
-            new SeedAccount("debojyoti.m@kol-legal.in", "Debo@KolB", UserRole.DONOR, "Debojyoti Mukherjee", "+919830088991", "B+", "Salt Lake Sector 5, Kolkata", 22.5804, 88.4378, true),
-            new SeedAccount("tanvi.verma@jaipur-des.in", "Tanvi@JprO", UserRole.DONOR, "Tanvi Verma", "+919829033445", "O+", "C-Scheme, Jaipur", 26.9088, 75.8052, true),
-            new SeedAccount("suresh.menon@kochi-shipping.in", "Suresh@KocB", UserRole.DONOR, "Suresh Menon", "+919847088992", "B-", "Marine Drive, Kochi", 9.9816, 76.2762, true),
-            new SeedAccount("kavya.reddy@hsr-tech.in", "Kavya@HsrAB", UserRole.DONOR, "Kavya Reddy", "+919886011224", "AB+", "HSR Layout, Bengaluru", 12.9116, 77.6389, true)
+            new SeedAccount("arjun.rao@blr-med.org", "Arjun@2026Blood", UserRole.DONOR, "Dr. Arjun K. Rao", "+919845112233", "O+", "Indiranagar, Bengaluru", 12.9719, 77.6412, true, java.time.LocalDate.of(2026, 6, 10)),
+            new SeedAccount("priyanka.s@gmail.com", "Priya@2026Donate", UserRole.DONOR, "Priyanka Sharma", "+919880223344", "A+", "Koramangala, Bengaluru", 12.9345, 77.6265, true, java.time.LocalDate.of(2026, 7, 15)),
+            new SeedAccount("karthik.v@techblr.io", "Karthik@UniversalO", UserRole.DONOR, "Karthik Venkatesh", "+919741334455", "O-", "Jayanagar, Bengaluru", 12.9298, 77.5843, true, java.time.LocalDate.of(2026, 5, 20)),
+            new SeedAccount("sneha.n@outlook.com", "Sneha@BPositive", UserRole.DONOR, "Sneha Nandakumar", "+919632445566", "B+", "Whitefield, Bengaluru", 12.9856, 77.7289, false, java.time.LocalDate.of(2026, 10, 15)),
+            new SeedAccount("rohan.d@fintech.in", "Rohan@ABPlatelets", UserRole.DONOR, "Rohan Deshmukh", "+919513556677", "AB+", "Malleshwaram, Bengaluru", 13.0031, 77.5702, true, java.time.LocalDate.of(2026, 6, 25)),
+            new SeedAccount("ananya.h@ecity.org", "Ananya@RareBlood", UserRole.DONOR, "Ananya Hegde", "+919448667788", "A-", "Electronic City, Bengaluru", 12.8452, 77.6602, true, java.time.LocalDate.of(2026, 7, 2)),
+            new SeedAccount("vikram.rathore@delhi-adv.in", "Vikram@DelhiB", UserRole.DONOR, "Vikramaditya Rathore", "+919810122334", "B-", "Connaught Place, New Delhi", 28.6315, 77.2167, true, java.time.LocalDate.of(2026, 5, 12)),
+            new SeedAccount("meera.iyer@mumbai-art.org", "Meera@MumbaiO", UserRole.DONOR, "Meera Iyer", "+919820044556", "O+", "Bandra West, Mumbai", 19.0596, 72.8295, true, java.time.LocalDate.of(2026, 6, 18)),
+            new SeedAccount("aravind.swamy@chennai-med.edu", "Aravind@RareAB", UserRole.DONOR, "Dr. Aravind Swamy", "+919840066778", "AB-", "T. Nagar, Chennai", 13.0418, 80.2341, true, java.time.LocalDate.of(2026, 5, 30)),
+            new SeedAccount("rajeshwari.p@ahmedabad-tech.in", "Rajeshwari@GujO", UserRole.DONOR, "Rajeshwari Patel", "+919825088990", "O-", "SG Highway, Ahmedabad", 23.0338, 72.5126, true, java.time.LocalDate.of(2026, 6, 5)),
+            new SeedAccount("faizan.a@hyd-eng.in", "Faizan@HydA", UserRole.DONOR, "Faizan Ahmed", "+919849011223", "A+", "Banjara Hills, Hyderabad", 17.4156, 78.4356, true, java.time.LocalDate.of(2026, 7, 10)),
+            new SeedAccount("debojyoti.m@kol-legal.in", "Debo@KolB", UserRole.DONOR, "Debojyoti Mukherjee", "+919830088991", "B+", "Salt Lake Sector 5, Kolkata", 22.5804, 88.4378, true, java.time.LocalDate.of(2026, 6, 22)),
+            new SeedAccount("tanvi.verma@jaipur-des.in", "Tanvi@JprO", UserRole.DONOR, "Tanvi Verma", "+919829033445", "O+", "C-Scheme, Jaipur", 26.9088, 75.8052, true, java.time.LocalDate.of(2026, 7, 1)),
+            new SeedAccount("suresh.menon@kochi-shipping.in", "Suresh@KocB", UserRole.DONOR, "Suresh Menon", "+919847088992", "B-", "Marine Drive, Kochi", 9.9816, 76.2762, true, java.time.LocalDate.of(2026, 5, 18)),
+            new SeedAccount("kavya.reddy@hsr-tech.in", "Kavya@HsrAB", UserRole.DONOR, "Kavya Reddy", "+919886011224", "AB+", "HSR Layout, Bengaluru", 12.9116, 77.6389, true, java.time.LocalDate.of(2026, 7, 20))
     );
 
     public TestAccountsSeeder(
@@ -98,7 +104,7 @@ public class TestAccountsSeeder implements ApplicationRunner {
                         if (item.role == UserRole.DONOR && item.bloodGroup != null) {
                             DonorProfile profile = new DonorProfile(
                                     savedUser, item.name, item.phone, item.bloodGroup,
-                                    item.location, item.lat, item.lng, item.available
+                                    item.location, item.lat, item.lng, item.available, item.lastDonationDate
                             );
                             donorProfileRepository.save(profile);
                         }

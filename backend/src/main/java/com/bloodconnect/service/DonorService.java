@@ -29,9 +29,19 @@ public class DonorService {
     public DonorProfileResponse save(AppUser user, DonorProfileRequest request) {
         DonorProfile profile = donorRepository.findByUserId(user.getId())
                 .orElseGet(() -> new DonorProfile(user, request.name(), request.phone(), request.bloodGroup(),
-                        request.location(), request.latitude(), request.longitude(), request.available()));
+                        request.location(), request.latitude(), request.longitude(), request.available(),
+                        request.lastDonationDate()));
         profile.update(request.name(), request.phone(), request.bloodGroup(), request.location(),
-                request.latitude(), request.longitude(), request.available());
+                request.latitude(), request.longitude(), request.available(), request.lastDonationDate());
+        return DonorProfileResponse.from(donorRepository.save(profile));
+    }
+
+    @Transactional
+    public DonorProfileResponse recordDonation(UUID userId, java.time.LocalDate donationDate) {
+        DonorProfile profile = donorRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Donor profile not found"));
+        profile.setLastDonationDate(donationDate != null ? donationDate : java.time.LocalDate.now());
+        profile.setAvailable(false);
         return DonorProfileResponse.from(donorRepository.save(profile));
     }
 

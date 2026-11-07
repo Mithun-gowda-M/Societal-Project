@@ -13,6 +13,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -46,6 +47,9 @@ public class DonorProfile {
     @Column(nullable = false)
     private boolean available;
 
+    @Column(name = "last_donation_date")
+    private LocalDate lastDonationDate;
+
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
@@ -54,12 +58,22 @@ public class DonorProfile {
 
     public DonorProfile(AppUser user, String name, String phone, String bloodGroup, String location,
                         Double latitude, Double longitude, boolean available) {
+        this(user, name, phone, bloodGroup, location, latitude, longitude, available, null);
+    }
+
+    public DonorProfile(AppUser user, String name, String phone, String bloodGroup, String location,
+                        Double latitude, Double longitude, boolean available, LocalDate lastDonationDate) {
         this.user = user;
-        update(name, phone, bloodGroup, location, latitude, longitude, available);
+        update(name, phone, bloodGroup, location, latitude, longitude, available, lastDonationDate);
     }
 
     public void update(String name, String phone, String bloodGroup, String location,
                        Double latitude, Double longitude, boolean available) {
+        update(name, phone, bloodGroup, location, latitude, longitude, available, this.lastDonationDate);
+    }
+
+    public void update(String name, String phone, String bloodGroup, String location,
+                       Double latitude, Double longitude, boolean available, LocalDate lastDonationDate) {
         this.name = name;
         this.phone = phone;
         this.bloodGroup = bloodGroup;
@@ -67,11 +81,17 @@ public class DonorProfile {
         this.latitude = latitude;
         this.longitude = longitude;
         this.available = available;
+        this.lastDonationDate = lastDonationDate;
         this.updatedAt = Instant.now();
     }
 
     public void setAvailable(boolean available) {
         this.available = available;
+        this.updatedAt = Instant.now();
+    }
+
+    public void setLastDonationDate(LocalDate lastDonationDate) {
+        this.lastDonationDate = lastDonationDate;
         this.updatedAt = Instant.now();
     }
 
@@ -92,5 +112,6 @@ public class DonorProfile {
     public Double getLatitude() { return latitude; }
     public Double getLongitude() { return longitude; }
     public boolean isAvailable() { return available; }
+    public LocalDate getLastDonationDate() { return lastDonationDate; }
     public Instant getUpdatedAt() { return updatedAt; }
 }

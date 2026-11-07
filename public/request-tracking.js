@@ -446,6 +446,32 @@
     if (h && document.getElementById('trackHospital')) document.getElementById('trackHospital').textContent = h;
     if (g && document.getElementById('trackGroup')) document.getElementById('trackGroup').textContent = `${g} (${u || 2} Units PRBC)`;
 
+    // Check for live accepted replies from Java API
+    const activeReqId = localStorage.getItem('activeEmergencyId') || localStorage.getItem('lastRequestId');
+    if (activeReqId && typeof bloodConnectApi === 'function') {
+      bloodConnectApi(`/api/requests/${activeReqId}/replies`)
+        .then(replies => {
+          if (Array.isArray(replies) && replies.length > 0) {
+            const accepted = replies.find(r => r.status === 'ACCEPTED') || replies[0];
+            if (accepted && accepted.donorName) {
+              const donorCardName = document.getElementById('donorCardName');
+              if (donorCardName) donorCardName.textContent = `${accepted.donorName} (${accepted.donorBloodGroup || storedGroup} Compatible Match)`;
+              const btnCall = document.getElementById('btnCallDonor');
+              if (btnCall && accepted.donorPhone) {
+                btnCall.href = `tel:${accepted.donorPhone}`;
+                btnCall.textContent = `📞 Call Donor (${accepted.donorPhone})`;
+              }
+              const btnWA = document.getElementById('btnWhatsAppDonor');
+              if (btnWA && accepted.donorPhone) {
+                const clean = accepted.donorPhone.replace(/\D/g, '');
+                btnWA.href = `https://wa.me/${clean}?text=${encodeURIComponent('Hello ' + accepted.donorName + ', thank you for accepting the emergency requisition.')}`;
+              }
+            }
+          }
+        })
+        .catch(err => console.warn('[BloodConnect] Live request replies fallback:', err.message));
+    }
+
     initMap();
   });
 })();

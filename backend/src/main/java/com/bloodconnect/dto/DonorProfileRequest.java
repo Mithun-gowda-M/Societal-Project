@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
+import java.time.LocalDate;
 
 public record DonorProfileRequest(
         @NotBlank @Size(max = 100) String name,
@@ -14,6 +15,11 @@ public record DonorProfileRequest(
         @NotBlank @Size(max = 160) String location,
         @DecimalMin("-90.0") @DecimalMax("90.0") Double latitude,
         @DecimalMin("-180.0") @DecimalMax("180.0") Double longitude,
-        @NotNull Boolean available
+        @NotNull Boolean available,
+        LocalDate lastDonationDate
 ) {
+    public DonorProfileRequest(String name, String phone, String bloodGroup, String location,
+                               Double latitude, Double longitude, Boolean available) {
+        this(name, phone, bloodGroup, location, latitude, longitude, available, null);
+    }
 }
