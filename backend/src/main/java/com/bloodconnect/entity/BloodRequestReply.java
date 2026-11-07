@@ -81,3 +81,4 @@ public class BloodRequestReply {
     public void setNotes(String notes) { this.notes = notes; }
     public Instant getRespondedAt() { return respondedAt; }
 }
+

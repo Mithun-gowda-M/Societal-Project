@@ -11,3 +11,4 @@ public interface BloodRequestReplyRepository extends JpaRepository<BloodRequestR
     List<BloodRequestReply> findByRequestIdOrderByRespondedAtDesc(UUID requestId);
     Optional<BloodRequestReply> findByRequestIdAndDonorUserId(UUID requestId, UUID donorUserId);
 }
+
