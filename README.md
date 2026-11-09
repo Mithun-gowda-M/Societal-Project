@@ -36,6 +36,7 @@ Experience BloodConnect live across global devices (iPhone, Android, iPad, Table
 
 ## 📑 Technical Documentation & Credentials
 - 📕 **Comprehensive 13-Page PDF Technical Dossier:** [BloodConnect-Comprehensive-Architecture-Dossier.pdf](./BloodConnect-Comprehensive-Architecture-Dossier.pdf)
+- 📋 **Official Google Forms & Survey Instruments:** [Documents/Google Forms Links.md](./Documents/Google%20Forms%20Links.md)
 - 🔑 **Verified 25 Test Accounts & Credentials:** [test-credentials.md](./test-credentials.md)
 - 📱 **Frontend Architecture Guide:** [frontend/README.md](./frontend/README.md)
 
